@@ -1,0 +1,93 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title> Edit Profile </title>
+{% endblock %} {% block content %}
+<!-- Page Content  -->
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-3 mt-1">
+            <form method='POST' enctype="multipart/form-data">
+                {% csrf_token %} {% if us.pat_img %}
+                <img src="{{ us.pat_img.url}}" class="w-90" style="min-height: 200px;max-height: 200px; ">{% else%}
+                <img src="{%static 'Images/user_img.jpg' %}" class="w-70 p-2 ps-4" style="min-height: 200px;max-height: 200px; ">{% endif %}
+                <input type="file" required name="image" class="form-control mb-3 mt-3">
+                <center><input type="submit" name="save" class="btn btn-light" value="Update"></center>
+                <input type='text' value='1' name='type' hidden>
+            </form>
+        </div>
+        <div class="col-md-9 border p-4 rounded shadow " style="border-radius:2rem; background:linear-gradient(to top left,#0044ad, #f5efeb)">
+            <h3 class="text-center mb-4" style="color: #262626"><b>Edit Profile</b></h3>
+            <form action="" method="POST" class="row " style="color: #262626">
+                {% csrf_token %}
+                <input type='text' value='2' name='type' hidden>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="f"><b>Full Name</b></label><br/>
+                    <input type="text" class="form-control ii" placeholder="" name="fn" value="{{us.pat_name}}" id="f">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="bgroup"><b>Email</b></label><br/>
+                    <input type="email" class="form-control ii" placeholder="" name="em" value="{{us.pat_email}}" disabled>
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="g" class="mb-2"><b>Gender</b></label> <br/> {% if us.pat_gender == 'M' %}
+                    <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked> Male
+                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" style="margin-left: 10px;" id="g"> Female {% else %}
+                    <input type="radio" name="gen" value="M" class="form-check-input" id="g">Male
+                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g" checked>Female {% endif %}
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="c"><b>Contact Number</b></label><br/>
+                    <input type="tel" class="form-control ii" placeholder="" name="phn" value="{{us.pat_contact}}" id="c">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="d"><b>DOB</b><font color="red">*</font></label><br/>
+                    <input type="date" required class="form-control ii" placeholder="" name="dob" value="{{pat_dob}}" id="d">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="a"><b>Age</b></label><br/>
+                    <input type="text" readonly class="form-control ii" placeholder="" name="age" value="{{us.pat_age}}" id="a">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="bgroup"><b>Blood Group</b></label><br/>
+                    <input type="text" class="form-control ii" placeholder="" name="bg" value="{{us.pat_bloodgroup}}" id="bgroup">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="pincode"><b>PIN Code</b></label><br/>
+                    <input type="text" name="pin" value="{{us.pat_pincode}}" class="form-control ii" id="pincode">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="ci"><b>City</b></label><br/>
+                    <input type="text" name="city" value="{{us.pat_city}}" class="form-control ii" id="ci">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for=""><b>State</b></label><br/>
+                    <input type="text" name="state" value="{{us.pat_state}}" class="form-control ii" id="">
+                </div>
+
+                <div class="col-md-12 form-group mb-3">
+                    <label for="a"><b>Address</b></label>
+                    <div class="input-group">
+                        <textarea name="address" rows="3" class="form-control" id="a">{{us.pat_address}} </textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12"><br/>
+                    <center><input type="submit" name='save1' class="btn btn-dark" value="Submit"></center>
+                </div>
+
+            </form>
+            <!--
+            {% if res %} {% if res == 1 %}
+            <div>
+                Profile updated successfully
+            </div>
+            {% else %}
+            <div>
+                Error
+            </div>
+            {% endif %} {% endif %}
+        -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

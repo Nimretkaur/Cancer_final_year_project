@@ -1,0 +1,48 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title>Cancer Deaths Visualization</title>
+{% endblock %} {% block content %}
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-12 border rounded shadow p-3 text-center" style="border-radius:2rem; background:linear-gradient(to top left,#0044ad,#f5efeb)">
+            <h4>Total Cancer Deaths By Types</h4>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-2 text-lg-center">
+            <h4>Total annual number of deaths from different types of cancers</h4>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-10">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <select class="form-select p-1 mr-2" required name='num' aria-label="Default select example" style="height: 37px; width: 200px;">
+                <option selected>Select the number</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="27">27</option>
+            </select>
+
+                <button type="submit" name="save" class="btn btn-dark">Enter</button>
+            </form>
+        </div>
+
+        <div class="col-md-2">
+            <a class="btn btn-dark" href="{% url 'visCancerDeathsTypes' %}" role="button">Go Back</a>
+
+        </div>
+    </div>
+
+
+</div>
+{% if graphic %}
+<div class='row p-3 ml-5'>
+    <img src="data:image/png;base64,{{graphic|safe}}">
+</div>
+{% endif %} {% endblock %}

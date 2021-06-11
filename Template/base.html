@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Basefile</title>
+    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{%static 'css/icofont.min.css' %}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- style of index page -->
+    <style>
+        .navbar-nav .nav-item .nav-link {
+            color: black;
+            font-size: 18px;
+            font-weight: 500;
+            position: relative;
+            display: inline-block
+        }
+        
+        .navbar-nav .nav-item .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #FF8C3E;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        
+        .navbar-nav .nav-item .nav-link:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    </style>
+    <!-- style of footer -->
+    <style>
+        .i-hover {
+            color: blue;
+            border: 1px solid blue;
+            color: white !important
+        }
+        
+        .i-hover:hover {
+            background-color: #FF8C3E;
+            border: 1px solid #FF8C3E;
+            color: white !important
+        }
+        
+        .f1 {
+            position: relative;
+            color: white;
+        }
+        
+        .f1:hover {
+            font-size: 19px;
+            color: #FF8C3E;
+        }
+        
+        .is:hover {
+            transform: scale(1.2)
+        }
+    </style>
+    <style>
+        .bg-image {
+            position: relative
+        }
+        
+        .bg-image:before {
+            content: '';
+            position: absolute;
+            background: url({%static 'Images/medical.jpg' %});
+            background-attachment: fixed;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            filter: grayscale(60%) opacity(0.3);
+            z-index: -1
+        }
+    </style>
+
+    <style type='text/css'>
+        .dropdown:hover>.dropdown-menu {
+            display: block;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Narbar starts -->
+    <nav class="navbar navbar-expand-lg navbar-light p-1 sticky-top" style="background-color: white; border-color: orange; border-bottom:solid">
+        <div class="container-fluid">
+            <a href="{% url 'index' %}" class="navbar-brand" style="background-image: url({%static 'Images/mainlogo4.pdf' %}); height: 90px; width: 300px; background-size: cover; background-position: center"> </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'index' %}">About Cancer</a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Cancer Types</a>
+                        <ul class="dropdown-menu" style="font-size: 16px;font-weight: 450" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'breastcancer' %}">Breast Cancer</a></li>
+                            <li><a class="dropdown-item" href="{% url 'prostatecancer' %}">Prostate Cancer</a></li>
+                            <li><a class="dropdown-item" href="{% url 'lungcancer' %}">Lungs Cancer</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cervicalcancer' %}">Cervical Cancer</a></li>
+                            <li><a class="dropdown-item" href="#">Other Cancers</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Drugs & supplements</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Living Healthy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item p-1 ms-5"><a href="{% url 'register' %}" class="btn btn-outline" style="color:black; border-color: #0044ad;" role="button">Register</a></li>
+                    <li class="dropdown">
+                        <button class="nav-item btn btn-outline dropdown-toggle" type="button" style="color:black; border-color: #0044ad;padding:6px;margin-top: 4px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Login
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'login' %}">User</a>
+                            <a class="dropdown-item" href="{% url 'doclogin' %}">Doctor</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Narbar ends -->
+    {%block content %} {% endblock%}
+    <!-- footer starts -->
+    <div class="container-fluid p-5" style="background-color: black; color: white ;">
+        <div class="row">
+            <div class="col-md-2">
+                <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E; ">Canc</span>er <span style="color: #FF8C3E">Care</span></h4>
+                <p>This website is about Cancer. You can understand what is cancer and what are types and symptoms of cancer.</p>
+            </div>
+
+            <div class="col-md-2">
+                <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E;">Quic</span>k <span style="color: #FF8C3E">Links</span></h4>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="..." class="f1" style="text-decoration: none;">About Us</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'contactus' %}" class="f1" style="text-decoration: none;">Contact Us</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'review' %}" class="f1" style="text-decoration: none;">Review</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'login' %}" class="f1" style="text-decoration: none;">User Login</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'register' %}" class="f1" style="text-decoration: none;">User Register</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'doclogin' %}" class="f1" style="text-decoration: none;">Doctor Login</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'recoverpassword' %}" class="f1" style="text-decoration: none;">Recover Password</a></p>
+
+
+            </div>
+
+            <div class="col-md-2 pb-5" style="text-align: center;">
+                <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E;">Follo</span>w <span style="color: #FF8C3E">Us</span></h4>
+                <div class="row">
+                    <div class="col-md-4 p-2" style="background-color: #08a0e9;">
+                        <h4>5K</h4>
+                        <p style="font-size:14px">Followers</p>
+                    </div>
+                    <div class="col-md-4 p-2" style="background-color: #DD2A7B;">
+                        <h4>5K</h4>
+                        <p style="font-size:14px">Followers</p>
+                    </div>
+                    <div class="col-md-4 p-2" style="background-color:#3B5998">
+                        <h4>5K</h4>
+                        <p style="font-size:14px">Followers</p>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-md-4 pt-2 pb-2 is" style="background-color: #08a0e9;">
+                        <i class="icofont-twitter "></i>
+                    </div>
+                    <div class="col-md-4 pt-2 pb-2 is" style="background-color: #DD2A7B">
+                        <i class="icofont-instagram "></i>
+                    </div>
+                    <div class="col-md-4 pt-2 pb-2 is" style="background-color:#3B5998">
+                        <i class="icofont-facebook"></i>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group pb-3 pt-4">
+                            <input type="text" class="form-control" placeholder="Email" aria-label="Recipient's username">
+                            <button class="btn btn-outline-secondary" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E;">Serv</span>ices</h4>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="..." style=" text-decoration: none;">Facts</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="contactus.html" style="text-decoration: none;">Submit Report</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="..." style="text-decoration: none;">Diagnosis</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="..." style="text-decoration: none;">Types</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="..." style="text-decoration: none;">Symptoms</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="..." style="text-decoration: none;">Labs</a></p>
+                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a class="f1" href="..." style="text-decoration: none;">Risk Factors & Causes</a></p>
+            </div>
+
+            <div class="col-md-3">
+                <h4 class="mb-3"><span style="border-bottom:solid; border-color: #FF8C3E;">Conta</span>ct <span style="color: #FF8C3E">With Us</span></h4>
+                <p class="mb-3"><i class="icofont-email border rounded rounded-circle p-2 i-hover" style="border-color: #FF8C3E "></i><a class="f1" style="text-decoration: none" href=""> abc@gmail.com</a></p>
+                <h4 class='mb-3 mt-5'><span style="border-bottom:solid; border-color: #FF8C3E;">Addr</span>ess</h4>
+                <p class="mb-3"><i class="icofont-user border  rounded rounded-circle p-2 i-hover"></i> 1234 South Cicero Avenue Chicago,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IL 60638, United States</p>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- footer ends -->
+    <script src="{%static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

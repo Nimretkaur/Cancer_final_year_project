@@ -1,0 +1,385 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<!-- Navbar -->
+<!-- Craousel starts -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" >
+    <div class="carousel-indicators" id="top_part">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="background-image: url({%static 'Images/doc5.jpg' %}); height: 590px; width: 100%; background-repeat: no-repeat; background-position: center; background-size: cover">
+            <div class="row">
+                <div class="col-md-6" style="padding-top: 250px; padding-left: 200px">
+                    <h3>Welcome to CancerCare</h3>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+        <div class="carousel-item" style="background-image: url({%static 'Images/patient6.jpg' %}); height: 600px; width: 100%; background-repeat: no-repeat; background-position: center; background-size: cover">
+            <div class="row">
+                <div class="col-md-6" style="padding-top: 250px; padding-left: 200px">
+                    <h3>Welcome to CancerCare</h3>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    </div>
+</div>
+<!-- Block Starts-->
+<div class="container-fluid pt-4 text-dark bg-light;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center" >
+                <ul style="display: flex;justify-content: space-around;list-style: none;font-weight: 500;font-size:21px;">
+                    <li><a href="#facts_part">Facts</a></li>
+                    <li>What It Is?</li>
+                    <li>Risks and Control</li>
+                    <li>Symptoms</li>
+                    <li>Staging</li>
+                    <li>Types</li>
+                    <li>Labs</li>
+                    <li>Specilists</li>
+                    <li>What Causes Cancer?</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- block Ends -->
+
+<!-- Cancer Intro Starts -->
+<div class="container-fluid bg-image pt-3 pb-5">
+    <div class="container">
+        <div class="row pt-5">
+            <div data-aos="fade-right" class="col-md-6" style="background:url({%static 'Images/4i5T.gif' %}); z-index: -1; background-size: cover">
+            </div>
+            <div class="col-md-6 text-justify">
+                <p data-aos="fade-left">
+                    <spam style="color: #0044ad;font-size: 25px">Cancer</spam> is the name given to a collection of related diseases. In all types of cancer, some of the body’s cells begin to divide without stopping and spread into surrounding tissues.</p>
+                <p data-aos="fade-left">Cancer can start almost anywhere in the human body, which is made up of trillions of cells. Normally, human cells grow and divide to form new cells as the body needs them. When cells grow old or become damaged, they die, and new cells
+                    take their place.</p>
+                <p data-aos="fade-left">When cancer develops, however, this orderly process breaks down. As cells become more and more abnormal, old or damaged cells survive when they should die, and new cells form when they are not needed. These extra cells can divide without
+                    stopping and may form growths called tumors.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cancer Intro Ends -->
+
+<!-- cards start -->
+<div class="container-fluid bg-light pt-5 pb-5" style="background-color: ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="{%static 'Images/cervicalcancer_icon.png' %}" height="60px">Cervical Cancer</h5>
+                        <p class="card-text">Cervical cancer is a type of cancer that occurs in the cells of the cervix — the lower part of the uterus that connects to the vagina.<br/>
+                            Various strains of the human papillomavirus (HPV), a sexually transmitted infection, play a role in causing most cervical cancer.<br/>                  
+                        <span><a href="{% url 'cervicalcancer' %}" class="card-link" style="color:#0044ad;text-align: center"><b>Read More</b></a></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="{%static 'Images/lungcancer_icon.png' %}" height="60px">Lung Cancer</h5>
+                        <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                        <p class="card-text">Lung cancer or lung carcinoma is a type of cancer that causes by the uncontrollable growth of cells in the tissues of the lungs. Lung Tumor is the leading cause of cancer deaths in both men and women worldwide...
+                            <span><a href="{% url 'lungcancer' %}" class="card-link" style="color:#0044ad;text-align: center"><b>Read More</b></a></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="{%static 'Images/breastcancer_icon.png' %}" height="60px">Breast Cancer</h5>
+                        <p class="card-text">According to the World Health Organization, breast cancer is the most common cancer among women worldwide, claiming the lives of hundreds of thousands of women each year and affecting countries at all levels of modernization. But
+                            the good news is that...<span><a href="{% url 'breastcancer' %}" class="card-link" style="color:#0044ad;text-align: center"><b>Read More</b></a></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="{%static 'Images/prostatecancer_icon.png' %}" height="60px">Prostate Cancer</h5>
+                        <p class="card-text">Prostate cancer is one of the most common types of cancer. Many prostate cancers grow slowly and are confined to the prostate gland, where they may not cause serious harm. However, while some types of prostate cancer grow slowly and may need minimal or even no treatment...
+
+
+                        <span><a href="{% url 'prostatecancer' %}" class="card-link" style="color:#0044ad;text-align: center"><b>Read More</b></a></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- cards end -->
+<!-- New section starts -->
+<div class="container-fluid text-light pt-5 pb-5" style="background-color: #0044ad">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-center mb-4" style="font-size:30px; color: #FF8C3E"><a id="facts_part"><b>Cancer Facts</b></a></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{%static 'Images/cells30.jpg' %}" height="300px" width="100%">
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li>Cancer is the uncontrolled growth of abnormal cells anywhere in a body.</li>
+                    <li>Anything that may cause a normal body cell to develop abnormally potentially can cause cancer; general categories of cancer-related or causative agents are as follows: chemical or toxic compound exposures, ionizing radiation, some
+                        pathogens, and human genetics.</li>
+                    <li><b><span style="color:#FF8C3E;font-size: 25px">Cancer symptoms</span></b> and signs depend on the specific type and grade of cancer; although general signs and symptoms are not very specific the following can be found in patients with
+                        different cancers: fatigue, weight loss, pain, skin changes, change in bowel or bladder function, unusual bleeding, persistent cough or voice change, fever, lumps, or tissue masses.</li>
+                    <li>Although there are many tests to screen and presumptively diagnose cancer, the definite diagnosis is made by examination of a biopsy sample of suspected cancer tissue.</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- New Section starts -->
+<div class="container-fluid bg-light pt-3 pb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 pb-5">
+                <h3 class="text-center p-3" style="color: #262626; font-size: 30px;"> <b>Late<span style="border-bottom: 3px solid #FF8C3E ; padding-bottom: 15px">st N</span>ews </b></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3" style="width: 24rem;">
+                    <img src="{%static 'Images/doc1.jpg' %}" height="400px" width="100%" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Facts</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3" style="width: 24rem;">
+                    <img src="{%static 'Images/cells12.jpg' %}" height="400px " width="100% " height="335px " class="card-img-top " alt="... ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">Facts</h5>
+                        <p class="card-text ">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text "><small class="text-muted ">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="card mb-3 " style="width: 24rem; ">
+                    <img src="{%static 'Images/patient11.jpeg' %}" height="400px " width="100% " class="card-img-top " alt="... ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">Facts</h5>
+                        <p class="card-text ">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text "><small class="text-muted ">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- New section started -->
+<div class="container-fluid pt-5 pb-5 text-light " style="background-color:#0044ad ">
+    <div class="container ">
+        <div class="row text-center ">
+            <div class="col-md-12 ">
+                <h2>Total Number Of Cancer Cases</h2>
+                <h5> around the world!</h5>
+            </div>
+        </div>
+        <div class="row pt-5 text-center ">
+            <div class="col-md-3 " style="border-right: 3px solid #fff ">
+                <h5>Breast Cancer</h5>
+                <h2>7676849</h2>
+            </div>
+            <div class="col-md-3 " style="border-right: 3px solid #fff ">
+                <h5>Lung Cancer</h5>
+                <h2>5476849</h2>
+            </div>
+            <div class="col-md-3 " style="border-right: 3px solid #fff ">
+                <h5>Skin Cancer</h5>
+                <h2>938449</h2>
+            </div>
+            <div class="col-md-3 ">
+                <h5>Prostate Cancer</h5>
+                <h2>66849</h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- cards start -->
+<div class="container-fluid bg-light pt-5 pb-5" style="background-color: ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Stage 0</h5>
+                        <p class="card-text"> This stage is still located in the place they started and have not spread to nearby tissues. This stage of cancer is often highly curable, usually by removing the entire tumor with surgery.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Stage I</h5>
+                        <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                        <p class="card-text">This stage is usually a small cancer or tumor that has not grown deeply into nearby tissues. It also has not spread to the lymph nodes or other parts of the body. It is often called early-stage cancer.</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Stage II or III</h5>
+                        <p class="card-text">In general, these 2 stages indicate larger cancers or tumors that have grown more deeply into nearby tissue. They may have also spread to lymph nodes but not to other parts of the body.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div data-aos="flip-up" class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Stage IV</h5>
+                        <p class="card-text">This stage means that the cancer has spread to other organs or parts of the body. It may also be called advanced or metastatic cancer.</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!-- cards end -->
+
+<!-- New section started -->
+<!--
+
+<div class="container-fluid pt-5 pb-5 " style="background-color:#FF8C3E; color: #262626 ">
+    <div class="container ">
+        <div class="row text-center ">
+            <div class="col-md-12 ">
+                <h2>Total Number Of Cancer Cases</h2>
+                <h5> around the world!</h5>
+            </div>
+        </div>
+        <div class="row pt-5 text-center ">
+            <div class="col-md-3 " style="border-right: 3px solid #262626 ">
+                <h5>Breast Cancer</h5>
+                <h2>7676849</h2>
+            </div>
+            <div class="col-md-3 " style="border-right: 3px solid #262626 ">
+                <h5>Lung Cancer</h5>
+                <h2>5476849</h2>
+            </div>
+            <div class="col-md-3 " style="border-right: 3px solid #262626 ">
+                <h5>Skin Cancer</h5>
+                <h2>938449</h2>
+            </div>
+            <div class="col-md-3 ">
+                <h5>Prostate Cancer</h5>
+                <h2>66849</h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+ -->
+<div class="container-fluid pb-4 ">
+    <div class="container ">
+        <div class="row text-center p-5 " style="color: #262626 ">
+            <div class="col-md-12 ">
+                <h5>Compain About The Awareness Of Breast Cancer</h5>
+                <h2>LATE<span style="border-bottom: 3px solid #FF8C3E; padding-bottom: 15px ">ST CA</span>USES</h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-4 ">
+                <div class="card " style="width: 22rem; ">
+                    <img src="{%static 'Images/lowerCancerRisk.jpg' %}" height="400px " width="100% " class="card-img-top " alt="... ">
+                    <div class="card-body bg-dark text-light ">
+                        <a href="{% url 'loweryourriskofcancer' %}" style="color:white;text-align: center;text-decoration: none;">Lower Your Risk of Cancer</a>
+                        <!-- <p class="card-text ">Lower Your Risk of Cancer</p> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 ">
+                <div class="card " style="width: 22rem; ">
+                    <img src="{%static 'Images/microscope2.jpg' %} " height="375px " width="100% " class="card-img-top " alt="... ">
+                    <div class="card-body bg-dark text-light ">
+                        <a href="{% url 'yourgenes' %}" style="color:white;text-align: center;text-decoration: none;">Your Genes and Your Cancer Risk: What to Know</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 ">
+                <div class="card " style="width: 22rem; ">
+                    <img src="{%static 'Images/patient21.jpg' %} " height="400px " width="100% " class="card-img-top " alt="... ">
+                    <div class="card-body bg-dark text-light ">
+                        <a href="{% url 'copingwithcancer' %}" style="color:white;text-align: center;text-decoration: none;">Coping With Cancer</a>
+                        <!-- <p class="card-text ">Coping with Cancer</p> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-auto " style="text-align: right;">
+            <p >Go to the
+                <a href="#top_part">top</a>.
+              </p>
+        </div>
+    </div>
+</div>
+<br/>
+
+<!-- footer starts -->
+
+<br/><br/><br/> <br/>
+<script src="js/aos.js "></script>
+<script>
+    AOS.init({
+        duration: 1000
+    })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js " integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns " crossorigin="anonymous "></script>
+
+<script src="https://cdn.rawgit.com/michalsnik/aos/2.0.4/dist/aos.js "></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js " integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf " crossorigin="anonymous "></script>
+<script src="{%static 'js/bootstrap.bundle.min.js' %} "></script>
+
+{% endblock %}

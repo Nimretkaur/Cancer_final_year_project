@@ -1,0 +1,63 @@
+.i-hover {
+    color: blue;
+    border: 1px solid blue;
+    color: white !important
+}
+
+.i-hover:hover {
+    background-color: #0044ad;
+    border: 1px solid #0044ad;
+    color: white !important
+}
+
+.box:hover {
+    box-shadow: 6px 6px 20px #0044ad !important
+}
+
+.banner {
+    background: url({% static 'Images/Screenshot%202021-04-05%20105454.jpg' %}) no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.banner-color {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 65px
+}
+
+.h {
+    color: white;
+    font-size: 82px;
+    font-weight: 500;
+    font-family: "Open Sans";
+    line-height: 1.3em
+}
+
+.hi {
+    color: #FFA56E;
+    font-size: 32px;
+    font-weight: 500;
+    font-family: "Open Sans"
+}
+
+.form-group {
+    position: relative
+}
+
+.form-group i {
+    position: absolute;
+    left: 10px;
+    top: 13px;
+    color: #999
+}
+
+input {
+    text-indent: 24px
+}
+
+textarea {
+    text-indent: 24px
+}
+
+
+/* style="background:linear-gradient(to top left,#c0a4bc,#E698CC) */

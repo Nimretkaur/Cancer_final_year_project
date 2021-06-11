@@ -1,0 +1,141 @@
+{% extends 'base.html' %} {% load static %} {% block title %}
+<title> Contact US </title>
+{% endblock %} {% block content %}
+
+<style>
+    .ic-hover {
+        color: blue;
+        border: 1px solid blue;
+    }
+    
+    .ic-hover:hover {
+        background-color: #0044ad;
+        border: 1px solid #0044ad;
+        color: white !important
+    }
+</style>
+
+</head>
+
+<body>
+    <div class="container-fluid banner">
+        <div class="row">
+            <div class="col-md-12 text-center banner-color">
+                <h1 class="h">Contact</h1>
+                <h3 class="hi">Home | Contact</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center mt-5 mb-5" style="color:#0044ad; outline-width: thick;outline-color: blueviolet !important"><b>IF YOU HAVE ANY QUESTION CONTACT US !</b> </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 text-center " style=" ">
+                    <div class="container box" style="padding-top: 70px;padding-bottom: 50px;border:1px solid #394241;">
+                        <i class="icofont-user icofont-4x p-4 rounded rounded-circle ic-hover" style="color: #394241;border:1px solid #394241;"></i>
+                        <h2 class="pt-5" style="color:  #0044ad;">Address</h2>
+                        <p>1234 South Cicero Avenue Chicago, </p>
+                        <p>IL 60638, United States</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 text-center " style=" ">
+                    <div class="container box" style="padding-top: 70px;padding-bottom: 50px;border:1px solid #394241;">
+                        <i class="icofont-email icofont-4x p-4 rounded rounded-circle ic-hover" style="color: #394241;border:1px solid #394241;"></i>
+                        <h2 class="pt-5" style="color: #0044ad;">Email</h2>
+                        <p>info@cancercare.com</p>
+                        <p>info@cancercare.com</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 text-center " style=" ">
+                    <div class="container box" style="padding-top: 70px;padding-bottom: 50px;border:1px solid #394241;">
+                        <i class="icofont-phone icofont-4x p-4 rounded rounded-circle ic-hover" style="color: #394241;border:1px solid #394241;"></i>
+                        <h2 class="pt-5" style="color: #0044ad;">Phone</h2>
+                        <p>Reservation: +1 123-654-7890</p>
+                        <p>Contact: +1 123-456-7890</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 text-center " style=" ">
+                    <div class="container box" style="padding-top: 70px;padding-bottom: 50px;border:1px solid #394241;">
+                        <i class="icofont-clock-time icofont-4x p-4 rounded rounded-circle ic-hover" style="color: #394241;border:1px solid #394241;"></i>
+                        <h2 class="pt-5" style="color:  #0044ad;">Working Hours</h2>
+                        <p>Mon - Thu: 11:00 am - 11:00 pm</p>
+                        <p>Fri - Sat: 11:00 am - 1:00 am</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4 p-4">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <center>
+                        <h2>Send Us Mail</h2>
+                    </center>
+
+                    <form class="row" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-6 ">
+                            <div class="form-group mb-3">
+                                <i class="icofont-user"></i>
+                                <input type="text" required placeholder="Enter Name" name="fn" class="form-control" id="f">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <i class="icofont-email"></i>
+                                <input type="email" required name="em" id="e" placeholder="Enter Email" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <i class="icofont-address-book "></i>
+                                <input type="text" name="add" class="form-control" id='em' placeholder="Enter Address">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <i class="icofont-phone"></i>
+                                <input type="tel" name="phn" class="form-control" id='em' placeholder="Enter Phone">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group mb-3">
+                                <i class="icofont-ui-message"></i>
+                                <textarea required placeholder="Enter Message" rows="5" required class="form-control " id="msg" name="message"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <center><button type="submit" name='save1' class="btn btn-dark">Submit</button></center>
+                        </div>
+
+                    </form>
+                    {% if res %} {% if res == 1 %}
+                    <div>
+                        Data submitted successfully
+                    </div>
+                    {% else %}
+                    <div>
+                        Error
+                    </div>
+                    {% endif %} {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 mb-3fffz">
+        <div class="col-md-12">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13584.928839595892!2d74.85202878241356!3d31.654866201203337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39196493fdde71ef%3A0x5a89f3cec3595534!2sRanjit%20Avenue%2C%20Amritsar%2C%20Punjab!5e0!3m2!1sen!2sin!4v1616657325104!5m2!1sen!2sin"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+    <script src="{%static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% endblock %}

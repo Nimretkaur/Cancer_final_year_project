@@ -1,0 +1,285 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="title icon" href="images/title-img.png"> -->
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <!-- <title>User Dashboard</title> -->
+    {% block title %} {% endblock %}
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #eee;
+        }
+        /* Navbar */
+        
+        .sidebar {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .9));
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            box-shadow: 5px 7px 25px #999;
+        }
+        
+        .bottom-border {
+            border-bottom: 1px groove #eee;
+        }
+        
+        .sidebar-link:hover {
+            background-color: #444;
+            border-radius: 5px;
+        }
+        
+        .sidebar-link {
+            transition: all .4s;
+        }
+        
+        .current {
+            background-color: #0044ad;
+            border-radius: 7px;
+            box-shadow: 2px 5px 10px #111;
+            transition: all .3s;
+        }
+        
+        .current:hover {
+            background-color: #0044ad;
+            border-radius: 7px;
+            box-shadow: 2px 5px 20px #111;
+            transform: translate(-1px);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            border-bottom: 2px solid #999;
+            transition: all 0.4s;
+        }
+        
+        .search-input:focus {
+            background: transparent;
+            box-shadow: none;
+            border-bottom: 2px solid #0044ad;
+        }
+        
+        .search-button {
+            border-radius: 50%;
+            padding: 10px 16px;
+            transition: all .4s;
+        }
+        
+        .search-button:hover {
+            background-color: #eee;
+            transform: translate(-1px);
+        }
+        
+        .icon-parent {
+            position: relative;
+        }
+        
+        .icon-bullet ::after {
+            content: "";
+            position: absolute;
+            top: 7px;
+            left: 15px;
+            height: 12px;
+            width: 12px;
+            background-color: #f44336;
+            border-radius: 50%;
+        }
+        
+        @media(max-width: 768px) {
+            .sidebar {
+                position: static;
+                height: auto;
+            }
+            .top-navbar {
+                position: static;
+            }
+        }
+        /* End of Navbar */
+        /* Cards */
+        
+        .card-common {
+            box-shadow: 1px 2px 5px #999;
+            transition: all .4s;
+        }
+        
+        .card-common:hover {
+            box-shadow: 2px 3px 15px #999;
+            transform: translateY(-1px);
+        }
+        /* End of Cards */
+        /* Task-list */
+        
+        .task-border {
+            border-left: 3px solid #f66346
+        }
+        /* End of Task-list */
+    </style>
+
+
+</head>
+
+<body>
+    <!------Navbar---------->
+    <nav class="navbar navbar-expand-md navbar-light">
+        <button class="navbar-toggler ml-auto mb-2 bg-light" type="button" data-toggle="collapse" data-target="#myNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <!------Sidebar---------->
+                    <div class=" col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
+                        <a href="#" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border" style="font-size:24px;"><span><i class="fas fa-ribbon"></i></span> Cancer Care</a>
+                        <div class="bottom-border pb-3">
+                            <p6 class="d-block text-center text-white">{{request.session.pat_name}}</p6>
+                        </div>
+
+                        <ul class="navbar-nav flex-column mt-4">
+                            <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link text-light p-2 mb-2 "><span class="fas fa-tachometer-alt text-light fa-lg mr-3 "></span>Dashboard</a> </li>
+                            <li class="nav-item"><a href="{% url 'doctorspage' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-user-md text-light fa-lg mr-4 "></i>Doctors</a></li>
+                            <li class="nav-item"><a href="{% url 'chatpage' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-comments text-light fa-lg mr-3"></i>Chat with Doctors</a></li>
+                            <li class="nav-item"><a href="{% url 'userappointmentstatus' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-calendar-check text-light fa-lg mr-3"></i>My Appointments</a></li>
+                            <li class="nav-item"><a href="{% url 'labs' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-chart-bar text-light fa-lg mr-3"></i>Diagnostic centres</a></li>
+                            <li class="nav-item"><a href="{% url 'hospitals' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-hospital-alt text-light fa-lg mr-3"></i>Hospitals</a></li>
+                            <li class="nav-item"><a href="{% url 'clinics' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-hospital text-light fa-lg mr-4"></i>Clinics</a></li>
+
+                            <li class="nav-item">
+                                <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="nav-link text-white p-2 mb-2 " style="display: flex; justify-content: space-between;">
+                                    <span><i class="fas fa-user-cog text-light fa-lg mr-2"></i> Settings </span> <i class="fas fa-caret-down"></i>
+                                </a>
+                                <ul class="collapse list-unstyled " id="pageSubmenu1">
+                                    <li class="nav-item "><a href="{% url 'review' %} " class="nav-link text-white p-2 mb-2 "><i class="fas fa-pen-alt text-light fa-lg mr-3 "></i> Review</a></li>
+                                    <li class="nav-item "><a href="{% url 'editprofile' %} " class="nav-link text-white p-2 mb-2 "><i class="fas fa-user-edit text-light fa-lg mr-3 "></i> Edit Profile</a></li>
+                                    <li class="nav-item "><a href="{% url 'help' %} " class="nav-link text-white p-2 mb-2 "><i class="fas fa-hands-helping text-light fa-lg mr-3 "></i> Help & Support</a></li>
+                                    <li class="nav-item "><a href="{% url 'changepassword' %} " class="nav-link text-white p-2 mb-2 "><i class="fas fa-key text-light fa-lg mr-3 "></i> Change Password</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-white p-2 mb-2"><i class="fas fa-sign-out-alt text-light fa-lg mr-3"></i>Logout</a></li>
+
+                        </ul>
+                    </div>
+                    <!------End of Sidebar--->
+                    <!------Top nav---------->
+                    <div class=" col-xl-10 col-lg-9 col-md-8 ml-auto bg-dark fixed-top py-2 top-navbar ">
+                        <div class="row align-items-center ">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-3">
+                                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Make Visualizations
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item" href="# ">Number of people with Cancer by Age</a>
+                                                <a class="dropdown-item" href="{% url 'visCancerDeathsTypes' %}">Total Deaths Due to Cancer</a>
+                                                <a class="dropdown-item" href="{% url 'visCancerDeathsAge' %}">Cancer deaths by Age</a>
+                                                <a class="dropdown-item" href="{% url 'visLungSurvival' %}">Survival rates from Lung Cancer</a>
+                                                <a class="dropdown-item" href="{% url 'visBreastSurvival' %}">Survival rates from Breast Cancer</a>
+                                                <a class="dropdown-item" href="{% url 'visCancerDeathsTobacco' %}">Cancer deaths attributed to Tobacco</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-3 ">
+                                <ul class="navbar-nav " style="align-content: flex-end; ">
+                                    <li class="nav-item ">
+                                        <a class="nav-link text-light " href="{% url 'dashboard' %} " style="padding-left: 10px; "><span class="icofont-home "></span>Home</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link text-light " href="{% url 'profile' %} " style="padding-left: 10px; "><span class="icofont-ui-user "></span>Profile</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link text-light " href="{% url 'logout' %} " style="padding-left: 10px; ">Logout <span><i
+                                            class="fas fa-sign-out-alt text-danger fa-lg "></i></span></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <!------End of Top Nav--->
+                </div>
+    </nav>
+    <!------End of Navbar--->
+
+    <!------Modal--->
+    <div class="modal fade " id="sign-out ">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <h4 class="modal-title ">Wat to sign out?</h4>
+                    <button type="button " class="close " data-dismiss="modal ">&times;
+
+          </button>
+                </div>
+                <div class="modal-body ">
+                    Log out
+                </div>
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-success " data-dismiss="modal ">Stay Here</button>
+                    <button type="button " class="btn btn-danger " data-dismiss="modal ">Log out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="container-fluid ">
+        <div class="row ">
+            <div class=" col-xl-10 col-lg-9 col-md-8 ml-auto ">
+                <div class="row pt-md-4 mt-md-3 mb-2 ">
+                    {% block content %}{%endblock%}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+ -->
+
+    <!-- <script src="script.js "></script> -->
+
+
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+
+</html>

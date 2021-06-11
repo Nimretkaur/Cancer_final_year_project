@@ -1,0 +1,125 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title> Appointment Page </title>
+{% endblock %} {% block content %}
+<!-- Page Content  -->
+
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Appointment Form</h1>
+        </div>
+    </div>
+    <hr class="border border-4 m-0">
+    <div class="row">
+        <div class="col-md-12 pb-2">
+            <h4>Contact Information</h4>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-sm-3">
+            <h6 class="mb-0">Patient Name</h6>
+        </div>
+        <div class="col-sm-9 ">
+            {{user.pat_name}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <h6 class="mb-0">Email</h6>
+        </div>
+        <div class="col-sm-9 ">
+            {{user.pat_email}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <h6 class="mb-0">Contact</h6>
+        </div>
+        <div class="col-sm-9 ">
+            {{user.pat_contact}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <h6 class="mb-0">Age</h6>
+        </div>
+        <div class="col-sm-9 ">
+            {{user.pat_age}}
+        </div>
+    </div>
+    <hr class="border border-2 ">
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>Appointment Details</h4>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-1">
+        <div class="col-md-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="form-group mb-3 col-md-5">
+                        <label style="color: #262626"><h6>Please Select an Appointment Date</h6></label>
+                        <div class="input-group mb-3" style="width:300px">
+                            <span class="input-group-text" id="basic-addon1"><i class="icofont-quill-pen"></i></span>
+                            <input type="date" name="dateforapp" id="appointment_date" class="form-control ii" required autofocus name="sub" placeholder="Enter Subject">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 col-md-5">
+                        <label style="color: #262626"><h6>Best time of day to reach you?</h6></label>
+                        <div class="input-group mb-3">
+                            <select class="custom-select" id="inputGroupSelect02" name="tofd" style="width: auto;">
+                          <option selected>Choose...</option>
+                          <option value="Morning"> Morning </option>
+                            <option value="Afternoon"> Afternoon </option>
+                            <option value="Evening"> Evening </option>
+                        </select>
+                            <div class="input-group-append">
+                                <label class="input-group-text" for="inputGroupSelect02">Options</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label style="color: #262626"><h6> Additional Notes: </h6></label>
+                    <div class="input-group mb-3">
+                        <textarea required rows="3" required class="form-control mb-3" name="notes"></textarea>
+                    </div>
+                </div>
+                <center><button type="submit" name='save1' class="btn btn-dark">Send</button></center>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script>
+    function loadTodayDateForDateInput() {
+        var today = new Date();
+        today.setDate(today.getDate() + 1);
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("appointment_date").setAttribute("min", today);
+    }
+
+    window.onload(loadTodayDateForDateInput());
+</script>
+
+{% endblock %}

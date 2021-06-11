@@ -1,0 +1,113 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title> Hospitals </title>
+{% endblock %} {% block content %}
+<!-- Page Content  -->
+
+
+<!-- Third Row [Profiles]-->
+<div class="container py-5 col p-4" style="background:linear-gradient(to top left, #0044ad, #f5efeb)">
+    <h2 class="font-weight-bold mb-3">Hospitals</h2>
+
+    <div class="row pb-3 mb-1">
+
+        {% for temp in hospitals %}
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 p-2">
+            <!-- Card-->
+            <div class="card rounded shadow-sm border-0" style="min-height: 320px;max-height: 320px;">
+                <div class="card-body p-0">
+                    <div class="px-1 py-3 text-center card-img-top" style="background-color: rgb(249, 249, 253);">
+                        {% if temp.hosp_img %}
+                        <img src="{{ temp.hosp_img.url}}" alt="Doctor image" style="width:130px;  max-height:120px; min-height: 120px;" class="mb-2 img-thumbnail d-block mx-auto "> {% else %}
+                        <img src="{%static 'Images/hospital_img.jpg' %}" alt="Doctor image" width="100 " class="mb-2 img-thumbnail d-block mx-auto "> {% endif %}
+
+                        <h5 class=" mb-0 p-2 ">{{temp.hosp_name}}</h5>
+                        <p class="small mb-0 "><span style="color: black;">Address: </span> {{temp.hosp_fulladdress}}</p>
+
+                    </div>
+                    <div class="p-2 d-flex justify-content-center ">
+                        <ul class="list-inline mb-0 ">
+                            <li class="list-inline-item ">
+                                <small class="text-muted "><span style="color: black;">Phone - </span> {{temp.hosp_contact}}</small>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 ">
+             Card
+        <div class="card rounded shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="px-1 py-3 text-center card-img-top" style="background-color: rgb(249, 249, 253);"><img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg " alt="...
+                        " width="100 " class="mb-2 img-thumbnail d-block mx-auto ">
+                    <h5 class=" mb-0 ">Diagnostic_Name</h5>
+                    <p class="small mb-0">email - diagnostic@gmail.com</p>
+                    <p class="small mb-0 ">Address - </p>
+
+                </div>
+                <div class="p-2 d-flex justify-content-center ">
+                    <ul class="list-inline mb-0 ">
+                        <li class="list-inline-item ">
+                            <small class="text-muted ">Call - 828877445</small>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 ">
+         Card
+        <div class="card rounded shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="px-1 py-3 text-center card-img-top" style="background-color: rgb(249, 249, 253);"><img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg " alt="...
+                        " width="100 " class="mb-2 img-thumbnail d-block mx-auto ">
+                    <h5 class=" mb-0 ">Diagnostic_Name</h5>
+                    <p class="small mb-0">email - diagnostic@gmail.com</p>
+                    <p class="small mb-0 ">Address - </p>
+
+                </div>
+                <div class="p-2 d-flex justify-content-center ">
+                    <ul class="list-inline mb-0 ">
+                        <li class="list-inline-item ">
+                            <small class="text-muted ">Call - 828877445</small>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 ">
+        Card
+        <div class="card rounded shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="px-1 py-3 text-center card-img-top" style="background-color: rgb(249, 249, 253);"><img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg " alt="...
+                        " width="100 " class="mb-2 img-thumbnail d-block mx-auto ">
+                    <h5 class=" mb-0 ">Diagnostic_Name</h5>
+                    <p class="small mb-0">email - diagnostic@gmail.com</p>
+                    <p class="small mb-0 ">Address - </p>
+
+                </div>
+                <div class="p-2 d-flex justify-content-center ">
+                    <ul class="list-inline mb-0 ">
+                        <li class="list-inline-item ">
+                            <small class="text-muted ">Call - 828877445</small>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+     -->
+
+    </div>
+</div>
+
+{% endblock %}

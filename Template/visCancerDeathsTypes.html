@@ -1,0 +1,28 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title>Cancer Deaths Visualization </title>
+{% endblock %} {% block content %}
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-12 border rounded shadow p-3 text-center" style="border-radius:2rem; background:linear-gradient(to top left,#0044ad,#f5efeb)">
+            <h4>Cancer Deaths By Types</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-3 mt-4 text-lg-left">
+            <h4> Select Any one </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-2 ">
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visCDTypesC' %}" role="button">Cancer Deaths over Years in particular Country</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visCDTypesTC' %}" role="button">Country and Cancer types to Visualize the Cancer Deaths over Years</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visCDTypes2C' %}" role="button">Comparing 2 cancer types of a country to Visualizethe Cancer Deaths over Years</a>
+
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visCDTopY' %}" role="button">Top 10 countries with total cancer deaths in particular Year</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visCDTopCancers' %}" role="button">Total annual number of deaths from different types of cancers </a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

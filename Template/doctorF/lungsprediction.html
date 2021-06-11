@@ -1,0 +1,63 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Lung Prediction</title>
+{% endblock %} {% block content %}
+<!--Page Content -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 mt-2 pl-2 pr-2 border rounded shadow p-4" style="border-radius:2rem; background:linear-gradient(to top left, #ff8c3E, #f5efeb)">
+
+            <h3 class="text-center mb-5" style="color: #262626"><b>Lungs Cancer Prediction</b></h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group row p-1">
+                    <label class="col-md-3 mt-2">Age</label>
+                    <div class="col-md-8">
+                        <input type="number" min="1" max="110" required autofocus class="form-control" name="age" placeholder="Age of the Patient ">
+                    </div>
+                </div>
+                <div class="form-group row p-1 ">
+                    <label class="col-md-3 mt-2 ">Smokes</label>
+                    <div class="col-md-8 ">
+                        <input type="number" min="0" max="34" required class="form-control" name="smoke" placeholder="Add a number from 0 to 34!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-3 mt-2">AreaQ</label>
+                    <div class="col-md-8">
+                        <input type="number" min="0" max="15" required class="form-control" name="areaq" placeholder="Add a number from 1 to 10!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-3 mt-2">Alcohol</label>
+                    <div class="col-md-8">
+                        <input type="number" min="0" max="10" required class="form-control" name="alcohol" placeholder="Add a number from 0 to 8!">
+                    </div>
+                </div>
+                <center><button type="submit" name='save1' class="btn btn-dark mt-5">Make Prediction</button></center>
+            </form>
+
+            <div class="row mt-4">
+                <p><b>Result :</b></p>
+                <div class="col-md-12">
+                    <p>{{ans}}</p>
+                    {% if ans %} {% if ans == 0 %}
+                    <div>
+                        No Cancer
+                    </div>
+                    {% else %}
+                    <div>
+                        There is Lung Cancer
+                    </div>
+                    {% endif %} {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+
+
+{% endblock %}

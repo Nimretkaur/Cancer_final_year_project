@@ -1,0 +1,80 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Edit Profile</title>
+{% endblock %} {% block content %}
+<!-- Page Content  -->
+<div class="container mt-2 mb-2">
+    <div class="row">
+        <div class="col-md-3 mt-2">
+            <form method='POST' enctype="multipart/form-data">
+                {% csrf_token %} {% if us.doc_img %}
+                <img src="{{us.doc_img.url}}" class="w-90 ps-4" style="min-height: 200px;max-height: 200px;">{% else %}
+                <img src="{%static 'Images/doc14.jpeg' %}" alt="Doctor Image" class="ps-5" width="220" height="220"> {% endif %}
+                <input type="file" required name="image" class="form-control mb-3 mt-3">
+                <center><input type="submit" name="save" class="btn btn-light" value="Update"></center>
+                <input type='text' value='1' name='type' hidden>
+            </form>
+        </div>
+        <div class="col-md-9 border p-4 rounded shadow" style="border-radius:2rem; background:linear-gradient(to top left,#FF8c3E,#f5efeb);font-weight: bold;">
+            <h3 class="text-center mb-4" style="color: #262626"><b>Edit Profile</b></h3>
+            <form action="" method="POST" class="row " style="color: #262626">
+                {% csrf_token %}
+                <input type='text' value='2' name='type' hidden>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="f">Full Name</label><br/>
+                    <input type="text" class="form-control ii" placeholder="" name="fn" value="{{us.doc_name}}" id="f">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="bgroup">Email</label><br/>
+                    <input type="email" class="form-control ii" placeholder="" name="docem" value="{{us.doc_email}}" disabled>
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="g" class="mb-2">Gender</label> <br/> {% if user.doc_gender == 'M' %}
+                    <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked>Male
+                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g">Female {% else %}
+                    <input type="radio" name="gen" value="M" class="form-check-input" id="g">Male
+                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g" checked>Female {% endif %}
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="c">Contact Number</label><br/>
+                    <input type="tel" class="form-control ii" placeholder="" name="phn" value="{{us.doc_contact}}" id="c">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="ex">Experience</label><br/>
+                    <input type="text" class="form-control ii" placeholder="" name="exp" value="{{us.doc_experience}}" id="ex">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="pincode">PIN Code</label><br/>
+                    <input type="text" name="pin" value="{{us.doc_pincode}}" class="form-control ii" id="pincode">
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                    <label for="qa">Qualification</label>
+                    <div class="input-group">
+                        <textarea name="quali" rows="3" class="form-control" id="qa">{{us.qualification}}</textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 form-group mb-3">
+                    <label for="sp">Specialization</label>
+                    <div class="input-group">
+                        <textarea name="specia" rows="3" class="form-control" id="sp">{{us.specialization}}</textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group mb-3">
+                    <label for="ci">City</label><br/>
+                    <input type="text" name="city" value="{{us.doc_city}}" class="form-control ii" id="ci">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label for="">State</label><br/>
+                    <input type="text" name="state" value="{{us.doc_state}}" class="form-control ii" id="">
+                </div>
+
+                <div class="col-md-12"><br/>
+                    <center><input type="submit" name='save1' class="btn btn-dark" value="Submit"></center>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

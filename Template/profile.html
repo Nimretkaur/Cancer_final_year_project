@@ -1,0 +1,133 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title> User Profile </title>
+{% endblock %} {% block content %}
+
+<!-- Page Content  -->
+
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        {% if temp.clin_img %}
+                        <img src="{{ user.pat_img.url}}" alt="User Image" style="width:150px;  max-height:150px; min-height: 150px;" class="mb-2 rounded-circle img-thumbnail d-block mx-auto "> {% else %}
+                        <img src="{%static 'Images/user_img.jpg' %}" alt="User image" width="170" height="200" class="img-thumbnail "> {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- card starts-->
+            <div class="card mb-3">
+                <div class="card-body border rounded shadow" style="background:linear-gradient(to top left, #0044ad, #f5efeb) ; font-size: medium; font-weight:bold; ">
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0"><b>Full Name</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_name}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Gender</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {% if us.pat_gender == 'F' %} Female {% else %} Male {% endif%}
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Email</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_email}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Mobile</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_contact}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>DOB</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_dob}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Age</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_age}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Pin Code</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_pincode}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>City</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_city}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>State</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_state}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Blood Group</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_bloodgroup}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0 "><b>Address</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{user.pat_address}}
+                        </div>
+                    </div>
+
+                    <!-- card ends -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title> Doctors </title>
+{% endblock %} {% block content %}
+<!-- Page Content  -->
+
+<!-- Third Row [Profiles]-->
+<div class="container py-5 col p-4">
+    <h2 class="font-weight-bold mb-3">Doctors</h2>
+    <div class="row pb-3 mb-1">
+        {% for temp in doctors %}
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 p-2">
+            <!-- Card-->
+            <div class="card rounded shadow-sm border-0" style="min-height: 320px;max-height: 320px;">
+                <div class="card-body p-0">
+                    <div class="px-1 py-3 text-center card-img-top" style="background:linear-gradient(to top left, #fff, #0044ad); max-height: 210px; min-height: 210px;">
+                        {% if temp.doc_img %}
+                        <img src="{{ temp.doc_img.url}}" alt="Doctor image" style="width:100px;  max-height:100px; min-height: 100px;" class="rounded-circle mb-2 img-thumbnail d-block mx-auto "> {% else %}
+                        <img src="{%static 'Images/doc14.jpeg' %}" alt="Doctor image" style="width:100px;  max-height:100px; min-height: 100px;" class="rounded-circle mb-2 img-thumbnail d-block mx-auto "> {% endif %}
+                        <h5 class=" mb-0 ">{{temp.doc_name}}</h5>
+                        <p class="small mb-0 ">{{temp.specialization}}</p>
+                        <p class="small mb-0">{{temp.hospital_id.hosp_name}}</p>
+                    </div>
+                    <div class="p-2 d-flex justify-content-center ">
+                        <ul class="list-inline mb-0 ">
+                            <li class="list-inline-item ">
+                                <small class="text-muted ">{{temp.doc_experience}} Years of Experience</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mb-1 apointment">
+                        <center><a href="{% url 'userappointment' temp.id %}" target='_blank' class="btn" role="button" style="background-color: #2357a7; color: white;"> Book Appointment</a>
+                            <!--<button class="btn text-uppercase" style="background-color:#2357a7; color: white;">Book Appointment</button> -->
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!--
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 ">
+     
+            <div class="card rounded shadow-sm border-0 ">
+                <div class="card-body p-0 ">
+                    <div class="px-1 py-3 text-center card-img-top" style="background:linear-gradient(to top left, #fff, #FF8C3E)"><img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-2.jpg " alt="... " width="100 " class="rounded-circle mb-2 img-thumbnail d-block mx-auto ">
+                        <h5 class=" mb-0 ">Dr. Hakeem Ansar Hussain</h5>
+                        <p class="small mb-0 ">Medical Oncologist</p>
+                        <p class="small mb-0">Fortis Hospital Amritsar</p>
+                    </div>
+                    <div class="p-2 d-flex justify-content-center ">
+                        <ul class="list-inline mb-0 ">
+                            <li class="list-inline-item ">
+                                <small class="text-muted ">8 Years of Experiences</small>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="mb-1 apointment">
+                        <center><a href="..." class="btn    " role="button" style="background-color: #FF8C3E; color: white;"> Book Appointment</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 ">
+          
+            <div class="card rounded shadow-sm border-0 ">
+                <div class="card-body p-0 ">
+                    <div class="px-1 py-3 text-center card-img-top" style="background:linear-gradient(to top left, #fff, #0044ad)"><img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-7.jpg " alt="... " width="100 " class="rounded-circle mb-2 img-thumbnail d-block mx-auto ">
+                        <h5 class="mb-0 ">Dr. Rajeev Kapoor</h5>
+                        <p class="small mb-0 ">Colo-Rectal Surgeon</p>
+                        <p class="small mb-0">Fortis Hospital Mohali</p>
+                    </div>
+                    <div class="p-2 d-flex justify-content-center ">
+                        <ul class="list-inline mb-0 ">
+                            <li class="list-inline-item ">
+                                <small class="text-muted ">29 Years of Experiences</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mb-1 apointment">
+                        <center><a href="..." class="btn" role="button" style="background-color: #2357a7; color: white;"> Book Appointment</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 ">
+          
+            <div class="card rounded shadow-sm border-0 ">
+                <div class="card-body p-0 ">
+                    <div class="px-1 py-3 text-center card-img-top" style="background:linear-gradient(to top left, #fff, #FF8C3E)"><img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-1.jpg " alt="... " width="100 " class="rounded-circle mb-2 img-thumbnail d-block mx-auto ">
+                        <h5 class="mb-0 ">Dr. Vikas kakkar</h5>
+                        <p class="small mb-0 ">Breast Surgeon</p>
+                        <p class="small mb-0 ">Kakkar Clinic Amritsar</p>
+                    </div>
+                    <div class="p-2 d-flex justify-content-center ">
+                        <ul class="list-inline mb-0 ">
+                            <li class="list-inline-item ">
+                                <small class="text-muted "> Experiences</small>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="mb-1 apointment">
+                        <center><a href="..." class="btn " role="button" style="background-color: #FF8C3E; color: white;"> Book Appointment</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+-->
+    </div>
+</div>
+
+{% endblock %}

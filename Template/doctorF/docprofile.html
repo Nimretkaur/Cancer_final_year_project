@@ -1,0 +1,138 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Doctor Profile</title>
+{% endblock %} {% block content %}
+<!--Page Content -->
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        {% if doctor.doc_img %}
+                        <img src="{{ doctor.doc_img.url}}" alt="Doctor Photo" class="w-99" width="150" height="150">{% else %}
+                        <img src="{%static 'Images/doc14.jpeg' %}" alt="Doctor Image" class="mb-2 img-thumbnail" width="170" height="80">{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- card starts-->
+            <div class="card mb-3">
+                <div class="card-body border rounded shadow" style="background:linear-gradient(to top left, #FF8c3E,#f5efeb);font-weight: bold;">
+                    <div class="row">
+                        <div class="col-sm-3 ">
+                            <h6 class="mb-0"><b>Full Name</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.doc_name}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Gender</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {% if doctor.doc_gender == 'F' %} Female {% else %} Male {% endif%}
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Email</b></h6>
+                        </div>
+                        <div class="col-sm-9">
+                            {{doctor.doc_email}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Mobile</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.doc_contact}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Experience</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.doc_experience}} years of experience
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Pin Code</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.doc_pincode}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>City</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.doc_city}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>State</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.doc_state}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Qualification</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.qualification}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Specialization</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.specialization}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Clinic</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {{doctor.clinic_id.clin_name}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Hospital name</b></h6>
+                        </div>
+                        <div class="col-sm-9 ">
+                            {% if doctor.hospital_id %} {{doctor.hospital_id.hosp_name}} {% else %} Not Available {% endif %}
+                        </div>
+                    </div>
+                    <!-- card ends -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

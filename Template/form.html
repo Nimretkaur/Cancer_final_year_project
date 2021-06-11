@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <style>
+        table,th,td {border: 4px groove black; border-collapse:collapse}
+    
+    </style>
+</head>
+
+<body>
+    <form>
+        <table align="center" cellspacing="5" cellpadding="5">
+
+            <tr>
+                <th>First Name
+                    <font color="red">*</font>
+                </th>
+                <td><input type="text" pattern="[A-Z a-z]{3,30}" autofocus autocomplete="off" required name="fn" title="Format:Alphabets" placeholder="Enter your first name"> </td>
+                <th>Last Name</th>
+                <td><input type="text" name="ln" placeholder="Enter your last name "> </td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type='email' name="em" /> </td>
+                <th>Contact
+                    <font color="purple">*</font>
+                </th>
+                <td><input type="tel" name="phn" pattern="[0-9]{10}"> </td>
+            </tr>
+            <tr>
+                <th>DOB
+                    <font color="orange">*</font>
+                </th>
+                <td><input type="date" name="dob"></td>
+                <th>Image</th>
+                <td><input type="file" name="image"></td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td><select><option value="">Select Your City</option>
+            <option value="ASR">Amritsar</option>
+            <option value="Delhi">Delhi</option>
+            <option value="LDH">Ludhiana</option>
+            </select></td>
+                <th>Gender</th>
+                <td>
+                    <input type="radio" name="gender" value="Male">Male
+                    <input type="radio" name="gender" value="Female">Female
+                </td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td colspan="3">
+                    <textarea rows="4" name="add" cols="60"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>Qualification</th>
+                <td><input type="checkbox" name="Diploma" value="Diploma">Diploma
+                    <input type="checkbox" name="Degree" value="Degree">Degree
+                </td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td><input type="password" name="pwd"> </td>
+                <th>Comfirm Password</th>
+                <td><input type="password" name="cpwd"> </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+                    <button type="submit" name="save">Register</button>
+                    <button type="reset">Reset</button>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</body>
+
+</html>

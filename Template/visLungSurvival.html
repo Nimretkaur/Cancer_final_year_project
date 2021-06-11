@@ -1,0 +1,24 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title>Lung Visualization </title>
+{% endblock %} {% block content %}
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-12 border rounded shadow p-3 text-center" style="border-radius:2rem; background:linear-gradient(to top left,#0044ad,#f5efeb)">
+            <h4>Survival Rates from Lung Cancer</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-3 mt-4 text-lg-left">
+            <h4> Select Any one </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-2 ">
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visLSYear' %}" role="button">Survival Rates from Lung Cancer in particular Year</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visLSTopCY' %}" role="button">Top countries with Survival Rates in particular Year</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visLSCountry' %}" role="button">Survial Rates of Lung Cancer in Particular Country</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

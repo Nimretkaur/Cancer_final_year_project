@@ -1,0 +1,48 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Skin Prediction</title>
+{% endblock %} {% block content %}
+<!--Page Content -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-5 mt-2 border rounded shadow p-5" style="border-radius:2rem; background:linear-gradient(to top left, #ff8c3E, #f5efeb)">
+
+            <h3 class="text-center mb-5" style="color: #262626"><b>Skin Cancer Prediction</b></h3>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <!-- <label for="formFile" class="form-label">Load the Image</label>
+                    <input class="form-control" type="file" id="formFile" name="predfile"> -->
+                    <label class="form-label" for="customFile"><b>Load The Image</b></label>
+                    <input type="file" class="form-control p-1 g-0 m-1" name="predfile" id="customFile" />
+                    <!-- <input type="file" id="files" class="hidden" /> -->
+
+                </div>
+                <center><button type="submit" name='save1' class="btn btn-dark mt-3">Make Prediction</button></center>
+            </form>
+            <div class="row mt-5 p-2">
+                <p><b>Result : </b></p>
+                <div class="col">
+                    <p>{{ans}}</p>
+                    {% if ans %} {% if ans == 1 %}
+                    <div>
+                        Malignant
+                    </div>
+                    {% else %}
+                    <div>
+                        Benin
+                    </div>
+                    {% endif %} {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% load static %}{% block title %}
+<title> User Login </title>
+{% endblock %} {% block content %}
+<div class="container-fluid" style="background-color: rgba(255, 255, 255, 0.75);padding-top: 80px; padding-bottom: 80px">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-1"></div>
+            <div class="col-md-5 mt-3 border shadow p-4 " style="background-color: #ec7220; text-align:center;">
+                <img src="{% static 'Images/login1.jpg' %}" style="height: 350px; width:450px;">
+            </div>
+            <div class="col-md-5 mt-3 border shadow p-4" style="background-radius:2rem; background:#ec7220; text-align: center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="mb-4 text-center"><span><i class="icofont-user"></i></span>Log In</h3>
+                    </div>
+                </div>
+                {% if res %} {% if res == 1 %}
+                <div>
+                    <b>Invalid Credentials</b>
+                </div>
+                {% else %}
+                <div>
+                    Error
+                </div>
+                {% endif %} {% endif %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group mt-3 pt-3 mb-3">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="icofont-email"></i></span>
+                                    <input type="email" name="em" id="e" placeholder="Enter Your Email ID" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><i class="icofont-lock"></i></span>
+                                    <input type="password" placeholder="Enter Your Password" class="form-control ii" name="npwd">
+                                    <span class="input-group-text"><i class="icofont-eye"></i></span>
+                                </div>
+                            </div>
+
+
+                            <a href="{% url 'recoverpassword' %}" style="color: #262626">Forgot Password ?</a>
+                            <a href="{% url 'register' %}" style="margin-left: 200px;color: #262626">Don't have an account.</a>
+                            <br/>
+                            <br/><br/>
+
+                            <center><button type="submit" name='save1' class="btn btn-dark">Login</button></center>
+                        </form>
+                    </div>
+                </div>
+                
+
+            </div>
+            <div class="col-md-1"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="{%static 'js/bootstrap.bundle.min.js' %}"></script>
+
+{% endblock %}

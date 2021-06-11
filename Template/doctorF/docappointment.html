@@ -1,0 +1,225 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Doctor Profile</title>
+{% endblock %} {% block content %}
+<script>
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function(event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+        var recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+        var modalTitle = exampleModal.querySelector('.modal-title')
+        var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+        modalTitle.textContent = 'New message to ' + recipient
+        modalBodyInput.value = recipient
+    })
+</script>
+
+<!-- Page Content  -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12 p-2">
+            <h1>Patient Appointment</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 p-1">
+            <!-- Form Starts -->
+            <form method='POST'>
+                {% csrf_token %}
+                <input type="text" value="3" name='type' hidden>
+                <select name="filter" id="filter" required style="height: 30px;">
+
+                {% if selected_field %}
+                <option value=""  disabled>Apply Filter </option>
+
+                    {% if selected_field == 'pending_appointments' %}
+                        <option value="pending_appointments" selected >Pending Appointments</option>
+                    {% else %}
+                        <option value="pending_appointments"  >Pending Appointments</option>
+                    {% endif %}
+
+                    {% if selected_field == 'approved_appointments' %}   
+                        <option value="approved_appointments" selected>Approved Appointments</option selected>
+                    {% else %}
+                    <option value="approved_appointments" >Approved Appointments</option>
+                    {% endif %}
+
+                    {% if selected_field == 'all_appointments' %}   
+                        <option value="all_appointments" selected>All Appointments</option selected>
+                    {% else %}
+                    <option value="all_appointments" >All Appointments</option>
+                    {% endif %}
+
+                    {% if selected_field == 'rejected_appointments' %}   
+                        <option value="rejected_appointments" selected>Rejected Appointments</option selected>
+                    {% else %}
+                    <option value="rejected_appointments" >Rejected Appointments</option>
+                    {% endif %}
+
+                
+                {% else %}<option value="" selected disabled>Apply Filter </option>
+                    <option value="pending_appointments">Pending Appointments</option>
+                    <option value="approved_appointments">Approved Appointments</option>
+                    <option value="all_appointments">All Appointments</option>
+                    <option value="rejected_appointments">Rejected</option>
+                {% endif %}
+                </select>
+
+                <input type="date" required id='filter_date' name='date' value="{{entered_date}}" style=" height: 30px; ">
+                <input type="submit" value="Apply" style="height: 30px;width: 70px;">
+            </form>
+            <!-- <a href="# " class="btn btn-outline-dark active " role="button " aria-pressed="true ">Upcoming</a>
+            <a href="# " class="btn btn-outline-dark active " role="button " aria-pressed="true " id='today_btn'>Today</a> -->
+        </div>
+        <div class="col-md-4 "></div>
+    </div>
+    <div class="row ">
+        <div class="col-md-12 ">
+            <table class="table mt-2 ">
+                <thead>
+                    <tr>
+                        <th scope="col ">#</th>
+                        <th scope="col ">Patient Name</th>
+                        <th scope="col ">Appt Date</th>
+                        <th scope="col ">Time</th>
+                        <th scope="col ">Description</th>
+                        <th scope="col ">Status</th>
+                        <th scope="col ">Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in appointments %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter}}</th>
+                        <td>{{app.patient_id.pat_name}}</td>
+                        <td>{{app.app_date}}</td>
+                        <td>{{app.app_timeofday}}</td>
+                        <td>{{app.app_notes}}</td>
+                        {% if app.app_status == 'P' %}
+                        <td>
+
+                            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModa{{forloop.counter}}">Accept</button>
+                            <!-- Modal -->
+                            <div id="myModa{{forloop.counter}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content ">
+                                        <div class="modal-header ">
+                                            <h4 class="modal-title ">Select the timings</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                    </button>
+                                        </div>
+                                        <!-- Form starts for accept appointment -->
+                                        <form method='POST'>
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                <div class="md-form">
+                                                    <h6>For {{app.app_timeofday}}</h6>
+                                                    <input type="time" name='timing' class="form-control timepicker ">
+                                                </div>
+                                            </div>
+                                            <input type="text" name='type' hidden value="1">
+                                            <input type="text" name="app_id" id=" " value="{{app.id}}" hidden>
+                                            <div class="modal-footer justify-content-center ">
+                                                <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary ">Approved</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <button type="button " class="btn btn-primary " data-toggle="modal" data-target="#my{{forloop.counter}}">Cancel</button>
+                            <!-- Modal -->
+                            <div id="my{{forloop.counter}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog ">
+                                    <!-- Modal content-->
+                                    <div class="modal-content ">
+                                        <div class="modal-header ">
+                                            <h4 class="modal-title ">Reason For Cancellation</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                    </button>
+                                        </div>
+                                        <!-- Form starts for cencel appointment -->
+                                        <form method='POST'>
+                                            {% csrf_token %}
+                                            <input type="text" name='type' hidden value="2">
+                                            <input type="text" name="app_id" id=" " value="{{app.id}}" hidden>
+                                            <div class="modal-body ">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="icofont-pen-nib "></i></span>
+                                                    <input type="text" name="reason" class="form-control ">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-center ">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        {% else %}
+                        <td>
+                            {% if app.app_status == 'A' %} Approved {% endif %}
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>No Appointments Found</td>
+                    </tr>
+                    {% endfor %}
+                    <!--
+                        <tr>
+                            <th scope="row ">2</th>
+                            <td>Parth</td>
+                            <td>15 june,21</td>
+                            <td>Evening</td>
+                            <td>Old Patient</td>
+                            <td></td>
+                            <td><button class="btn btn-light " style="color:green ">accept</button><button class="btn btn-light " style="color: red; ">cancel</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row ">3</th>
+                            <td>Jon</td>
+                            <td>20 June,21</td>
+                            <td>Morning</td>
+                            <td>New Patient</td>
+                            <td></td>
+                            <td><button class="btn btn-light " style="color:green ">accept</button><button class="btn btn-light " style="color: red; ">cancel</button></td>
+                        </tr>
+                        <tr>
+                            <th scope="row ">4</th>
+                            <td>Jack</td>
+                            <td>25 June,21</td>
+                            <td>Afternoon</td>
+                            <td>New Patient</td>
+                            <td></td>
+                            <td><button class="btn btn-light " style="color:green ">accept</button><button class="btn btn-light " style="color: red; ">cancel</button></td>
+                        </tr>-->
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

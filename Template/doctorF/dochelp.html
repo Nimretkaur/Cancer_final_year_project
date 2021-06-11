@@ -1,0 +1,51 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Help & Support </title>
+{% endblock %} {% block content %}
+
+<!-- Page Content  -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-5 mt-5 border rounded shadow p-5" style="border-radius:4rem; background:linear-gradient(to top left, #FF8c3E, #f5efeb); ">
+
+            <h3 class="text-center mb-3 " style="color: #262626 "><b>Help & Support</b></h3>
+            <form action=" " method="POST">
+                {% csrf_token %}
+
+                <div class="form-group mb-3 ">
+                    <label style="color: #262626;"><h6><b>Enter Subject</b></h6></label>
+                    <div class="input-group mb-3 ">
+                        <span class="input-group-text " id="basic-addon1 "><i class="icofont-quill-pen "></i></span>
+                        <input type="text " class="form-control ii " required autofocus name="sub" placeholder="Enter Subject ">
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 ">
+                    <label style="color: #262626 "><h6><b>Enter Message</b></h6></label>
+                    <div class="input-group mb-3 ">
+
+                        <textarea required rows="5 " required class="form-control mb-3 " rows="5 " id="msg " name="msg"></textarea>
+                    </div>
+                </div>
+
+                <center><button type="submit " name='save1' class="btn btn-dark ">Send</button></center>
+            </form>
+
+            {% if res %} {% if res == 1 %}
+            <div>
+                Data submitted successfully
+            </div>
+            {% else %}
+            <div>
+                Error
+            </div>
+            {% endif %} {% endif %}
+
+        </div>
+    </div>
+</div>
+<div class="col-md-4 "></div>
+
+
+
+{% endblock %}

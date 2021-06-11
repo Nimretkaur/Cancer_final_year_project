@@ -1,0 +1,208 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Patients </title>
+{% endblock %} 
+
+{% block style_tags %}
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 20px;
+            }
+            
+            /* Hide default HTML checkbox */
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            
+            /* The slider */
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+            
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 4px;
+                bottom: 2.5px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+            
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+            
+            input:focus + .slider {
+                box-shadow: 0 0 1px #2196F3;
+            }
+            
+            input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+            
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+            }
+            
+            .slider.round:before {
+                border-radius: 50%;
+            }
+
+{% endblock %}
+
+{% block content %}
+<!-- Page Content  -->
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 p-2">
+                <h1>My Patients</h1>
+            </div>
+        </div>
+        <div class="row">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <select name="apply_filter" id="">
+                    {% if selected_field == 'enabled' %}
+                        <option value="enabled" selected >Active Patients</option>
+                     {% else %}   
+                     <option value="enabled" selected >Active Patients</option>
+                     {% endif %}
+
+                     {% if selected_field == 'disabled' %}
+                         <option value="disabled" selected>Deactive Patients</option>
+                      {% else %}
+                        <option value="disabled" >Deactive Patients</option>  
+                      {% endif %}   
+                </select>
+
+                <input type="submit" value="Apply" class='btn btn-primary'>
+            </form>      
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table mt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">Patient ID</th>
+                            <th scope="col">Patient Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Disease</th>
+                            <th scope="col">Additional Notes</th>
+                            <th scope="col">Chat with Patient</th>
+                            <th scope="col">Active/Deactive</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for var in appointments %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter}}</th>
+                            <td>{{var.patient_id.pat_name}}</td>
+                            <td>{{var.patient_id.pat_age}}</td>
+                            <td>{{var.disease_id.dise_name}}</td>
+                            <td>{{var.disease_id.dise_description}}</td>
+                            <td>
+                                {% if var.app_isactive == True %}
+                                <a href="{% url 'docchatpage' var.id %}" style="text-decoration: none;" id="chat_link-{{var.id}}" style="pointer-events: none;" target="_blank">Chat</a>
+                                {% elif var.app_isactive == False %} 
+                                <a href="#" style="text-decoration: none; pointer-events: none;" id="chat_link-{{var.id}}"  disable>Chat</a>
+
+                                {% endif %}
+                            </td>
+                            
+                            <td>
+                                <!-- Rounded switch -->
+
+                                {% if var.app_isactive == True %}
+                                <label class="switch">
+                                    <input type="checkbox"  id="checked{{forloop.counter}}" onclick="test(this)" value="{{var.id}}" checked>
+                                    <span class="slider round"></span>
+                                </label>
+
+                                 {% elif var.app_isactive == False %} 
+                                 <label class="switch">
+                                    <input type="checkbox"  id="checked{{forloop.counter}}" onclick="test(this)" value="{{var.id}}">
+                                    <span class="slider round"></span>
+                                </label>
+                                {% endif %}
+
+                                
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>No Patients Found</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script>
+
+function test(elem){
+
+    var app_id = elem.getAttribute('value');
+    var status = "";
+    if (elem.checked == true){
+        status = "enable";
+        var chat = document.getElementById('chat_link-'+app_id);
+        chat.style.pointerEvents = "initial";
+    }
+    else if(elem.checked == false ){
+        status="disable";
+        var chat = document.getElementById('chat_link-'+app_id);
+        chat.style.pointerEvents= "None";
+    }
+
+    $.ajax({
+    url: "{% url 'enable_disable' %}",
+    data : {
+                'app_id': app_id,
+                'status' : status,
+        },
+
+    })
+    .done(function(res) {
+        
+        
+
+    }	
+    )
+    .fail(function(err) {
+            alert("There is some error contact to the team. Thanks");
+    });
+
+
+
+
+
+    };
+</script>
+{% endblock %}

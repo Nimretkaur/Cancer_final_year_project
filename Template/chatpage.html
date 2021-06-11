@@ -1,0 +1,283 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title> Chat Page </title>
+{% endblock %}
+
+<style>
+    .text-small {
+        font-size: 0.9rem;
+    }
+    
+    .chat-box {
+        height: 510px;
+        overflow-y: scroll;
+    }
+    
+    #attachment {
+        display: none;
+    }
+</style>
+
+{% block content %}
+
+<!-- Page Content  -->
+
+<div class="container-fluid mt-1 ">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <div class="row">
+                <p><button class="btn btn-primary ml-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Choose Doctor</button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <div class="btn-group" role='group'>
+                            <button type="button" class="btn btn-outline-info">Info</button>
+                            <button type="button" class="btn btn-outline-dark">Dark</button>
+                            <button type="button" class="btn btn-outline-info">Info</button>
+                            <button type="button" class="btn btn-outline-dark">Dark</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row p-1 pt-3">
+                        <h4 class="text-center ml-1">Doctor Profile</h4>
+                    </div>
+                    <div class="row p-2">
+                        <div class="container">
+                            <div class="row p-2">
+                                <div class="col">Name</div>
+                                <div class="col">{{appointment.doctor_id.doc_name}}</div>
+                                <div class="w-100"></div>
+                                <div class="col">Email</div>
+                                <div class="col">{{appointment.doctor_id.doc_email}}</div>
+                                <div class="w-100"></div>
+                                <div class="col">Experience</div>
+                                <div class="col">{{appointment.doctor_id.doc_experience}} years</div>
+                                <div class="w-100"></div>
+                                <div class="col">City</div>
+                                <div class="col">{{appointment.doctor_id.doc_city}}</div>
+                                
+                                
+                                <!-- <div class="w-100 p-2"></div>
+                                <div class="col">Files uploaded till now</div>
+                                <div class="col">Files data</div> -->
+                            </div><hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Chat section -->
+        <div class="col-md-7 border shadow pl-5 pr-5 pt-3 pb-5" style="background:linear-gradient(to top left, #0044ad,#c0c2dd)">
+            <h3 class="text-center px-0" style="color: white">Chat system</h3>
+
+            <div class="row" style=" height: 70vh; ">
+                <div class="col-12 px-0 pb-4">
+                    <div class="px-4 py-5 chat-box bg-white" id='chatSection' style="height: 65vh; overflow-y: scroll; ">
+                        {% for message in messages %}
+
+                        {% if message.mess_from == message.app_id.patient_id.id %}
+                        <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
+                            <div class="media-body ml-3">
+                                <div class="bg-light rounded py-2 px-3 mb-2">
+                                    <p class="text-small mb-0 text-muted">{{message.mess_message}}</p>
+                                </div>
+                                <p class="small text-muted">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="media w-60 ml-auto mb-3">
+                            <div class="media-body">
+                                <div class="bg-primary rounded py-2 px-3 mb-2">
+                                    <p class="text-small mb-0 text-white">{{message.mess_message}}</p>
+                                </div>
+                                <p class="small text-muted" style="text-align: right;">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
+                            </div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
+                        </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    <!-- Text-Area -->
+                </div>
+            </div>
+      </div>
+        
+
+        <form action="#" class="bg-light"  id='form'>
+           {% csrf_token %}
+            <input type="text" value="{{appointment.id}}"  name="app_id" hidden>
+            <input type="text" value="{{appointment.doctor_id.id}}"  name='doc_id' hidden>
+            <div class="input-group p-1">
+                <input type="text" placeholder="Type a message" class="form-control rounded-0 border-0 py-4 bg-light" required id='message_text' value='' name='msg'>
+                <div class="input-group-append"></div>
+                <!--<button class="btn"><i class="icofont-attachment icofont-2x"></i></button> -->
+                <input type="file"  style="display: none" id='message_attachment' name='attachment'>
+                <i onclick="clickAttachment()" class="icofont-attachment icofont-3x"></i>
+
+                <button type="submit" class="btn btn-primary"> <i class="icofont-paper-plane icofont-2x" id="submit_button" ></i></button>
+            </div>
+
+        </form>
+        {{request.session.user_Id}}
+
+        </div>
+    <div class="col-md-1"></div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block jsscript %}
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script>
+    function clickAttachment() {
+        var attachment = document.getElementById('message_attachment');
+        attachment.click();
+    }
+
+    function get_time(input){
+        let split_time = input.split(":");
+        var temp_date = new Date();
+        temp_date.setHours(split_time[0]);
+        temp_date.setMinutes(split_time[1]);
+        console.log(temp_date.toLocaleTimeString('en-us', {hour:'numeric' , minute:'numeric'}));
+        return temp_date.toLocaleTimeString('en-us', {hour:'numeric' , minute:'numeric'});
+    }
+
+function get_date(input){
+    let d = new Date(input);
+    let c = d.toDateString();
+    c = c.split(" ");
+
+    return c[1]+" "+c[2]+", "+c[3];
+
+
+}
+
+var d = null;
+function upload(event){
+    event.preventDefault();
+    var data = new FormData($('#form').get(0));
+    $.ajax({
+    url: "{% url 'chat_update' %}",
+    type: "POST",
+    data: data,
+    cache: false,
+    processData: false,
+    contentType: false,
+    success: function(data) {
+       alert("Success");
+       console.log(data);
+       d = data; //use it for experiment
+       var message_from_db = JSON.parse(data.message);
+       
+       var message_data = message_from_db[0].fields.mess_message;
+       var message_time = get_time(message_from_db[0].fields.mess_time);
+       var message_date = get_date(message_from_db[0].fields.mess_date);
+        
+       var message_attachment = message_from_db[0].fields.mess_attachment;
+        var node =  document.getElementById("chatSection");
+
+        
+        let tags = '<div class="media w-60 mb-3">'
+            +'<i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                           +' <div class="media-body ml-3">'
+                               + '<div class="bg-light rounded py-2 px-3 mb-2">'
+                                    +'<p class="text-small mb-0 text-muted">'+ message_data+'</p>'
+                                +'</div>'
+                                +'<p class="small text-muted">'+message_time+' |'+ message_date+'</p>'
+                            +"</div>"
+                        +"</div>";
+
+                     // Append the text to <li>
+      
+
+        
+                        
+
+        document.getElementById('form').reset();
+    }
+});
+}
+
+
+    
+   
+   
+
+$(function() {
+    $('#form').submit(upload);
+});
+
+var dd = null;
+var count = 0;
+$(document).ready(function(){
+
+var app_id = "{{appointment.id}}";
+var interval = setInterval(function(){
+    $.ajax({
+        type: 'GET',
+        url : "{% url 'getmessages' %}",
+        data: {'app_id': app_id},
+        success: function(response){
+            console.log(response);
+            dd =response;
+
+            var data = JSON.parse(response.messages);
+            var chatSection = document.getElementById('chatSection');
+            chatSection.innerHTML = "";
+            var user_id = "{{request.session.user_id}}";
+            console.log(user_id);
+            
+            
+            for(d in data){
+                var temp_data = data[d];
+                var message_data = temp_data.fields.mess_message;
+                var message_date = get_date(temp_data.fields.mess_date);
+                var message_time = get_time(temp_data.fields.mess_time);
+                if(temp_data.fields.mess_from == user_id){
+                    chatSection.innerHTML+='<div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                           +' <div class="media-body ml-3">'
+                                +'<div class="bg-light rounded py-2 px-3 mb-2">'
+                                    +'<p class="text-small mb-0 text-muted">'+message_data+'</p>'
+                                +'</div>'
+                                +'<p class="small text-muted">'+message_time +'|'+message_time +'</p>'
+                            +'</div>'
+                        +'</div>';
+                }
+                else{
+                    chatSection.innerHTML+='<div class="media w-60 ml-auto mb-3">'
+                            +'<div class="media-body">'
+                               +' <div class="bg-primary rounded py-2 px-3 mb-2">'
+                                    +'<p class="text-small mb-0 text-white">'+message_data+'</p>'
+                                +'</div>'
+                                +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
+                            +'</div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                        +'</div>';
+                }
+
+                
+
+            }
+
+          
+        },
+        error: function(response){
+            alert('An error occured')
+        }
+    });
+},10000);
+});
+</script>
+
+
+
+{% endblock %}
+

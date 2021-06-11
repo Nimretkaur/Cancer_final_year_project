@@ -1,0 +1,168 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title>Appointment Status </title>
+{% endblock %} {% block content %}
+
+
+<!-- Page Content  -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12 p-2">
+            <h1> Appointment Status</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 p-1">
+            <!-- Form Starts -->
+            <form method='POST'>
+                {% csrf_token %}
+                <select name="filter" id="filter" required style="height: 30px;">
+
+                {% if selected_field %}
+                    {% if selected_field == 'pending_appointments' %}
+                        <option value="pending_appointments" selected >Pending Appointments</option>
+                    {% else %}
+                        <option value="pending_appointments"  >Pending Appointments</option>
+                    {% endif %}
+
+                    {% if selected_field == 'approved_appointments' %}   
+                        <option value="approved_appointments" selected>Approved Appointments</option selected>
+                    {% else %}
+                    <option value="approved_appointments" >Approved Appointments</option>
+                    {% endif %}
+
+                    {% if selected_field == 'all_appointments' %}   
+                        <option value="all_appointments" selected>All Appointments</option selected>
+                    {% else %}
+                    <option value="all_appointments" >All Appointments</option>
+                    {% endif %}
+
+                    {% if selected_field == 'rejected_appointments' %}   
+                        <option value="rejected_appointments" selected>Rejected Appointments</option selected>
+                    {% else %}
+                    <option value="rejected_appointments" >Rejected Appointments</option>
+                    {% endif %}
+
+                
+                {% else %}
+                    <option value="" selected disabled>Apply Filter </option>
+                    <option value="all_appointments">All Appointments</option>
+                    <option value="pending_appointments">Pending Appointments</option>
+                    <option value="approved_appointments">Approved Appointments</option>
+                    <option value="rejected_appointments">Rejected</option>
+                {% endif %}
+                </select>
+                <input type="submit" value="Apply" style="height: 30px;width: 70px;">
+            </form>
+
+        </div>
+        <div class="col-md-4 "></div>
+    </div>
+    <div class="row ">
+        <div class="col-md-12 ">
+            <table class="table mt-2 ">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time(by doctor)</th>
+                        <th scope="col">Reason</th>
+                        <!-- <th scope="col">Chat Button</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for var in userappointments %}
+                    <!-- <tr>
+                        <th scope="row ">{{ forloop.counter}}</th>
+                        <td>{{app.patient_id.pat_name}}</td>
+                        <td>{{app.app_date}}</td>
+                        <td>{{app.app_timeofday}}</td>
+                        <td>{{app.app_notes}}</td>
+                    </tr> -->
+                    <tr>
+                        <th scope="row ">{{ forloop.counter}}</th>
+                        <th scope="row">
+                            {% if var.app_status == 'P'%} Pending {% elif var.app_status == 'A'%} Approved {% else %} Not Approved {% endif %}
+                        </th>
+                        <td>{{var.app_date}}</td>
+                        <td>{{var.app_time}}</td>
+                        <td>{{var.app_reason}}</td>
+
+                        <!-- <td><a class="btn">Chat</a></td> -->
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>No Appointments Found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}
+
+<!-- 
+    <!-- Page Content  -->
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 p-4">
+                <h1>Appointment Status</h1>
+            </div>
+            <hr>
+            <!-- <h6 class="p-3">Today's Date(26-05-21)</h6> -->
+        </div>
+        <!-- <div class="row p-2">
+            <div class="col-md-4 p-2 border">Status</div>
+            <div class="col-md-4 p-2 border">Pending</div>
+            <div class="w-100"></div>
+            <div class="col-md-4 p-2 border">Patient</div>
+            <div class="col-md-4 p-2 border">Name</div>
+            <div class="w-100"></div>
+            <div class="col-md-4 p-2 border">Date for Appointment</div>
+            <div class="col-md-4 p-2 border">4 June,21</div>
+            <div class="w-100"></div>
+            <div class="col-md-4 p-2 border">Time (by Doctor)</div>
+            <div class="col-md-4 p-2 border">12:30pm</div>
+            <div class="w-100"></div>
+            <div class="col-md-4 p-2 border">Reason for Cancellation</div>
+            <div class="col-md-4 p-2 border"></div>
+        </div> -->
+    </div>
+    <div>
+        <div class="col-md-12">
+            <table class="table mt-2 p-4">
+                <thead>
+                    <tr>
+                        <th scope="col">Status</th>
+                        <th scope="col">Patient</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time(by doctor)</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">Chat Button</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Pending</th>
+                        <td>pat_name</td>
+                        <td>Booking date</td>
+                        <td>Time by doctor</td>
+                        <td>Reason if any</td>
+                        <td><a class="btn">Chat</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+-->

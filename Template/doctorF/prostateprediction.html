@@ -1,0 +1,69 @@
+{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
+<title>Prostate Prediction</title>
+{% endblock %} {% block content %}
+<!--Page Content -->
+<div class="container mt-1">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 mt-2 border rounded shadow p-3" style="border-radius:2rem; background:linear-gradient(to top left, #ff8c3E, #f5efeb)">
+
+            <h3 class="text-center mb-3 " style="color: #262626"><b>Prostate Cancer Prediction</b></h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group row p-1">
+                    <label class="col-md-4 mt-2">Radius</label>
+                    <div class="col-md-8">
+                        <input type="number" min="9" max="25" required autofocus class="form-control" name="radius" placeholder="Add a number between 9-25!">
+                    </div>
+                </div>
+                <div class="form-group row p-1 ">
+                    <label class="col-md-4 mt-2 ">Texture</label>
+                    <div class="col-md-8 ">
+                        <input type="number" min="10" max="30" required class="form-control" name="texture" placeholder="Add a number between 10 - 30!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-4 mt-2">Perimeter</label>
+                    <div class="col-md-8">
+                        <input type="number" min="50" max="175" required class="form-control" name="peri" placeholder="Add a number between 50 - 175!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-4 mt-2">Area</label>
+                    <div class="col-md-8">
+                        <input type="number" min="200" max="1880" required class="form-control" name="area" placeholder="Add a number between 200 - 1880!">
+                    </div>
+                </div>
+                <div class="form-group row p-1 ">
+                    <label class="col-md-4 mt-2 ">Smoothness</label>
+                    <div class="col-md-8 ">
+                        <input type="number" min="0.07" max="0.14" required class="form-control" name="smoot" placeholder="Add a number between 0.07 - 0.14!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-4 mt-2">Compactness</label>
+                    <div class="col-md-8">
+                        <input type="number" min="0.04" max="0.34" required class="form-control" name="compact" placeholder="Add a number between 0.04 - 0.34!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-4 mt-2">Symmetry</label>
+                    <div class="col-md-8">
+                        <input type="number" min="0.14" max="0.3" required class="form-control" name="symmetry" placeholder="Add a number between 0.14 - 0.3!">
+                    </div>
+                </div>
+                <div class="form-group row p-1">
+                    <label class="col-md-4 mt-2">Fractal dimension</label>
+                    <div class="col-md-8">
+                        <input type="number" min="0.05" max="0.1" required class="form-control" name="fd" placeholder="Add a number between 0.05 - 0.1!">
+                    </div>
+                </div>
+                <center><button type="submit" name='save1' class="btn btn-dark mt-4">Make Prediction</button></center>
+            </form>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+{% endblock %}
