@@ -9,7 +9,7 @@
                 {% csrf_token %} {% if us.pat_img %}
                 <img src="{{ us.pat_img.url}}" class="w-90" style="min-height: 200px;max-height: 200px; ">{% else%}
                 <img src="{%static 'Images/user_img.jpg' %}" class="w-70 p-2 ps-4" style="min-height: 200px;max-height: 200px; ">{% endif %}
-                <input type="file" required name="image" class="form-control mb-3 mt-3">
+                <input type="file" required name="image" class="form-control mb-3 mt-3 pb-4">
                 <center><input type="submit" name="save" class="btn btn-light" value="Update"></center>
                 <input type='text' value='1' name='type' hidden>
             </form>
@@ -27,13 +27,42 @@
                     <label for="bgroup"><b>Email</b></label><br/>
                     <input type="email" class="form-control ii" placeholder="" name="em" value="{{us.pat_email}}" disabled>
                 </div>
-                <div class="col-md-6 form-group mb-3">
+
+                <!-- <div class="col-md-6 form-group mb-3">
                     <label for="g" class="mb-2"><b>Gender</b></label> <br/> {% if us.pat_gender == 'M' %}
                     <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked> Male
                     <input type="radio" name="gen" value="F" class="form-check-input ms-5" style="margin-left: 10px;" id="g"> Female {% else %}
                     <input type="radio" name="gen" value="M" class="form-check-input" id="g">Male
                     <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g" checked>Female {% endif %}
+                </div> -->
+
+                <div class="col-md-6 form-group mb-3" >
+                    <label for="g" class="mb-2">Gender</label> <br/> 
+                   
+                    {% if us.pat_gender == 'M' %}
+                    <div style="display: flex; ">
+                        <div class="col-md-3">
+                            <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked>Male
+                        </div>   
+                        <div class="col-md-3">
+                            <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g">Female
+                        </div>
+                    </div>
+                    
+                     {% else %}
+              
+                    <div style="display: flex; ">
+                        <div class="col-md-3">
+                            <input type="radio" name="gen" value="M" class="form-check-input" id="g" >Male
+                         </div>   
+                         <div class="col-md-3">
+                            <input type="radio" name="gen" value="F" class="form-check-input ms-5" checked id="g">Female
+                         </div>
+                    </div>
+                     
+                    {% endif %}
                 </div>
+
                 <div class="col-md-6 form-group mb-3">
                     <label for="c"><b>Contact Number</b></label><br/>
                     <input type="tel" class="form-control ii" placeholder="" name="phn" value="{{us.pat_contact}}" id="c">

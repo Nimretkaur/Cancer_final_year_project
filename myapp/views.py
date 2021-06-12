@@ -20,7 +20,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import random as rn
-
+from Cancer import settings
 from matplotlib import pylab
 from pylab import *
 from PIL import Image, ImageDraw
@@ -38,7 +38,7 @@ from sklearn.preprocessing import StandardScaler
 import pickle
 from tensorflow.keras.models import load_model
 from keras.preprocessing import image
-
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -131,7 +131,30 @@ def login(request):
         return render(request,'login.html',{'formpost':formpost})
 
 def recoverpassword(request):
-    return render(request,'recoverpassword.html',{})
+
+    if request.method == 'POST':
+        em = request.POST.get('em')
+        res = None
+        if mypatient.objects.filter(pat_email = em).exists():
+            user = mypatient.objects.get(pat_email = em)
+
+            subject = 'Password'
+            message  = 'Hello '+user.pat_name+' Your Password is '+user.pat_pass
+            email_from = settings.EMAIL_HOST_USER
+            recepient_list = [user.pat_email, ]
+            try: 
+                send_mail(subject,message , email_from , recepient_list)
+                res = "Your Password is sent successfully to your mail"
+            except Exception as E:
+                print(E)    
+            return render(request, 'recoverpassword.html', {'res':res})
+
+        else:
+            res = 'User doesnot exist'
+           
+            return render(request, 'recoverpassword.html', {'res':res})
+    
+    return render(request, 'recoverpassword.html', {'res':''})
 
 def footer(request):
     return render(request,'footer.html',{})
@@ -444,6 +467,7 @@ def doclogin(request):
             print("Valid Credentials")
             request.session['docem'] = doctoremail
             request.session['doc_name'] = expert[0].doc_name
+            request.session['doc_id'] = expert[0].id
             # return render(request,'doctorF/docdashboard.html',{})
             return redirect('docdashboard')
         else:
@@ -612,32 +636,42 @@ def docchatpage(request, appid=None):
         return redirect("/doclogin")
 
     if request.method == 'POST':
-        message_text = request.POST.get('msg')
-        attachment = request.FILES.get('attachment')
-        appointment_id = request.POST.get('app_id')
-        patient_id = request.POST.get("pat_id")
+        type_of_form = request.POST.get('type')
 
-        today_time_date = datetime.datetime.now()
+        if type_of_form == "1":
+            pass
+            # disease_name = request.POST.get("")
+            # disease_notes = request.POST.get("")
+            
+            # disease = mydisease()
+            # dise_name = disease_name
+            # dise_description = disease_notes
+            # disease.save()
+            # data = mydisease.objects.get(doc_email = request.session['docem'])
+            # return render(request,'docchatpage.html',{'us':data})
 
-        message = mymessages()
-        # print(request.session.get('docem'))
-        message.mess_form = mydoctor.objects.get(doc_email = request.session.get('docem')).id
-        # print(message.mess_form)
-        message.mess_to = patient_id
-        message.mess_date = today_time_date.date()
-        message.mess_time = today_time_date.time()
-        message.mess_message = message_text
+        elif type_of_form == "2":
+            message_text = request.POST.get('msg')
+            attachment = request.FILES.get('attachment')
+            appointment_id = request.POST.get('app_id')
+            patient_id = request.POST.get("pat_id")
 
-        if attachment:
-            message.mess_attachment = attachment
-        
-        message.app_id = myappointment.objects.get(id = int(appointment_id))   
+            today_time_date = datetime.datetime.now()
 
-        message.save()
-
-        ser_message = serializers.serialize('json',[message,])
-        
-        return JsonResponse( {'message':ser_message}, safe=False )
+            message = mymessages()
+            message.mess_from = mydoctor.objects.get(doc_email = request.session.get('docem')).id
+            message.mess_to = patient_id
+            message.mess_date = today_time_date.date()
+            message.mess_time = today_time_date.time()
+            message.mess_message = message_text
+            if attachment:
+                message.mess_attachment = attachment
+            
+            message.app_id = myappointment.objects.get(id = int(appointment_id))   
+            message.save()
+            ser_message = serializers.serialize('json',[message,])
+            
+            return JsonResponse( {'message':ser_message}, safe=False )
     
     appointment = myappointment.objects.get(id = appid)
     all_messages = mymessages.objects.filter(app_id = appointment)

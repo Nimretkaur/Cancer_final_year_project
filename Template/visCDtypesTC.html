@@ -19,7 +19,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <select class="form-select p-1 mr-2" required name='country' aria-label="Default select example" style="height: 37px; width: 200px;">
-                <option selected>Select the Country</option>
+                <option selected value="">Select the Country</option>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Algeria">Algeria</option>
                 <option value="Argentina">Argentina</option>
@@ -73,7 +73,7 @@
             </select>
 
                 <select class="form-select p-1 mr-2" required name='ctype' aria-label="Default select example" style="height: 37px; width: 250px;">
-                <option selected>Select the Cancer Type</option>
+                <option selected value="">Select the Cancer Type</option>
                 <option value="Liver cancer">Liver cancer</option>
                 <option value="Kidney cancer">Kidney cancer</option>
                 <option value="Breast cancer">Breast cancer</option>
@@ -88,7 +88,6 @@
                 <option value="Ovarian cancer">Ovarian cancer</option>
                 <option value="Larynx cancer">Larynx cancer</option>
                 <option value="Lip and oral cavity cancer">Oral cavity cancer</option>
-               
             </select>
 
                 <button type="submit" name="save" class="btn btn-dark">Enter</button>

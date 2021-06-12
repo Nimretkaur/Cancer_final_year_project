@@ -19,7 +19,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <select class="form-select" required name='agegroup' aria-label="Default select example" style="height: 37px; width: 200px;">
-                    <option selected>Select the Age-Group</option>
+                    <option selected value="">Select the Age-Group</option>
                     <option value="Age: Under 5 years">Age: Under 5 years</option>
                     <option value="Age: 5-14 years">Age: 5-14 years</option>
                     <option value="Age: 15-49 years">Age:15-49 years</option>
@@ -28,7 +28,7 @@
                 </select>
 
                 <select class="form-select" required name='c' aria-label="Default select example" style="height: 37px; width: 200px;">
-                    <option selected>Select the Country</option>
+                    <option selected value="">Select the Country</option>
                     <option value="World">World</option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Algeria">Algeria</option>

@@ -23,18 +23,14 @@
 
 <div class="container-fluid mt-1">
     <div class="row g-0">
-        <div class="col-md-6">
-            <div class="row">
+        <div class="col-md-4">
+            <!-- <div class="row">
                 <p><button class="btn btn-primary ml-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               Choose Doctor</button>
                 </p>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                        <!-- <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary">Left</button>
-                            <button type="button" class="btn btn-secondary">Middle</button>
-                            <button type="button" class="btn btn-secondary">Right</button>
-                        </div> -->
+                        
                         <div class="btn-group" role='group'>
                             <button type="button" class="btn btn-outline-info">Info</button>
                             <button type="button" class="btn btn-outline-dark">Dark</button>
@@ -42,25 +38,31 @@
                             <button type="button" class="btn btn-outline-dark">Dark</button>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
-            <hr>
+            <hr>  -->
             <div class="row">
-                <div class="col-md-6">
-                    <div class="row p-1 ml-2">
-                        <h4 class="text-center">Patient Profile</h4>
+                <div class="col-md-12">
+                    <div class="row p-1 pt-3">
+                        <h4 class="text-center ml-1">Patient Profile</h4>
                     </div>
                     <div class="row p-2">
                         <div class="container">
-                            <div class="row p-1">
+                            <div class="row p-2">
                                 <div class="col">Name</div>
                                 <div class="col">{{appointment.patient_id.pat_name}}</div>
                                 <div class="w-100"></div>
-                                <div class="col">Email</div>
-                                <div class="col">{{appointment.patient_id.pat_email}}</div>
+                                <div class="col">Gender</div>
+                                <div class="col">{{appointment.patient_id.pat_gender}}</div>
                                 <div class="w-100"></div>
                                 <div class="col">Age</div>
                                 <div class="col">{{appointment.patient_id.pat_age}}</div>
+                                <div class="w-100"></div>
+                                <div class="col">City</div>
+                                <div class="col">{{appointment.patient_id.pat_city}}</div>
+                                <div class="w-100"></div>
+                                <div class="col">Email</div>
+                                <div class="col">{{appointment.patient_id.pat_email}}</div>
                                 <div class="w-100"></div>
                                 <hr>
                             </div>
@@ -70,15 +72,16 @@
             </div>
             <hr>
             <div class="row p-0 g-0 m-0">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <form action=" " method="POST">
                         {% csrf_token %}
+                        <input type="text" value="1" name='type' hidden>
                         <div class="row align-items-center">
-                            <div class="col-md-3">
+                            <div class="col-md-3 p-1">
                                 <label class="col-form-label m-0 p-0 small">Disease</label>
                             </div>
                             <div class="col-auto">
-                                <input type="text" class="fform-control form-control-sm" name="dis">
+                                <input type="text" class="form-control form-control-sm" name="dis" value="{{us.dise_name}}">
                             </div>
                         </div>
                         <div class="row align-items-center">
@@ -86,7 +89,7 @@
                                 <label class="col-form-label">Notes</label>
                             </div>
                             <div class="col-auto">
-                                <textarea class="form-control form-control-sm" name="id"></textarea>
+                                <textarea class="form-control form-control-sm" row=5 name="id" >{{us.dise_description}}</textarea>
                             </div>
                         </div>
                         <button type="submit" name='save1' class="btn btn-dark btn-sm">Submit</button>
@@ -94,108 +97,48 @@
                 </div>
             </div>
             <hr>
-            <div class="col">Files uploaded till now</div>
-            <div class="col">Show Files</div>
+            <!-- <div class="col">Files uploaded till now</div>
+            <div class="col">Show Files</div> -->
         </div>
 
-
-
-
         <!--Chat section -->
-        <div class="col-md-6 px-0 py-0 border shadow pl-5 pr-5 pt-3" style="background:linear-gradient(to top left, #FF8c3E,#e9c3aa)">
+        <div class="col-md-7 border shadow pl-5 pr-5 pt-3 pb-4" style="background:linear-gradient(to top left, #FF8c3E,#e9c3aa)">
             <h3 class="text-center px-0" style="color: white"><b>Chat system</b></h3>
 
-            <div class="row">
-                <div class="col-12 px-0 pb-4">
-                    <div class="px-4 py-5 chat-box bg-white id='chatSection" style="min-height: 65vh;">
+            <div class="row" style=" height: 70vh;">
+                <div class="col-12 px-0 ">
+                    <div class="px-4 py-5 chat-box bg-white" id='chatSection' style="height: 65vh; overflow-y: scroll; ">
+                     {% for message in all_messages %}
 
-
-                        <!-- <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
-                            <div class="media-body ml-3">
-                                <div class="bg-light rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-muted">Test which is a new approach all solutions</p>
-                                </div>
-                                <p class="small text-muted">12:00 PM | Aug 13</p>
-                            </div>
-                        </div> -->
-
-                        <!-- Reciever Message-->
-                        {% for message in all_messages %}
-                        {% if message.mess_from == message.app_id.doctor_id.id %}
-                        <div class="media w-60 ml-auto mb-3">
+                         {% if message.mess_from == message.app_id.doctor_id.id %}
+                         <div class="media w-60 ml-auto mb-3">
                             <div class="media-body">
                                 <div class="bg-primary rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
+                                    <p class="text-small mb-0 text-white">{{message.mess_message}} <br/>
+                                            {% if message.mess_attachment %}
+                                                <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
+                                            {% endif %}  
+                                    </p>
                                 </div>
-                                <p class="small text-muted" style="text-align: right;">12:00 PM | Aug 13</p>
-                            </div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
+                                <p class="small text-muted" style="text-align: right;">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
+                            </div><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
                         </div>
-
-                        <!-- Sender Message-->
-                        <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
+                         {% else %}
+                         <div class="media w-60 mb-3"><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
                             <div class="media-body ml-3">
                                 <div class="bg-light rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-muted">Test, which is a new approach to have</p>
+                                    <p class="text-small mb-0 text-muted">{{message.mess_message}} <br/>
+                                            {% if message.mess_attachment %}
+                                            <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
+                                            {% endif %}  
+                                    </p>
                                 </div>
-                                <p class="small text-muted">12:00 PM | Aug 13</p>
+                                <p class="small text-muted">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
                             </div>
-                        </div>{% endif %}
-                        {% endfor %}
+                        </div>
+                        {% endif %}
 
-                         <!-- Reciever Message-->
-                         {% for message in all_messages %}
-                         {% if message.mess_from == message.app_id.doctor_id.id %}
-                         <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
-                             <div class="media-body ml-3">
-                                 <div class="bg-light rounded py-2 px-3 mb-2">
-                                     <p class="text-small mb-0 text-muted">
-                                         {{message.mess_message}} <br/>
-
-                                             {% if message.mess_attachment %}
-                                             <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
-                                             {% endif %}  
-                                     </p>
-                                 </div>
-                                 <p class="small text-muted">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
-                             </div>
-                         </div>
-                         {% else %}
-                         <div class="media w-60 ml-auto mb-3">
-                             <div class="media-body">
-                                 <div class="bg-primary rounded py-2 px-3 mb-2">
-                                     <p class="text-small mb-0 text-white">
-                                         {{message.mess_message}} <br/>
-
-                                             {% if message.mess_attachment %}
-                                                 <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
-                                             {% endif %}  
-                                     </p>
-                                 </div>
-                                 <p class="small text-muted" style="text-align: right;">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
-                             </div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
-                         </div>
-                         {% endif %}
-
-                     {% endfor %}
-
-                     <!-- Sender Message
-                     <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
-                         <div class="media-body ml-3">
-                             <div class="bg-light rounded py-2 px-3 mb-2">
-                                 <p class="text-small mb-0 text-muted">Test, which is a new approach to have</p>
-                             </div>
-                             <p class="small text-muted">12:00 PM | Aug 13</p>
-                         </div>
-                     </div>
-                     <div class="media w-60 ml-auto mb-3">
-                         <div class="media-body">
-                             <div class="bg-primary rounded py-2 px-3 mb-2">
-                                 <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
-                             </div>
-                             <p class="small text-muted" style="text-align: right;">12:00 PM | Aug 13</p>
-                         </div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
-                     </div> -->
-               
+                    {% endfor %}
              </div>
          </div>
      </div>
@@ -215,7 +158,9 @@
          </div>
 
      </form>
- </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
 </div>
 
 {% endblock %}
@@ -224,6 +169,7 @@
 <script>
  function clickAttachment() {
      var attachment = document.getElementById('message_attachment');
+     attachment.click();
      
  }
 
@@ -261,7 +207,7 @@ function upload(event){
  success: function(data) {
 
  
-    alert("Success");
+    // alert("Success");
     console.log(data);
     d = data; //use it for experiment
 
@@ -274,23 +220,18 @@ function upload(event){
 
      var node =  document.getElementById("chatSection");
      
-     tags = '<div class="media w-60 mb-3">'
-                        +'<i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
-                            +' <div class="media-body ml-3">'
-                                 +'<div class="bg-light rounded py-2 px-3'+' mb-2">'
-                                     +'<p class="text-small mb-0' +'text-muted">'+message_data;
-                                         
-                                         if (message_attachment !=""){
+     let tags = '<div class="media w-60 ml-auto mb-3">'
+                         +'<div class="media-body">'
+                            +' <div class="bg-primary rounded py-2 px-3 mb-2">'
+                                 +'<p class="text-small mb-0 text-white">'+message_data;
+                                     if (message_attachment !=""){
                                          tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
-
-                                     }
-
-                                       tags+= '</p>'
-                                 +'</div>'
-                                 +'<p class="small text-muted">'+message_time +"|"+ message_date +'</p>'
-                             +'</div>';
-
-
+                                     };
+                                 tags+='</p>'
+                             +'</div>'
+                             +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
+                         +'</div><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                     +'</div>';
        node.innerHTML+=tags;                   
 
                   // Append the text to <li>
@@ -340,17 +281,33 @@ var interval = setInterval(function(){
              var message_date = get_date(temp_data.fields.mess_date);
              var message_time = get_time(temp_data.fields.mess_time);
              var message_attachment = temp_data.fields.mess_attachment;
-             if(temp_data.fields.mess_from == user_id){
-              
-                 let tags ='<div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+             if(temp_data.fields.mess_from == user_id)
+             {
+                let tags;
+                 tags='<div class="media w-60 ml-auto mb-3">'
+                         +'<div class="media-body">'
+                            +' <div class="bg-primary rounded py-2 px-3 mb-2">'
+                                 +'<p class="text-small mb-0 text-white">'+message_data;
+                                     if (message_attachment !=""){
+                                         tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
+                                     };
+                                 tags+='</p>'
+                             +'</div>'
+                             +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
+                         +'</div><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                     +'</div>';
+
+                     chatSection.innerHTML+=tags;
+             }
+             else
+             
+             {
+                 let tags ='<div class="media w-60 mb-3"><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
                         +' <div class="media-body ml-3">'
                              +'<div class="bg-light rounded py-2 px-3 mb-2">'
                                  +'<p class="text-small mb-0 text-muted">'+message_data;
-                                     
                                      if (message_attachment !=""){
-                                         tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
-
-                                             
+                                         tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';     
                                      }
                              tags+='</p>'
                              +'</div>'
@@ -359,26 +316,6 @@ var interval = setInterval(function(){
                      +'</div>';
 
                      chatSection.innerHTML+= tags;
-             }
-             else{
-                let tags;
-                 tags='<div class="media w-60 ml-auto mb-3">'
-                         +'<div class="media-body">'
-                            +' <div class="bg-primary rounded py-2 px-3 mb-2">'
-                                 +'<p class="text-small mb-0 text-white">'+message_data;
-                                     if (message_attachment !=""){
-                                         tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
-
-                                             
-                                     };
-                                     
-                                 tags+='</p>'
-                             +'</div>'
-                             +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
-                         +'</div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
-                     +'</div>';
-
-                     chatSection.innerHTML+=tags;
              }
 
              

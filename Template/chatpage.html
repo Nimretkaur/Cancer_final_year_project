@@ -64,49 +64,56 @@
                                 <!-- <div class="w-100 p-2"></div>
                                 <div class="col">Files uploaded till now</div>
                                 <div class="col">Files data</div> -->
-                            </div><hr>
+                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!--Chat section -->
-        <div class="col-md-7 border shadow pl-5 pr-5 pt-3 pb-5" style="background:linear-gradient(to top left, #0044ad,#c0c2dd)">
+        <div class="col-md-7 border shadow pl-5 pr-5 pt-3 pb-4" style="background:linear-gradient(to top left, #0044ad,#c0c2dd)">
             <h3 class="text-center px-0" style="color: white">Chat system</h3>
 
             <div class="row" style=" height: 70vh; ">
-                <div class="col-12 px-0 pb-4">
+                <div class="col-12 px-0 pb-3">
                     <div class="px-4 py-5 chat-box bg-white" id='chatSection' style="height: 65vh; overflow-y: scroll; ">
                         {% for message in messages %}
 
                         {% if message.mess_from == message.app_id.patient_id.id %}
-                        <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
-                            <div class="media-body ml-3">
-                                <div class="bg-light rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-muted">{{message.mess_message}}</p>
-                                </div>
-                                <p class="small text-muted">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
-                            </div>
-                        </div>
-                        {% else %}
                         <div class="media w-60 ml-auto mb-3">
                             <div class="media-body">
                                 <div class="bg-primary rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-white">{{message.mess_message}}</p>
+                                    <p class="text-small mb-0 text-white">{{message.mess_message}}
+                                        {% if message.mess_attachment %}
+                                             <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
+                                             {% endif %}  
+                                    </p>
                                 </div>
                                 <p class="small text-muted" style="text-align: right;">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
                             </div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
+                        </div>
+                        {% else %}
+                        <div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>
+                            <div class="media-body ml-3">
+                                <div class="bg-light rounded py-2 px-3 mb-2">
+                                    <p class="text-small mb-0 text-muted">{{message.mess_message}}
+                                        {% if message.mess_attachment %}
+                                             <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
+                                             {% endif %}  
+                                    </p>
+                                </div>
+                                <p class="small text-muted">{{message.mess_time| time:"g:iA"}} | {{message.mess_date}}</p>
+                            </div>
                         </div>
 
                         {% endif %}
 
                     {% endfor %}
-
-                    <!-- Text-Area -->
                 </div>
             </div>
       </div>
-        
+        <!-- Text-Area -->
 
         <form action="#" class="bg-light"  id='form'>
            {% csrf_token %}
@@ -173,7 +180,7 @@ function upload(event){
     processData: false,
     contentType: false,
     success: function(data) {
-       alert("Success");
+    //    alert("Success");
        console.log(data);
        d = data; //use it for experiment
        var message_from_db = JSON.parse(data.message);
@@ -183,31 +190,46 @@ function upload(event){
        var message_date = get_date(message_from_db[0].fields.mess_date);
         
        var message_attachment = message_from_db[0].fields.mess_attachment;
-        var node =  document.getElementById("chatSection");
-
+       var node =  document.getElementById("chatSection");
         
-        let tags = '<div class="media w-60 mb-3">'
-            +'<i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
-                           +' <div class="media-body ml-3">'
-                               + '<div class="bg-light rounded py-2 px-3 mb-2">'
-                                    +'<p class="text-small mb-0 text-muted">'+ message_data+'</p>'
-                                +'</div>'
-                                +'<p class="small text-muted">'+message_time+' |'+ message_date+'</p>'
-                            +"</div>"
-                        +"</div>";
+        // let tags = '<div class="media w-60 mb-3">'
+        //     +'<i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+        //                    +' <div class="media-body ml-3">'
+        //                        + '<div class="bg-light rounded py-2 px-3 mb-2">'
+        //                             +'<p class="text-small mb-0 text-muted">'+ message_data;
+        //                                 if (message_attachment !=""){
+        //                                  tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
+        //                              }
+        //                                 tags += '</p>'
+        //                         +'</div>'
+        //                         +'<p class="small text-muted">'+message_time+' |'+ message_date+'</p>'
+        //                     +"</div>"
+        //                 +"</div>";
 
                      // Append the text to <li>
+
+        let tags ='<div class="media w-60 ml-auto mb-3">'
+        +'<div class="media-body">'
+            +' <div class="bg-primary rounded py-2 px-3 mb-2">'
+                +'<p class="text-small mb-0 text-white">'+message_data;
+                    if (message_attachment !=""){
+                        tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
+                    }
+                    tags += '</p>'
+            +'</div>'
+            +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
+            +'</div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+        +'</div>';
+                    
       
 
         
-                        
+        node.innerHTML+=tags;
 
         document.getElementById('form').reset();
     }
 });
 }
-
-
     
    
    
@@ -240,30 +262,42 @@ var interval = setInterval(function(){
             for(d in data){
                 var temp_data = data[d];
                 var message_data = temp_data.fields.mess_message;
+                var message_attachment = temp_data.fields.mess_attachment;
                 var message_date = get_date(temp_data.fields.mess_date);
                 var message_time = get_time(temp_data.fields.mess_time);
-                if(temp_data.fields.mess_from == user_id){
-                    chatSection.innerHTML+='<div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                var chatSection = document.getElementById('chatSection')
+                if(temp_data.fields.mess_from == user_id)
+                {
+                    let tags ='<div class="media w-60 ml-auto mb-3">'
+                        +'<div class="media-body">'
+                            +' <div class="bg-primary rounded py-2 px-3 mb-2">'
+                                +'<p class="text-small mb-0 text-white">'+message_data;
+                                    if (message_attachment !=""){
+                                        tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
+                                    }
+                                    tags += '</p>'
+                            +'</div>'
+                            +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
+                        +'</div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
+                    +'</div>';
+                    chatSection.innerHTML+= tags;
+                }
+                else{
+                    let tags = '<div class="media w-60 mb-3"><i class="icofont-doctor ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
                            +' <div class="media-body ml-3">'
                                 +'<div class="bg-light rounded py-2 px-3 mb-2">'
-                                    +'<p class="text-small mb-0 text-muted">'+message_data+'</p>'
+                                    +'<p class="text-small mb-0 text-muted">'+message_data;
+                                        if (message_attachment !=""){
+                                         tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
+                                     }
+                                      tags+= '</p>'
                                 +'</div>'
                                 +'<p class="small text-muted">'+message_time +'|'+message_time +'</p>'
                             +'</div>'
                         +'</div>';
-                }
-                else{
-                    chatSection.innerHTML+='<div class="media w-60 ml-auto mb-3">'
-                            +'<div class="media-body">'
-                               +' <div class="bg-primary rounded py-2 px-3 mb-2">'
-                                    +'<p class="text-small mb-0 text-white">'+message_data+'</p>'
-                                +'</div>'
-                                +'<p class="small text-muted" style="text-align: right;">'+message_time+' | '+message_date+ '</p>'
-                            +'</div><i class="icofont-user ml-3 icofont p-2 rounded rounded-circle" style="color: #394241;border:1px solid #394241;"></i>'
-                        +'</div>';
+                        chatSection.innerHTML+= tags;
                 }
 
-                
 
             }
 

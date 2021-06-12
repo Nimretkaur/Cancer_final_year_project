@@ -27,12 +27,31 @@
                     <label for="bgroup">Email</label><br/>
                     <input type="email" class="form-control ii" placeholder="" name="docem" value="{{us.doc_email}}" disabled>
                 </div>
-                <div class="col-md-6 form-group mb-3">
-                    <label for="g" class="mb-2">Gender</label> <br/> {% if user.doc_gender == 'M' %}
-                    <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked>Male
-                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g">Female {% else %}
-                    <input type="radio" name="gen" value="M" class="form-check-input" id="g">Male
-                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g" checked>Female {% endif %}
+                <div class="col-md-6 form-group mb-3" >
+                    <label for="g" class="mb-2">Gender</label> <br/> 
+                   
+                    {% if us.doc_gender == 'M' %}
+                    <div style="display: flex; ">
+                        <div class="col-md-3">
+                            <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked>Male
+                        </div>   
+                        <div class="col-md-3">
+                            <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g">Female
+                        </div>
+                    </div>
+                    
+                     {% else %}
+              
+                    <div style="display: flex; ">
+                        <div class="col-md-3">
+                            <input type="radio" name="gen" value="M" class="form-check-input" id="g" >Male
+                         </div>   
+                         <div class="col-md-3">
+                            <input type="radio" name="gen" value="F" class="form-check-input ms-5" checked id="g">Female
+                         </div>
+                    </div>
+                     
+                    {% endif %}
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="c">Contact Number</label><br/>

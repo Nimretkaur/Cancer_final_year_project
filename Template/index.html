@@ -110,25 +110,29 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="col-md-3">
+                
                 <div data-aos="flip-up" class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><img src="{%static 'Images/prostatecancer_icon.png' %}" height="60px">Prostate Cancer</h5>
                         <p class="card-text">Prostate cancer is one of the most common types of cancer. Many prostate cancers grow slowly and are confined to the prostate gland, where they may not cause serious harm. However, while some types of prostate cancer grow slowly and may need minimal or even no treatment...
 
-
+                            <div id="facts_part" ></div>
                         <span><a href="{% url 'prostatecancer' %}" class="card-link" style="color:#0044ad;text-align: center"><b>Read More</b></a></span></p>
                     </div>
+                    
                 </div>
             </div>
-
+            
         </div>
     </div>
 </div>
+
 <!-- cards end -->
 <!-- New section starts -->
-<div class="container-fluid text-light pt-5 pb-5 " style="background-color: #0044ad" id="facts_part" >
+<div class="container-fluid text-light pt-5 pb-5 " style="background-color: #0044ad" >
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -199,10 +203,10 @@
     </div>
 </div>
 <!-- New section started -->
-<div class="container-fluid pt-5 pb-5 text-light " style="background-color:#0044ad ">
-    <div class="container ">
-        <div class="row text-center ">
-            <div class="col-md-12 ">
+<div class="counts container-fluid pt-5 pb-5 text-light " style="background-color:#0044ad ">
+    <div class="container" id="counter">
+        <div class="row text-center" style='justify-content:space-between;'>
+            <div class="col-md-12 ct ">
                 <h2>Total Number Of Cancer Cases</h2>
                 <h5> around the world!</h5>
             </div>
@@ -210,24 +214,62 @@
         <div class="row pt-5 text-center ">
             <div class="col-md-3 " style="border-right: 3px solid #fff ">
                 <h5>Breast Cancer</h5>
-                <h2>7676849</h2>
+                <div><h2><span class='count'>7676849</span></h2> </div>		
             </div>
             <div class="col-md-3 " style="border-right: 3px solid #fff ">
                 <h5>Lung Cancer</h5>
-                <h2>5476849</h2>
+                <div><h2><span class='count'>5476849</span></h2> </div>		
+
             </div>
             <div class="col-md-3 " style="border-right: 3px solid #fff ">
                 <h5>Skin Cancer</h5>
-                <h2>938449</h2>
+                <div><h2><span class='count'>938449</span></h2> </div>		
+
             </div>
             <div class="col-md-3 ">
                 <h5>Prostate Cancer</h5>
-                <h2>66849</h2>
+                <div><h2><span class="count">66849</span></h2></div>
             </div>
 
         </div>
     </div>
 </div>
+<!-- <section class='counts container-fluid' >
+	<div class='container' id="counter">
+					<div class="row" style='justify-content:space-between;'>
+						<div class="col-md-3 ct ">
+							<div><span class='count'>4342</span> <sub>+</sub></div>
+							<p>Population</p>
+						</div>
+						<div class="col-md-3 ct" >
+							<div><span class='count'>100</span> <span>%</span></div>
+							<p>Death rate</p>
+						</div>
+						<div class="col-md-3 ct" >
+							<div><span class='count'>88</span>
+							<span>%</span>
+							</div>
+							<p>Birth rate</p>
+						</div>
+					
+</div></div>
+</section> -->
+<script src="{% static 'js/JQ.JS' %}"></script>
+
+ <script>
+$('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 5900,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+</script>
+
 
 
 <!-- cards start -->
@@ -341,11 +383,10 @@
     })
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js " integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns " crossorigin="anonymous "></script>
 
 <script src="https://cdn.rawgit.com/michalsnik/aos/2.0.4/dist/aos.js "></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js " integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf " crossorigin="anonymous "></script>
 <script src="{%static 'js/bootstrap.bundle.min.js' %} "></script>
-
 {% endblock %}

@@ -18,7 +18,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <select class="form-select" required name='y1' aria-label="Default select example" style="height: 37px; width: 200px;">
-                    <option selected>Select the Start Year</option>
+                    <option selected value="">Select the Start Year</option>
                     <option value="1990">1990</option>
                     <option value="1991">1991</option>
                     <option value="1992">1992</option>
@@ -49,7 +49,7 @@
                     <option value="2017">2017</option>
                 </select>
                 <select class="form-select" required name='y2' aria-label="Default select example" style="height: 37px; width: 200px;">
-                    <option selected>Select the End Year</option>
+                    <option selected value="">Select the End Year</option>
                     <option value="1990">1990</option>
                     <option value="1991">1991</option>
                     <option value="1992">1992</option>
@@ -80,7 +80,7 @@
                     <option value="2017">2017</option>
                 </select>
                 <select class="form-select" required name='country' aria-label="Default select example" style="height: 37px; width: 200px;">
-                    <option selected>Select the Country</option>
+                    <option selected value="">Select the Country</option>
                     <option value="World">World</option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Algeria">Algeria</option>
