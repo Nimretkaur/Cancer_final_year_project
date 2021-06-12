@@ -620,9 +620,9 @@ def docchatpage(request, appid=None):
         today_time_date = datetime.datetime.now()
 
         message = mymessages()
-        print(request.session.get('docem'))
+        # print(request.session.get('docem'))
         message.mess_form = mydoctor.objects.get(doc_email = request.session.get('docem')).id
-        print(message.mess_form)
+        # print(message.mess_form)
         message.mess_to = patient_id
         message.mess_date = today_time_date.date()
         message.mess_time = today_time_date.time()
