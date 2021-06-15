@@ -41,14 +41,14 @@
             <div class="row mt-4">
                 <p><b>Result :</b></p>
                 <div class="col-md-12">
-                    <p>{{ans}}</p>
-                    {% if ans %} {% if ans == 0 %}
+                    <!-- <p>{{ans}}</p> -->
+                    {% if ans %} {% if ans == 1 %}
                     <div>
-                        No Cancer
+                        <p><b>No Cancer</b></p>
                     </div>
                     {% else %}
                     <div>
-                        There is Lung Cancer
+                        <p><b>There is Lung Cancer</b></p>
                     </div>
                     {% endif %} {% endif %}
                 </div>

@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 p-2 text-lg-center">
-            <h4> Getting only Top countries with Survival Rates for particular Year</h4>
+            <h4> Top countries with Survival Rates from Breast Cancer in a particular Year </h4>
         </div>
     </div>
 
@@ -19,7 +19,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <select class="form-select p-1 mr-2" required name='year' aria-label="Default select example" style="height: 37px; width: 200px;">
-                <option selected value="">Select the Country</option>
+                <option selected value="">Select the Year</option>
                 <option value="1999">1999</option>
                 <option value="2004">2004</option>
                 <option value="2009">2009</option>
@@ -45,6 +45,6 @@
 </div>
 {% if graphic %}
 <div class='row p-3 ml-5'>
-    <img src="data:image/png;base64,{{graphic|safe}}">
+    <img src="data:image/png;base64,{{graphic|safe}}" width="800" height="600">
 </div>
 {% endif %} {% endblock %}

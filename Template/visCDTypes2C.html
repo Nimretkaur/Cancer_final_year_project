@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 p-2 text-lg-center">
-            <h4>Select the Country and Cancer types to Visualize the Cancer Deaths over Years</h4>
+            <h4>Comparision of two Cancer types in a Country to Visualizethe Cancer Deaths over Years</h4>
         </div>
     </div>
 
@@ -117,7 +117,11 @@
 
         </div>
     </div>
-
+    {% if res %}
+    <div class="row">
+        <div class="col-md-12 mt-5 p-5">
+        <h5><b>{{res}}</b></h5></div></div>
+    {% endif %}
 
 </div>
 <div class="container">

@@ -7,7 +7,7 @@
         background:linear-gradient(to top left,#e0ced4,#f5efeb); 
         color: rgb(72, 72, 214);
         margin-top:1em;
-        padding:1em;
+        padding:0.5em;
         display:flex;
         flex-wrap:wrap;
         justify-content:space-around;
@@ -27,7 +27,7 @@
     }
 </style>
 <div class="container">
-<div class="container-fluid p-4 mt-3" style="border-radius:1rem; background:linear-gradient(to top left,rgb(104, 144, 196),#f5efeb)">
+<div class="container-fluid p-4 mt-2" style="border-radius:1rem; background:linear-gradient(to top left,#f5efeb,rgb(211, 140, 100))">
         
         <!-- heading -->
         <div class="col-md-12 border rounded shadow p-3 text-center" >
@@ -38,19 +38,19 @@
                 <div class='row'>
                     <div class="col-md-12">
                         <h5><b>Active Patients</b></h5>
-                        <h4>6</h4>
+                        <h4>{{count_active}}</h4>
                         <i class="fas fa-users fa-2x" style="color: rgb(238, 84, 161);"></i>
                     </div>
                     <div class="col-md-12">
                         <h5><b>Pending Appointments</b></h5>
-                        <h4>6</h4>
+                        <h4>{{count_pending}}</h4>
                         <i class="fas fa-calendar-check fa-2x" style="color: rgb(74, 192, 74);"></i>
                     </div>
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <h5><b>New Messages</b></h5>
                         <h4>6</h4>
                         <i class="fas fa-comment-dots fa-2x" style="color: rgb(228, 130, 65);"></i>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- Next section -->
@@ -60,14 +60,17 @@
                     <iframe width="360" height="200" src="https://www.youtube.com/embed/oHp70KZfjBw" style="margin-right: 12px;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <iframe width="360" height="200" src="https://www.youtube.com/embed/wKED_Z0kKfg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                
+                <!-- <div class="row p-2 m-3 ">
+                    <marquee>Patients with Early Triple-Negative Breast Cancer May Benefit from Imfinzi-Neoadjuvant Chemo Combo</marquee>
+                    <marquee>Opdivo-Yervoy Combination Could Benefit Patients with Non-Small Cell Lung Cancer</marquee>
+                </div> -->
             </div>
             
             </div>
 
-            <div class="row mt-3 p-2">
+            <div class="row p-1">
                 <div class="col-md-12 " style="text-align: justify;">
-                    <h3 style="text-align: center; padding: 1rem;">Analysis</h3>
+                    <h3 style="text-align: center; padding: 0.5rem;">Analysis</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-7 ">

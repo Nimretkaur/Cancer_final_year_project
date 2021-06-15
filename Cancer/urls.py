@@ -102,6 +102,11 @@ urlpatterns = [
     path('visCDApY/',views.visCDApY,name="visCDApY"),
     path('visCDAsyey/',views.visCDAsyey, name="visCDAsyey"),
 
+    path('visNoPeopleByAge/',views.visNoPeopleByAge, name='visNoPeopleByAge'),
+    path('visNPAsyeyC/',views.visNPAsyeyC, name='visNPAsyeyC'),
+    path('visNPAsubplotC/',views.visNPAsubplotC, name='visNPAsubplotC'),
+    path('visNPAareaC/',views.visNPAareaC, name='visNPAareaC'),
+
     path('breastcancer/',views.breastcancer,name="breastcancer"),
     path('lungcancer/',views.lungcancer,name="lungcancer"),
     path('cervicalcancer/',views.cervicalcancer, name="cervicalcancer"),

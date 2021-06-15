@@ -13,31 +13,35 @@
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="formFile" class="form-label"><b>Load the Image</b></label>
-                    <input class="form-control p-1 g-0 m-1" type="file" id="formFile" name="predfile">
+                    <input class="form-control p-1 g-0 m-1" required type="file" id="formFile" name="predfile" >
                 </div>
                 <center><button type="submit" name='save1' class="btn btn-dark mt-3">Make Prediction</button></center>
             </form>
             <div class="row mt-4">
                 <p><b>Result :</b></p>
                 <div class="col">
-                    <p>{{ans}}</p>
+                    <!-- <p>{{ans}}</p> -->
                     {% if ans %} {% if ans == 1 %}
                     <div>
-                        Lung Cancer -> Adenocarcinoma
+                        <p><b>Adenocarcinoma - Lung Cancer </b></p>
                     </div>
                     {% elif ans == 2 %}
                     <div>
-                        Lung Cancer -> Large.cell.carcinoma
+                        <p><b>Large.cell.carcinoma - Lung Cancer </b></p>
                     </div>
                     {% elif ans == 3 %}
                     <div>
-                        Normal - No Lung Cancer
+                        <p><b>Normal - No Lung Cancer</b></p>
                     </div>
                     {% else %}
                     <div>
-                        Lung Cancer -> Squamous.cell.carcinoma
+                        <p><b>Squamous.cell.carcinoma - Lung Cancer</b></p>
                     </div>
                     {% endif %} {% endif %}
+
+                    {% if invalid %}
+                    <div><p><b>{{invalid}}</b></p></div>
+                    {% endif %}
                 </div>
             </div>
 

@@ -1,0 +1,27 @@
+{% extends 'sidebar.html' %}{% load static %} {% block title %}
+<title>Cancer prevalence by age</title>
+{% endblock %} {% block content %}
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-12 border rounded shadow p-3 text-center" style="border-radius:2rem; background:linear-gradient(to top left,#0044ad,#f5efeb)">
+            <h4> Cancer Prevalence by AGE </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-3 mt-4 text-lg-left">
+            <h4>Age breakdown of people with cancer</h4><br/>
+            <h5> Select Any one </h45>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-2 ">
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visNPAsyeyC' %}" role="button">Line Graph of Cancer Prevalence by Age over different Years in a Particular Country</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visNPAsubplotC' %}" role="button">Cancer Prevalence in different Age Groups in a Particular Country</a>
+            <a class="col btn btn-outline-dark m-1 font-weight-bold" href="{% url 'visNPAareaC' %}" role="button">Area Graph of Cancer Prevalence by Age from 1990 to 2017 in a Particular Country </a>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

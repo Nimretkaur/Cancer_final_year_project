@@ -13,7 +13,7 @@ from myapp.models import mydiagnostic
 from myapp.models import myhospital
 from myapp.models import myclinic
 from myapp.models import myappointment
-from myapp.models import mymessages
+from myapp.models import mymessages, mydisease
 from django.core import serializers
 import pandas as pd
 import numpy as np
@@ -39,6 +39,9 @@ import pickle
 from tensorflow.keras.models import load_model
 from keras.preprocessing import image
 from django.core.mail import send_mail
+# for api for latest news for index Page
+from newsapi import NewsApiClient
+from random import choices
 
 
 # Create your views here.
@@ -53,8 +56,25 @@ def test(request):
 def form(request):
     return render(request,'form.html',{})
 
+# ,\"Cervical Cancer\",\"Prostate Cancer\", \"living Healthy\" 
+
+def get_news():
+    newsapi = NewsApiClient(api_key='c163ff886deb44159a600cc569dd2109')
+    all_articles = newsapi.get_everything(q='\"Prostate Cancer\",\"Lung Cancer\",\"Breast Cancer\" ',               
+                                      language='en',
+                                      sort_by='relevancy',
+                                      )
+
+    print(all_articles.get('status'))
+    articles = choices(all_articles['articles'], k=3)
+
+    return articles
+
 def index(request):
-    return render(request,'index.html',{})
+    articles = get_news()
+    # print(articles)
+    return render(request,'index.html',{'articles': articles})
+
 
 def register(request):
 
@@ -309,7 +329,17 @@ def profile(request):
 def dashboard(request):
     if not request.session.has_key('em'):
         return redirect('/login')
-    return render(request,'dashboard.html',{})
+
+    cur_user = mypatient.objects.get(pat_email = request.session.get('em'))
+
+    count_approved_app = myappointment.objects.filter(patient_id = cur_user,app_status='A',app_isactive = True).count()
+
+    count_pending_app = myappointment.objects.filter(patient_id = cur_user, app_status = 'P' , app_date__gte = date.today()).count()
+
+    count_active_chat = myappointment.objects.filter(patient_id = cur_user, app_status = 'A' , app_isactive=True ).count()
+
+    return render(request,'dashboard.html',{'count_active':count_approved_app, 'count_pending': count_pending_app, 'count_active_chat':count_active_chat})
+
 
 def chatpage(request):
     if not  request.session.has_key('em'):
@@ -422,7 +452,14 @@ def docsidebar(request):
 def docdashboard(request):
     if not request.session.has_key('docem'):
         return redirect('/doclogin')
-    return render(request,'doctorF/docdashboard.html',{})
+    
+    cur_doc = mydoctor.objects.get(doc_email = request.session.get('docem'))
+
+    count_active_patients = myappointment.objects.filter(doctor_id = cur_doc,app_status='A',app_isactive = True).count()
+
+    count_pending_appointments = myappointment.objects.filter(doctor_id = cur_doc , app_status = 'P' , app_date__gte = date.today()).count()
+
+    return render(request,'doctorF/docdashboard.html',{'count_active':count_active_patients, 'count_pending': count_pending_appointments})
 
 def docprofile(request):
     if not request.session.has_key('docem'):
@@ -535,7 +572,7 @@ def docappointment(request):
 
   
     # will show all apointments of today
-    appointments = myappointment.objects.filter(doctor_id = doc, app_date = date.today())
+    appointments = myappointment.objects.filter(doctor_id = doc, app_status = 'P')
     return render(request,'doctorF/docappointment.html',{'appointments':appointments, 'entered_date': date.today().strftime('%Y-%m-%d')} )
 
 def userappointmentstatus(request):
@@ -637,18 +674,27 @@ def docchatpage(request, appid=None):
 
     if request.method == 'POST':
         type_of_form = request.POST.get('type')
-
+        print(type_of_form)
         if type_of_form == "1":
-            pass
-            # disease_name = request.POST.get("")
-            # disease_notes = request.POST.get("")
-            
-            # disease = mydisease()
-            # dise_name = disease_name
-            # dise_description = disease_notes
-            # disease.save()
-            # data = mydisease.objects.get(doc_email = request.session['docem'])
-            # return render(request,'docchatpage.html',{'us':data})
+            disease_name = request.POST.get("dis")
+            disease_notes = request.POST.get("notes")
+            app_id = request.POST.get('app_id')
+            print(disease_name, disease_notes)
+
+            if mydisease.objects.filter(appointment_id = app_id).exists():
+                dis = mydisease.objects.get(appointment_id = app_id)
+                dis.dise_name = disease_name
+                dis.dise_description = disease_notes
+                dis.save()
+            else:  
+                disease = mydisease()
+                disease.dise_name = disease_name
+                disease.dise_description = disease_notes
+                disease.appointment_id = myappointment.objects.get(id = app_id)
+
+                disease.save()
+
+            appid = app_id
 
         elif type_of_form == "2":
             message_text = request.POST.get('msg')
@@ -673,10 +719,17 @@ def docchatpage(request, appid=None):
             
             return JsonResponse( {'message':ser_message}, safe=False )
     
+
     appointment = myappointment.objects.get(id = appid)
     all_messages = mymessages.objects.filter(app_id = appointment)
 
-    return render(request,'doctorF/docchatpage.html',{'all_messages':all_messages, 'appointment':appointment})
+    disease_detail = None
+    try:
+        disease_detail = mydisease.objects.get(appointment_id = appointment)
+    except Exception as e:
+        print('No data')
+
+    return render(request,'doctorF/docchatpage.html',{'all_messages':all_messages, 'appointment':appointment, 'disease_detail':disease_detail})
 
 
 
@@ -710,12 +763,14 @@ def visLSTopCY(request):
         ax = sns.barplot(x = 'Lung', y = 'Entity',data=df1)
         for index, value in enumerate(df1['Lung']):
             plt.text(value+0.4, index+0.1, int(value),color='black',fontsize=11)
-        ax.set_ylabel("Countries")
-        ax.set_xlabel("Counts")
+        ax.set_ylabel("Countries",fontsize=18)
+        ax.set_xlabel("Counts",fontsize=18)
+        
         plt.title("Survival Lung Cancer Rates in Top "+str(n) +" Countries",loc='left')
         plt.tight_layout()   
         # plt.ylim(-1,16)
-        # plt.xlim(0,40)       
+        # plt.xlim(0,40) 
+        plt.ylim(0,n)      
           
         # Saving an image 
         buf = io.BytesIO()
@@ -859,15 +914,14 @@ def visBreastSurvival(request):
 def visBSTopCY(request):
     if request.method=='POST':
         # CODE HERE settings 
-        fig=plt.figure(figsize=(12, 10), dpi=90,facecolor='w', edgecolor='w')
+        fig=plt.figure(figsize=(12, 10), dpi=80,facecolor='w', edgecolor='w', constrained_layout=True)
         matplotlib.rcParams['axes.labelsize'] = 14
         matplotlib.rcParams['xtick.labelsize'] = 8
         matplotlib.rcParams['ytick.labelsize'] = 12
         matplotlib.rcParams['text.color'] = 'k'
-        matplotlib.rcParams['axes.titlepad'] = 0   #The offset of the title from the top of the axes, in points. Default is None
+        # matplotlib.rcParams['axes.titlepad'] = 0   #The offset of the title from the top of the axes, in points. Default is None
 
         # visualization code
-
         df = pd.read_csv('five-year-survival-rates-from-breast-cancer.csv')
 
         yr = int(request.POST.get('year'))
@@ -880,11 +934,17 @@ def visBSTopCY(request):
 
         ax = sns.barplot(x = 'Breast', y = 'Entity',data=df1)
         ax.set_xticklabels(ax.get_xticklabels(), rotation=45, horizontalalignment='right')
+        for index, value in enumerate(df1['Breast']):
+            plt.text(value+0.4, index+0.1, int(value),color='black',fontsize=11)
+        
         plt.grid()
-        plt.ylabel(ylabel=None)
-        plt.xlabel(None)
+        # plt.ylabel(ylabel=None)
+        # plt.xlabel(None)
+        ax.set_ylabel("Countries",fontsize=18)
+        ax.set_xlabel("Counts",fontsize=18)
         plt.title("Survival Breast Cancer Rates in Top "+str(n) +" Countries",loc='left')
-  
+        plt.ylim(-1,n)
+
         # Saving an image 
         buf = io.BytesIO()
         plt.margins(0.8)
@@ -1127,6 +1187,11 @@ def visCDTypes2C(request):
         country = str(request.POST.get('country'))
         ct1 = str(request.POST.get('ctype1'))
         ct2 = str(request.POST.get('ctype2'))
+
+        if ct1 == ct2:
+            res = "Please Enter different Cancer Types"
+            return render(request,'visCDTypes2C.html',{'res':res})
+
         df1 = df[df['Entity'] == country]
         df1 = df1.set_index('Year')
 
@@ -1180,12 +1245,12 @@ def visCDTopY(request):
         y = int(request.POST.get('year'))
         df1 = df[df['Year'] == y]
         df1 = df1.set_index("Entity")
-
-        df1 = df1.sort_values('Kidney cancer',ascending = False)
+        cancertype = str(request.POST.get('ctype'))
+        df1 = df1.sort_values(cancertype,ascending = False)
         df1 = df1.iloc[1:11,:]
 
-        ax = sns.barplot(x=df1.index, y=df1['Kidney cancer'],palette="Blues_d")
-        plt.title("Kidney Cancer Deaths in Top 10 Countries")
+        ax = sns.barplot(x=df1.index, y=df1[cancertype],palette="Blues_d")
+        plt.title(str(cancertype)+" Deaths in Top 10 Countries")
         plt.ylabel("")
         plt.xlabel("Countries")
         ax.set_xticklabels(ax.get_xticklabels(), rotation=45, horizontalalignment='right')
@@ -1292,6 +1357,10 @@ def visCDTYearCountries(request):
         c2 = str(request.POST.get('c2'))
         c3 = str(request.POST.get('c3'))
         c4 = str(request.POST.get('c4'))
+
+        if c1==c2 or c2==c3 or c3==c4 or c4==c1 or c1==c3 or c2==c4 :
+            res = "Please Select Different Countries"
+            return render(request,'visCDTYearCountries.html',{'res':res})
 
         df1=df[df['Entity'].isin([c1,c2,c3,c4])]
 
@@ -1485,6 +1554,11 @@ def visCDT2C(request):
         df = pd.read_csv('share-of-cancer-deaths-attributed-to-tobacco_mine_dataclean.csv')
         c1 = str(request.POST.get('c1'))
         c2 = str(request.POST.get('c2'))
+
+        if c1 == c2:
+            res = "Select Different Countries"
+            return render(request,'visCDT2C.html',{'res':res})
+
         df1=df[df['Entity'].isin([c1,c2])]
 
         sns.barplot(x="Year", y="AgeS-cancer deaths-tobacco", hue="Entity", data=df1, ci=None)
@@ -1637,6 +1711,14 @@ def visCDAsyey(request):
 
         y1 = int(request.POST.get('y1'))
         y2 = int(request.POST.get('y2'))
+
+        if (y1>y2):
+            res = 'Start Year should be less than End Year'
+            return render(request,'visCDAsyey.html',{'res':res})
+        elif y1==y2:
+            res = 'Start Year and End Year are Same'
+            return render(request,'visCDAsyey.html',{'res':res})
+
         df1 = df1[(df1["Year"]>=y1) & (df1["Year"]<=y2)]
         df2 = df1.set_index(df1['Year'])
         df2 = df2.iloc[:,3:]
@@ -1670,6 +1752,187 @@ def visCDAsyey(request):
     else:
         return render(request,'visCDAsyey.html',{})
 
+# Visualization Cancer Prevalence by Age
+def visNoPeopleByAge(request):
+    return render(request,'visNoPeopleByAge.html',{})
+
+def visNPAsyeyC(request):
+    if request.method=='POST':
+        # CODE HERE settings 
+        fig=plt.figure(figsize=(12, 5), dpi=85,facecolor='w', edgecolor='w')
+        matplotlib.rcParams['axes.labelsize'] = 14
+        matplotlib.rcParams['xtick.labelsize'] = 9
+        matplotlib.rcParams['ytick.labelsize'] = 12
+        matplotlib.rcParams['text.color'] = 'k'
+        
+        # visualization code
+        df = pd.read_csv('number-of-people-with-cancer-by-age_mine_dataclean.csv')
+
+        country = str(request.POST.get('c'))
+        df1=df[df['Entity']== country]
+
+        sy = int(request.POST.get('startyear'))
+        ey = int(request.POST.get('endyear'))
+
+        if (sy>ey):
+            res = 'Start Year should be less than End Year'
+            return render(request,'visNPAsyeyC.html',{'res':res})
+        elif sy==ey:
+            res = 'Start Year and End Year are Same'
+            return render(request,'visNPAsyeyC.html',{'res':res})
+
+        df1 = df1[(df1['Year'] >= sy) & (df1['Year'] <= ey)]
+
+        df1=df1.set_index('Year')
+        temp = df1.iloc[-1,1:].max()
+        t = temp/10
+        #df1.iloc[:,1:].plot.line(marker="o")
+        sns.lineplot(data=df1,palette='hls',linewidth = 2)
+        plt.title("Cancer Prevalence by Age in "+str(country))
+
+        plt.xlim(sy,ey)
+        plt.ylim(-20,temp+t)
+        
+        # Saving an image 
+        buf = io.BytesIO()
+        plt.margins(0.8)
+        # Tweak spacing to prevent clipping of tick-labels
+        plt.subplots_adjust(bottom=0.35)
+        plt.tight_layout()
+        plt.savefig(buf, format='png')
+    
+        fig.savefig('abc.png')
+        
+        plt.close(fig)
+        image = Image.open("abc.png")
+        draw = ImageDraw.Draw(image)
+        
+        image.save(buf, 'PNG')
+        content_type="Image/png"
+        buffercontent=buf.getvalue()
+
+        graphic = base64.b64encode(buffercontent) 
+        return render(request, 'visNPAsyeyC.html', {'graphic': graphic.decode('utf8')})
+
+    else:
+        return render(request,'visNPAsyeyC.html',{})
+
+def visNPAsubplotC(request):
+    if request.method=='POST':
+        # CODE HERE settings 
+        fig=plt.figure(figsize=(10, 5), dpi=85,facecolor='w', edgecolor='w')
+        matplotlib.rcParams['axes.labelsize'] = 14
+        matplotlib.rcParams['xtick.labelsize'] = 9
+        matplotlib.rcParams['ytick.labelsize'] = 12
+        matplotlib.rcParams['text.color'] = 'k'
+        
+        # visualization code
+        df = pd.read_csv('number-of-people-with-cancer-by-age_mine_dataclean.csv')
+
+        country = str(request.POST.get('c'))
+        df1=df[df['Entity']== country]
+
+        fig, axes = plt.subplots(2, 2, figsize=(15, 5), sharex=True, constrained_layout=True)
+        fig.suptitle("Cancer prevalence by age in "+str(country),y = 1,x=0.5)
+        
+        sns.set_palette("dark")
+
+        sns.lineplot(ax=axes[0,0], data=df1, x='Year', y="Age: 5-14 years")
+        axes[0,0].set_title("Age: 5-14 years", fontsize=12)
+        axes[0,0].set_ylabel(None)
+
+        sns.lineplot(ax=axes[0,1],data=df1, x='Year', y="Age: 15-49 years")
+        axes[0,1].set_title("Age: 15-49 years", fontsize=12)
+        axes[0,1].set_ylabel(None)
+
+        sns.lineplot(ax=axes[1,0],data=df1, x='Year', y="Age: 50-69 years")
+        axes[1,0].set_title("Age: 50-69 years", fontsize=12)
+        axes[1,0].set_ylabel(None)
+
+        sns.lineplot(ax=axes[1,1], data=df1, x='Year', y="Age: 70+ years")
+        axes[1,1].set_title("Age: 70+ years", fontsize=12)
+        axes[1,1].set_ylabel(None)
+
+        custom_xlim = (1988, 2020)
+        custom_ylim = (None,None)
+
+        # Setting the values for all axes.
+        plt.setp(axes, xlim=custom_xlim, ylim=custom_ylim)
+
+        # Saving an image 
+        buf = io.BytesIO()
+        plt.margins(0.8)
+        # Tweak spacing to prevent clipping of tick-labels
+        plt.subplots_adjust(bottom=0.35)
+        plt.tight_layout()
+        plt.savefig(buf, format='png')
+    
+        fig.savefig('abc.png')
+        
+        plt.close(fig)
+        image = Image.open("abc.png")
+        draw = ImageDraw.Draw(image)
+        
+        image.save(buf, 'PNG')
+        content_type="Image/png"
+        buffercontent=buf.getvalue()
+
+        graphic = base64.b64encode(buffercontent) 
+        return render(request, 'visNPAsubplotC.html', {'graphic': graphic.decode('utf8')})
+
+    else:
+        return render(request,'visNPAsubplotC.html',{})
+
+def visNPAareaC(request):
+    if request.method=='POST':
+        # CODE HERE settings 
+        fig=plt.figure(figsize=(12, 5), dpi=85,facecolor='w', edgecolor='w')
+        matplotlib.rcParams['axes.labelsize'] = 14
+        matplotlib.rcParams['xtick.labelsize'] = 9
+        matplotlib.rcParams['ytick.labelsize'] = 12
+        matplotlib.rcParams['text.color'] = 'k'
+        
+        # visualization code
+        df = pd.read_csv('cancer-deaths-by-age_mine_cleandata.csv')
+
+        country = str(request.POST.get('c'))
+        df1=df[df['Entity']== country]
+        
+        x = df1.iloc[:,2]
+        
+        plt.stackplot(x,df1.iloc[:,2],df1.iloc[:,3],df1.iloc[:,4],df1.iloc[:,5],df1.iloc[:,6],labels=['Age: Under 5', 'Age: 5-14 years','Age: 15-49 years', 'Age: 50-69 years', 'Age: 70+ years'])
+        plt.legend(loc='upper left')
+        sns.set_palette("RdPu")
+        plt.title("Prevalence of Cancer by Age, "+str(country)+", 1990 to 2017",fontsize=15,pad=10)
+        plt.ylabel("In Billions")
+        xlim(1990,2017)
+        
+        # Saving an image 
+        buf = io.BytesIO()
+        plt.margins(0.8)
+        # Tweak spacing to prevent clipping of tick-labels
+        plt.subplots_adjust(bottom=0.35)
+        plt.tight_layout()
+        plt.savefig(buf, format='png')
+    
+        fig.savefig('abc.png')
+        
+        plt.close(fig)
+        image = Image.open("abc.png")
+        draw = ImageDraw.Draw(image)
+        
+        image.save(buf, 'PNG')
+        content_type="Image/png"
+        buffercontent=buf.getvalue()
+
+        graphic = base64.b64encode(buffercontent) 
+        return render(request, 'visNPAareaC.html', {'graphic': graphic.decode('utf8')})
+
+    else:
+        return render(request,'visNPAareaC.html',{})
+
+
+
 
 
 # Prediction 
@@ -1689,21 +1952,53 @@ def lungsprediction(request):
         sc=StandardScaler()
         X_train=sc.fit_transform(X_train)
         X_test=sc.transform(X_test)
-        model=loaded_model = pickle.load(open('lungs_model.sav', 'rb'))
+        model=loaded_model = pickle.load(open('lungs_model_new.sav', 'rb'))
         Y_predict=model.predict(X_test)
         l=len(Y_predict)
         print("prediction",Y_predict[l-1])
         if(Y_predict[l-1]==0):
-            a = 0
+            a = 1
             return render(request,'doctorF/lungsprediction.html',{"ans":a})
         elif(Y_predict[l-1]==1):
-            a = 1
+            a = 2
             return render(request,'doctorF/lungsprediction.html',{"ans":a})
 
     return render(request,'doctorF/lungsprediction.html',{})
 
 def prostateprediction(request):
+    if request.method == 'POST':
+        dataset=pd.read_csv('Prostate_Cancer.csv')
+        X = dataset.iloc[:,[2,3,4,5,6,7,8,9]].values
+        Y = dataset.iloc[:,1].values
+        X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.25,random_state=0)
+        radius=request.POST.get("radius")
+        texture=request.POST.get("texture")
+        perimeter=request.POST.get("peri")
+        area=request.POST.get("area")
+        smoothness=request.POST.get("smoot")
+        compactness=request.POST.get("compact")
+        symmetry=request.POST.get("symmetry")
+        fractaldimension=request.POST.get("fd")
+        print("before",X_test.shape)
+        X_test=np.append(X_test,[[radius,texture,perimeter,area,smoothness,compactness,symmetry,fractaldimension]],axis=0)
+        print("after",X_test.shape)
+        sc=StandardScaler()
+        X_train=sc.fit_transform(X_train)
+        X_test=sc.transform(X_test)
+        model=loaded_model = pickle.load(open('prostate_model_new.sav', 'rb'))
+        Y_predict=model.predict(X_test)
+        l=len(Y_predict)
+        print("prediction",Y_predict[l-1])
+        if(Y_predict[l-1]==0):
+            a = 1
+            return render(request,'doctorF/prostateprediction.html',{"ans":a})
+        elif(Y_predict[l-1]==1):
+            a = 2
+            return render(request,'doctorF/prostateprediction.html',{"ans":a})
+
     return render(request,'doctorF/prostateprediction.html',{})
+
+    
 
 # Image Prediction
 def upload_file(f,name):
@@ -1722,8 +2017,13 @@ def breastpredictionDL(request):
     if request.method == "POST":
 
         f = request.FILES['predfile'] # here you get the files needed
-        handle_uploaded_file(f,f.name)
 
+        if (request.FILES["predfile"].content_type != 'image/jpeg') or (request.FILES["predfile"].content_type != 'image/png'):
+            invalid = 'Please submit jpg or png Image'
+            return render(request,'doctorF/breastpredictionDL.html',{'invalid':invalid})
+
+        handle_uploaded_file(f,f.name)
+        
         classifier = load_model('breast_cnn_model.h5',compile=False)
 
         test_image =image.load_img(f.name,target_size =(64,64))  ## Upload the image here 
@@ -1750,6 +2050,12 @@ def skinpredictionDL(request):
     if request.method == "POST":
 
         f = request.FILES['predfile'] # here you get the files needed
+        
+        if (request.FILES["predfile"].content_type != 'image/jpeg') or (request.FILES["predfile"].content_type != 'image/png'):
+            invalid = 'Please submit jpg or png Image'
+            return render(request,'doctorF/skinpredictionDL.html',{'invalid':invalid})
+
+
         handle_uploaded_file(f,f.name)
 
         classifier = load_model('skincancer_cnn_model.h5',compile=False)
@@ -1776,6 +2082,11 @@ def lungpredictionDL(request):
     if request.method == "POST":
 
         f = request.FILES['predfile'] # here you get the files needed
+
+        if (request.FILES["predfile"].content_type != 'image/jpeg') or (request.FILES["predfile"].content_type != 'image/png'):
+            invalid = 'Please submit jpg or png Image'
+            return render(request,'doctorF/lungpredictionDL.html',{'invalid':invalid})
+
         handle_uploaded_file(f,f.name)
 
         classifier = load_model('lung_cnn_model.h5',compile=False)

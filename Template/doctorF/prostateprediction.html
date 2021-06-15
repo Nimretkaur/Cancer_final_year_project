@@ -61,6 +61,22 @@
                 <center><button type="submit" name='save1' class="btn btn-dark mt-4">Make Prediction</button></center>
             </form>
 
+            <div class="row mt-4">
+                <p><b>Result :</b></p>
+                <div class="col-md-12">
+
+                    {% if ans %} {% if ans == 1 %}
+                    <div>
+                        <p><b>No Cancer</b></p>
+                    </div>
+                    {% else %}
+                    <div>
+                        <p><b>There is Prostate Cancer</b></p>
+                    </div>
+                    {% endif %} {% endif %}
+                </div>
+            </div>
+
         </div>
         <div class="col-md-4"></div>
     </div>

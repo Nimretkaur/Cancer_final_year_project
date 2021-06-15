@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 p-2 text-lg-center">
-            <h4> Select the Country to predict the Survival Rates from Breast Cancer </h4>
+            <h4> Survial Rates from Breast Cancer in a Particular Country </h4>
         </div>
 
     </div>
@@ -18,12 +18,39 @@
         <div class="col-md-10">
             <form action="" method="POST">
                 {% csrf_token %}
-                <select class="form-select p-1 mr-2" required name='country' aria-label="Default select example" style="height: 37px; width: 200px;">
-                <option selected value="">Select the country</option>
-                <option value="India">India</option>
-                <option value="United States">United States</option>
-                <option value="Argentina">Argentina</option>
-              </select>
+                <select class="form-select" required name='country' aria-label="Default select example" style="height: 37px; width: 200px;">
+                    <option selected value="">Select the Country</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Austria">Austria</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Canada">Canada</option>
+                    <option value="China">China</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="France">France</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="India">India</option>
+                    <option value="Israel">Israel</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Russia">Russia</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Turkey">Turkey</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
+                </select>
                 <button type="submit" name="save" class="btn btn-dark">Enter</button>
             </form>
         </div>

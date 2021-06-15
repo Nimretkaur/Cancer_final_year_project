@@ -2,7 +2,114 @@
 <title> User Dashboard </title>
 {% endblock %} {% block content %}
 
-<h1 class="p-5">Welcome to User's Panel</h1>
+<!-- Page Content  -->
+<style>
+    .left-count-card .col-md-12{
+        background:linear-gradient(to top left,#e0ced4,#f5efeb); 
+        color: rgb(72, 72, 214);
+        margin-top:2em;
+        padding:1em;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-around;
+        align-items:center;
+        border-radius:8px;
+        max-width:80%;
+
+    }
+    .left-count-card .col-md-12 h5{
+        width:100%;
+        padding-bottom:0.5em;
+
+    }
+    .left-count-card .col-md-12 h4{
+        margin:0;
+        font-weight:bold;
+    }
+</style>
+<div class="container">
+<div class="container-fluid p-4 mt-3" style="border-radius:1rem; background:linear-gradient(to top left,rgb(104, 144, 196),#f5efeb)">
+        
+        <!-- heading -->
+        <div class="col-md-12 border rounded shadow p-3 text-center" >
+            <h2 class="text-center"><b>Welcome to User's Panel</b></h2>
+        </div>
+        <div class="row ">
+            <div class="col-md-1"></div>
+            <div class='col-md-4 left-count-card '>
+                <div class='row'>
+                    <div class="col-md-12">
+                        <h5><b>Approved Appointments</b></h5>
+                        <h4>{{count_active}}</h4>
+                        <i class="fas fa-calendar-check fa-2x" style="color: rgb(238, 84, 161);"></i>
+                    </div>
+                    <div class="col-md-12">
+                        <h5><b>Active Chats</b></h5>
+                        <h4>{{count_active_chat}}</h4>
+                        <i class="fas fa-comment-dots fa-2x" style="color: rgb(207, 92, 46);"></i>
+                    </div>
+                    <div class="col-md-12">
+                        <h5><b>Pending Appointments</b></h5>
+                        <h4>{{count_pending}}</h4>
+                        <i class="fas fa-calendar-check fa-2x" style="color: rgb(74, 192, 74);"></i>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <!-- Next section -->
+            <div class="col-md-7">
+                <div class="row border rounded shadow p-2 m-3 text-center" style="border-radius:2rem; background:linear-gradient(to top left,#e0ced4,#f5efeb); ">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/1HkBl03WLk0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            
+        </div>
+
+            <div class="row mt-3 p-2">
+                <div class="col-md-12 " style="text-align: justify;">
+                    <h3 style="text-align: center; padding: 1rem;">Analysis</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 ">
+                        <img src="{%static 'Images/CancerPrevalence_AGE_World.png' %}" height="300px" width="100%">
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <h3>Cancer prevalence by age</h3>
+                        <p>We see that globally the majority of cancers occur in older populations. Approximately 70% of cancer cases occur in those aged over 50.<br/><br/>
+                            The chart shows that in 2017, 43 percent were aged between 50 and 69 and 27 percent were over 70 years old.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 p-1">
+                    <p>We see that in India the majority of cancers occur in older populations. Approximately 70% of cancer cases occur in those aged over 50.</p>
+                </div>
+
+                    <div class="col-md-12" style="justify-content:center;">
+                        <img src="{%static 'Images/CancerPrevalence_AGE.png' %}" height="400px" width="100%">
+                    </div>
+            </div>
+            <div class="row p-3">
+                <div class="col-md-12">
+                    <h3>Deaths from cancer</h3>
+                    <p>The group of tracheal, bronchus, and lung cancers claimed the largest number of lives – 3.9 million. Next follow colon and rectum, stomach and liver cancer, from 1990 to 2017.</p>
+                </div>
+                <div class="col-md-11" style="justify-content:center;">
+                    <img src="{%static 'Images/CancerDeathsByTypes.png' %}" height="400px" width="100%">
+                </div>
+            </div>
+            
+            
+                
+
+
+</div></div>
+
+
+
+
+
 
 
 {% endblock %}

@@ -24,23 +24,14 @@
 <div class="container-fluid mt-1">
     <div class="row g-0">
         <div class="col-md-4">
-            <!-- <div class="row">
-                <p><button class="btn btn-primary ml-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Choose Doctor</button>
-                </p>
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        
-                        <div class="btn-group" role='group'>
-                            <button type="button" class="btn btn-outline-info">Info</button>
-                            <button type="button" class="btn btn-outline-dark">Dark</button>
-                            <button type="button" class="btn btn-outline-info">Info</button>
-                            <button type="button" class="btn btn-outline-dark">Dark</button>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-            <hr>  -->
+            <!--<div class="row">
+                  <select class="form-select ml-4 mt-2 p-2" aria-label="Default select example">
+                    <option selected value="">Select Patient</option>
+                    <option value="1">Nimret</option>
+                    <option value="2">Kirat</option>
+                  </select> 
+                </div>
+            <hr> -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="row p-1 pt-3">
@@ -81,7 +72,7 @@
                                 <label class="col-form-label m-0 p-0 small">Disease</label>
                             </div>
                             <div class="col-auto">
-                                <input type="text" class="form-control form-control-sm" name="dis" value="{{us.dise_name}}">
+                                <input type="text" class="form-control form-control-sm" name="dis" value="{{disease_detail.dise_name}}">
                             </div>
                         </div>
                         <div class="row align-items-center">
@@ -89,16 +80,15 @@
                                 <label class="col-form-label">Notes</label>
                             </div>
                             <div class="col-auto">
-                                <textarea class="form-control form-control-sm" row=5 name="id" >{{us.dise_description}}</textarea>
+                                <textarea class="form-control form-control-sm" row=5 name="notes" >{{disease_detail.dise_description}}</textarea>
                             </div>
                         </div>
+                        <input type="text" value="{{appointment.id}}" name='app_id' hidden>
                         <button type="submit" name='save1' class="btn btn-dark btn-sm">Submit</button>
                     </form>
                 </div>
             </div>
             <hr>
-            <!-- <div class="col">Files uploaded till now</div>
-            <div class="col">Show Files</div> -->
         </div>
 
         <!--Chat section -->
@@ -114,7 +104,7 @@
                          <div class="media w-60 ml-auto mb-3">
                             <div class="media-body">
                                 <div class="bg-primary rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-white">{{message.mess_message}} <br/>
+                                    <p class="text-small mb-0 text-white" style="text-align:right">{{message.mess_message}} <br/>
                                             {% if message.mess_attachment %}
                                                 <a href="{{message.mess_attachment.url}}" target="_blank"><embed width="191" height="207" name="plugin" src="{{message.mess_attachment.url}}"></a>
                                             {% endif %}  
@@ -145,12 +135,12 @@
 
      <form action="" class="bg-light" method='POST' id='form'>
          {% csrf_token %}
+         <input type="text" value="2" hidden name='type'>
          <input type="text" value="{{appointment.id}}"  name="app_id" hidden>
          <input type="text" value="{{appointment.patient_id.id}}"  name='pat_id' hidden>
          <div class="input-group p-1">
              <input type="text" placeholder="Type a message" class="form-control rounded-0 border-0 py-4 bg-light" required id='message_text' value='' name='msg'>
              <div class="input-group-append"></div>
-             <!--<button class="btn"><i class="icofont-attachment icofont-2x"></i></button> -->
              <input type="file"  style="display: none" id='message_attachment' name='attachment'>
              <i onclick="clickAttachment()" class="icofont-attachment icofont-3x"></i>
 
@@ -223,7 +213,7 @@ function upload(event){
      let tags = '<div class="media w-60 ml-auto mb-3">'
                          +'<div class="media-body">'
                             +' <div class="bg-primary rounded py-2 px-3 mb-2">'
-                                 +'<p class="text-small mb-0 text-white">'+message_data;
+                                 +'<p class="text-small mb-0 text-white" style="text-align:right">'+message_data;
                                      if (message_attachment !=""){
                                          tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
                                      };
@@ -287,7 +277,7 @@ var interval = setInterval(function(){
                  tags='<div class="media w-60 ml-auto mb-3">'
                          +'<div class="media-body">'
                             +' <div class="bg-primary rounded py-2 px-3 mb-2">'
-                                 +'<p class="text-small mb-0 text-white">'+message_data;
+                                 +'<p class="text-small mb-0 text-white" style="text-align:right">'+message_data;
                                      if (message_attachment !=""){
                                          tags+='<br/> <a href="/media/'+message_attachment+'" target="_blank"><embed width="191" height="207" name="plugin" src="/media/'+message_attachment+'"></a> <br/>';
                                      };

@@ -15,7 +15,7 @@
                     <!-- <label for="formFile" class="form-label">Load the Image</label>
                     <input class="form-control" type="file" id="formFile" name="predfile"> -->
                     <label class="form-label" for="customFile"><b>Load The Image</b></label>
-                    <input type="file" class="form-control p-1 g-0 m-1" name="predfile" id="customFile" />
+                    <input type="file" class="form-control p-1 g-0 m-1" required name="predfile" id="customFile"  accept="image/x-png,image/gif,image/jpeg"/>
                     <!-- <input type="file" id="files" class="hidden" /> -->
 
                 </div>
@@ -24,16 +24,20 @@
             <div class="row mt-5 p-2">
                 <p><b>Result : </b></p>
                 <div class="col">
-                    <p>{{ans}}</p>
+                    <!-- <p>{{ans}}</p> -->
                     {% if ans %} {% if ans == 1 %}
                     <div>
-                        Malignant
+                        <p><b>Malignant - Cancerous - need immediate treat</b></p>
                     </div>
                     {% else %}
                     <div>
-                        Benin
+                        <p><b>Benin - Noncancerous</b></p>
                     </div>
                     {% endif %} {% endif %}
+
+                    {% if invalid %}
+                    <div><p><b>{{invalid}}</b></p></div>
+                    {% endif %}
 
                 </div>
             </div>

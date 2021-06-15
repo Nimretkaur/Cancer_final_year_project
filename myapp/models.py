@@ -52,7 +52,6 @@ class myregister(models.Model):
     def __str__(self):
         return self.reg_email
 
-
 class mypatient(models.Model):
 
     patient_id = models.CharField(max_length=30)
@@ -87,7 +86,6 @@ class mypatient(models.Model):
     def generate_patient_id(self):
         self.patient_id = self.pat_name[0:2]+"100"+str(self.id)
 
-
 class myhospital(models.Model):
     # hospital_id = models.CharField(max_length=80)
     hosp_name = models.CharField(max_length = 80)
@@ -103,7 +101,6 @@ class myhospital(models.Model):
 
     # def generate_hospital_id(self):
     #     self.hospital_id = "10"+str(self.id)+"_"+self.hosp_name
-
 
 class myclinic(models.Model):
     # clinic_id = models.CharField(max_length=80)
@@ -168,14 +165,6 @@ class mydoctor(models.Model):
     # def generate_doctor_id(self):
     #     self.doctor_id = "100"+str(self.id)
 
-
-class mydisease(models.Model):
-    dise_name = models.CharField(max_length = 30)
-    dise_description = models.CharField(max_length = 1000,null=True,blank=True)
-    dise_url = models.URLField(null=True)
-
-
-
 class myappointment(models.Model):
     patient_id = models.ForeignKey(mypatient, on_delete = models.CASCADE)
     doctor_id = models.ForeignKey(mydoctor, on_delete=models.CASCADE)
@@ -197,6 +186,11 @@ class myappointment(models.Model):
 
     def __str__(self):
         return self.patient_id.pat_email+"--->"+self.doctor_id.doc_email
+
+class mydisease(models.Model):
+    dise_name = models.CharField(max_length = 30)
+    dise_description = models.CharField(max_length = 1000,null=True,blank=True)
+    appointment_id = models.ForeignKey(myappointment, on_delete = models.CASCADE)
 
 class mymessages(models.Model):
     mess_from = models.IntegerField()
