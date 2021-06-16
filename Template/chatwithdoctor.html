@@ -1,5 +1,5 @@
-{% extends 'doctorF/docsidebar.html' %} {% load static %} {% block title %}
-<title>Patients </title>
+{% extends 'sidebar.html' %} {% load static %} {% block title %}
+<title>Chat with Doctor </title>
 {% endblock %} 
 
 {% block style_tag %}
@@ -73,7 +73,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 p-2">
-                <h1>My Patients</h1>
+                <h1>Doctors</h1>
             </div>
         </div>
         <div class="row">
@@ -81,15 +81,15 @@
                 {% csrf_token %}
                 <select name="apply_filter" id="">
                     {% if selected_field == 'enabled' %}
-                        <option value="enabled" selected >Active Patients</option>
+                        <option value="enabled" selected >Active Chats</option>
                      {% else %}   
-                     <option value="enabled" selected >Active Patients</option>
+                     <option value="enabled" selected >Active chats</option>
                      {% endif %}
 
                      {% if selected_field == 'disabled' %}
-                         <option value="disabled" selected>Deactive Patients</option>
+                         <option value="disabled" selected>Deactive Chats</option>
                       {% else %}
-                        <option value="disabled" >Deactive Patients</option>  
+                        <option value="disabled" >Deactive Chats</option>  
                       {% endif %}   
                 </select>
 
@@ -101,59 +101,33 @@
                 <table class="table mt-2">
                     <thead>
                         <tr>
-                            <th scope="col">Patient ID</th>
-                            <th scope="col">Patient Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Disease</th>
-                            <th scope="col">Additional Notes</th>
-                            <th scope="col">Chat with Patient</th>
-                            <th scope="col">Active/Deactive</th>
+                            <th scope="col">Doctor ID</th>
+                            <th scope="col">Doctor Name</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Chat with Doctor</th>
+                            <!-- <th scope="col">Active/Deactive</th> -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for appointment, associated_disease in appointments_data %}
+                        {% for var in appointments %}
                         <tr>
                             <th scope="row">{{ forloop.counter}}</th>
-                            <td>{{appointment.patient_id.pat_name}}</td>
-                            <td>{{appointment.patient_id.pat_age}}</td>
-                                {% if associated_disease %}
-                                    <td>{{associated_disease.dise_name}}</td>
-                                    <td>{{associated_disease.dise_description}}</td>
-                                 {% else %}
-                                    <td>Not Available</td>
-                                    <td>Not Available </td>
-                                 {% endif %}      
+                            <td>{{var.doctor_id.doc_name}}</td>
+                            <td>{{var.doctor_id.doc_experience}}</td>
+                            <td>{{var.doctor_id.doc_city}}</td>     
                             <td>
-                                {% if appointment.app_isactive == True %}
-                                <a href="{% url 'docchatpage' appointment.id %}" style="text-decoration: none;" id="chat_link-{{appointment.id}}" style="pointer-events: none;" target="_blank">Chat</a>
-                                {% elif appointment.app_isactive == False %} 
-                                <a href="#" style="text-decoration: none; pointer-events: none;" id="chat_link-{{appointment.id}}"  disable>Chat</a>
-
+                                {% if var.app_isactive == True %}
+                                <a href="{% url 'chatpage' var.id%} "  style="text-decoration: none;" id="chat_link-{{var.id}}" style="pointer-events: none;" target="_blank">Chat</a>
+                                {% elif var.app_isactive == False %} 
+                                <a href="#" style="text-decoration: none; pointer-events: none;" id="chat_link-{{var.id}}"  disable>Chat</a>
                                 {% endif %}
                             </td>
                             
-                            <td>
-                                <!-- Rounded switch -->
-
-                                {% if appointment.app_isactive == True %}
-                                <label class="switch">
-                                    <input type="checkbox"  id="checked{{forloop.counter}}" onclick="test(this)" value="{{appointment.id}}" checked>
-                                    <span class="slider round"></span>
-                                </label>
-
-                                 {% elif appointment.app_isactive == False %} 
-                                 <label class="switch">
-                                    <input type="checkbox"  id="checked{{forloop.counter}}" onclick="test(this)" value="{{appointment.id}}">
-                                    <span class="slider round"></span>
-                                </label>
-                                {% endif %}
-
-                                
-                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td>No Patients Found</td>
+                            <td>No Doctor Found</td>
                         </tr>
                         {% endfor %}
 
@@ -169,7 +143,7 @@
 
 {% block jsscript %}
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
-<script>
+<!-- <script>
 
 function test(elem){
 
@@ -204,5 +178,5 @@ function test(elem){
     });
 
     };
-</script>
+</script> -->
 {% endblock %}

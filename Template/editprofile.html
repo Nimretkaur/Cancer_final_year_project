@@ -1,6 +1,7 @@
 {% extends 'sidebar.html' %}{% load static %} {% block title %}
 <title> Edit Profile </title>
 {% endblock %} {% block content %}
+
 <!-- Page Content  -->
 <div class="container p-2">
     <div class="row">
@@ -16,25 +17,17 @@
         </div>
         <div class="col-md-9 border p-4 rounded shadow " style="border-radius:2rem; background:linear-gradient(to top left,#0044ad, #f5efeb)">
             <h3 class="text-center mb-4" style="color: #262626"><b>Edit Profile</b></h3>
-            <form action="" method="POST" class="row " style="color: #262626">
+            <form action="" method="POST" class="row " style="color: #262626" name="details">
                 {% csrf_token %}
                 <input type='text' value='2' name='type' hidden>
                 <div class="col-md-6 form-group mb-3">
                     <label for="f"><b>Full Name</b></label><br/>
-                    <input type="text" class="form-control ii" placeholder="" name="fn" value="{{us.pat_name}}" id="f">
+                    <input type="text" pattern="[A-Z a-z]{3,30}"  autofocus required class="form-control ii" placeholder="" name="fn" value="{{us.pat_name}}" id="f">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="bgroup"><b>Email</b></label><br/>
                     <input type="email" class="form-control ii" placeholder="" name="em" value="{{us.pat_email}}" disabled>
                 </div>
-
-                <!-- <div class="col-md-6 form-group mb-3">
-                    <label for="g" class="mb-2"><b>Gender</b></label> <br/> {% if us.pat_gender == 'M' %}
-                    <input type="radio" name="gen" value="M" class="form-check-input" id="g" checked> Male
-                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" style="margin-left: 10px;" id="g"> Female {% else %}
-                    <input type="radio" name="gen" value="M" class="form-check-input" id="g">Male
-                    <input type="radio" name="gen" value="F" class="form-check-input ms-5" id="g" checked>Female {% endif %}
-                </div> -->
 
                 <div class="col-md-6 form-group mb-3" >
                     <label for="g" class="mb-2">Gender</label> <br/> 
@@ -65,11 +58,11 @@
 
                 <div class="col-md-6 form-group mb-3">
                     <label for="c"><b>Contact Number</b></label><br/>
-                    <input type="tel" class="form-control ii" placeholder="" name="phn" value="{{us.pat_contact}}" id="c">
+                    <input type="tel" class="form-control ii" pattern="[0-9]{10}" placeholder="" name="phn" value="{{us.pat_contact}}" id="c">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="d"><b>DOB</b><font color="red">*</font></label><br/>
-                    <input type="date" required class="form-control ii" placeholder="" name="dob" value="{{pat_dob}}" id="d">
+                    <input type="date" class="form-control ii" placeholder="" name="dob" value="{{pat_dob}}" id="d">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="a"><b>Age</b></label><br/>
@@ -77,19 +70,19 @@
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="bgroup"><b>Blood Group</b></label><br/>
-                    <input type="text" class="form-control ii" placeholder="" name="bg" value="{{us.pat_bloodgroup}}" id="bgroup">
+                    <input type="text" class="form-control ii"  autocomplete="off" placeholder="" name="bg" value="{{us.pat_bloodgroup}}" id="bgroup">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="pincode"><b>PIN Code</b></label><br/>
-                    <input type="text" name="pin" value="{{us.pat_pincode}}" class="form-control ii" id="pincode">
+                    <input type="text" name="pin" pattern="[0-9]{6}" value="{{us.pat_pincode}}" class="form-control ii" id="pincode">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="ci"><b>City</b></label><br/>
-                    <input type="text" name="city" value="{{us.pat_city}}" class="form-control ii" id="ci">
+                    <input type="text" name="city" pattern="[A-Z a-z]{3,35}" value="{{us.pat_city}}" class="form-control ii" id="ci">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for=""><b>State</b></label><br/>
-                    <input type="text" name="state" value="{{us.pat_state}}" class="form-control ii" id="">
+                    <input type="text" name="state" pattern="[A-Z a-z]{3,35}" value="{{us.pat_state}}" class="form-control ii" id="">
                 </div>
 
                 <div class="col-md-12 form-group mb-3">
@@ -104,19 +97,9 @@
                 </div>
 
             </form>
-            <!--
-            {% if res %} {% if res == 1 %}
-            <div>
-                Profile updated successfully
-            </div>
-            {% else %}
-            <div>
-                Error
-            </div>
-            {% endif %} {% endif %}
-        -->
         </div>
     </div>
 </div>
+
 
 {% endblock %}

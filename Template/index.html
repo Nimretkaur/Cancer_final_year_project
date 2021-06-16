@@ -1,6 +1,5 @@
 {% extends 'base.html' %} {% load static %}{% block content %}
 <!-- <style>.anchor { padding-top: 500px; }</style> -->
-
 <!-- Navbar -->
 <!-- Craousel starts -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Poppins:wght@200;300;400;500;600&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
@@ -9,6 +8,18 @@
     *{
         font-family:poppins;
     }
+
+.underline-text a{
+    text-decoration:none;
+    text-transform:uppercase;
+    
+    color:rgb(70,70,70);
+    font-weight:bold;
+}
+.underline-text a:hover{
+    color:orange;
+}
+/* Styling for carousel */
 .homepage-slider {
     max-height:630px;
     overflow:hidden;
@@ -42,7 +53,61 @@
 .captions h3{
     font-size:50px;
 }
+/* Styling for Know more cards */
 
+.column-card .card{
+    position:relative;
+}
+.column-card .card:before{
+    content:'';
+    bottom:0;
+    left:0;
+    position:absolute;
+   height:0%;
+    width:100%;
+    background:#343A40;
+    transition:.5s;
+    z-index:;
+    opacity:0.5;
+}
+.column-card .card:hover:before{
+    height:100%;
+}
+.column-card .card-body{
+    position: relative;
+    z-index:3;
+    text-align:center;
+    
+}
+.column-card .card-body a{
+    text-decoration:none;
+    color:white;
+}
+.column-card .card-body:hover a{
+    color:orange;
+}
+/* Style for Lastest News block */
+.c-card{
+    height:600px;
+    max-height:600px;
+    overflow:hidden;
+}
+    .c-img{
+        height:300px;
+        max-height: 300px;
+        overflow:hidden;
+    }
+.c-img img{
+    width:100%;
+}
+.c-card p{
+    color:gray;
+}
+.c-card p:nth-child(2){
+    padding-top:0.5em;
+    font-size:16px;
+}
+              
 </style>
 <div id="carouselExampleIndicators" class="carousel slide homepage-slider" data-bs-ride="carousel" >
    <!--<div class="carousel-indicators">
@@ -81,18 +146,6 @@
     </div>
 </div>
 <!-- Block Starts-->
-<style>
-    .underline-text a{
-        text-decoration:none;
-        text-transform:uppercase;
-        
-        color:rgb(70,70,70);
-        font-weight:bold;
-    }
-    .underline-text a:hover{
-        color:orange;
-    }
-</style>
 <div class="container-fluid pt-4 text-dark bg-light" id="meaning">
     <div class="container underline-text">
         <div class="row">
@@ -257,40 +310,6 @@
     </div>
 </div>
 <!-- cards end -->
-<style>
-.column-card .card{
-    position:relative;
-}
-.column-card .card:before{
-    content:'';
-    bottom:0;
-    left:0;
-    position:absolute;
-   height:0%;
-    width:100%;
-    background:#343A40;
-    transition:.5s;
-    z-index:;
-    opacity:0.5;
-}
-.column-card .card:hover:before{
-    height:100%;
-}
-.column-card .card-body{
-    position: relative;
-    z-index:3;
-    text-align:center;
-    
-}
-.column-card .card-body a{
-    text-decoration:none;
-    color:white;
-}
-.column-card .card-body:hover a{
-    color:orange;
-}
-</style>
-
 
 <div class="container-fluid pb-4 ">
     <div class="container ">
@@ -391,38 +410,15 @@ $('.count').each(function () {
             </div>
         </div>
         <div class="row">
-            <style>
-                  .c-card{
-                    height:600px;
-                    max-height:600px;
-                    overflow:hidden;
-                }
-                  .c-img{
-                      height:300px;
-                      max-height: 300px;
-                      overflow:hidden;
-                  }
-                .c-img img{
-                    width:100%;
-                }
-                .c-card p{
-                    color:gray;
-                }
-                .c-card p:nth-child(2){
-                    padding-top:0.5em;
-                    font-size:16px;
-                }
-              
-            </style>
             {% for article in articles %}
 
             <div class="col-md-4">
                 <div class="card mb-3 c-card" style="width: 24rem;">
                   <div class='c-img' ><img src="{{article.urlToImage}}" alt="..."></div>
-                    <div class="card-body">
+                    <div  class="card-body">
                         <h5 class="card-title">{{article.title}}</h5>
                         <p class="card-text">{{article.description}}</p>
-                        <p class="card-text"><small class="text-muted"><a href="{{article.url}}" target="_blank">Read more</a></small></p>
+                        <p id='about_us' class="card-text"><small class="text-muted"><a  href="{{article.url}}" target="_blank" >Read more</a></small></p>
                     </div>
                 </div>
             </div>
@@ -432,7 +428,7 @@ $('.count').each(function () {
 </div>
 <!-- About Us -->
 <div class="jumbotron text-center">
-    <h1 class="display-3" id='about_us'>About US</h1>
+    <h1 class="display-3">About US</h1>
     <div class="lead">
     <p>Cancer care is a personal care solution that combines curated and trained care professionals with smart technology to manage and provide on-demand holistic home and community-based caregiving to patients diagnosed with various cancers.</p>
         <p><b>The Problem </b>With increasing number of cancer cases in Punjab and the paucity of medical based websites in our region,</p>

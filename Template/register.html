@@ -28,21 +28,21 @@
                     <div class="form-group mb-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="icofont-email"></i></span>
-                            <input type="email" name="em" id="e" placeholder="Enter Email" class="form-control">
+                            <input type="email" name="em" id="e" required placeholder="Enter Email" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group mb-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="icofont-ui-contact-list"></i></span>
-                            <input type="text" class="form-control ii" name="phn" placeholder="Enter your Contact number">
+                            <input type="tel" pattern="[0-9]{10}" class="form-control ii" name="phn" placeholder="Enter your Contact number">
                         </div>
                     </div>
 
                     <div class="form-group mb-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="icofont-lock"></i></span>
-                            <input type="password" class="form-control ii" placeholder="Enter New Password" name="npwd">
+                            <input type="password" required class="form-control ii" placeholder="Enter New Password" name="npwd">
                             <span class="input-group-text"><i class="icofont-eye"></i></span>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                     <div class="form-group mb-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="icofont-lock"></i></span>
-                            <input type="password" class="form-control ii" placeholder="Enter Confirmed Password" name="cpwd">
+                            <input type="password" required class="form-control ii" placeholder="Enter Confirmed Password" name="cpwd">
                             <span class="input-group-text"><i class="icofont-eye"></i></span>
                         </div>
                     </div>
@@ -60,15 +60,11 @@
 
                     <center><button type="submit" name='save1' class="btn btn-dark">Register</button></center>
                 </form>
-                {% if res %} {% if res == 1 %}
+                {% if temp %}
                 <div>
-                    Data submitted successfully
+                    <p><b>{{temp}}</b></p>
                 </div>
-                {% else %}
-                <div>
-                    Error
-                </div>
-                {% endif %} {% endif %}
+                 {% endif %}
 
             </div>
             <div class="col-md-1"></div>

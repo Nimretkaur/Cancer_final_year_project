@@ -21,13 +21,15 @@ from django.conf import settings # for imprting settings file
 from django.conf.urls.static import static
 
 urlpatterns = [
+
+    path('',views.index,name='index'),
     path('admin/', admin.site.urls),
+   
     path('form/',views.form,),
-    path('index/',views.index,name='index'),
+   
     path('register/',views.register,name='register'),
     path('login/',views.login,name='login'),
     path('contactus/',views.contactus,name='contactus'),
-    path('footer/',views.footer,),
     path('base/',views.base,),
 
     path('recoverpassword/',views.recoverpassword,name='recoverpassword'),
@@ -39,7 +41,8 @@ urlpatterns = [
     path('logout/',views.logout, name="logout"),
     path('profile/',views.profile, name="profile"),
     path('dashboard/',views.dashboard, name="dashboard"),
-    path('chatpage/',views.chatpage, name="chatpage" ),
+    path('chatpage/<int:id>',views.chatpage, name="chatpage" ),
+    path('chatwithdoctor',views.chatwithdoctor, name="chatwithdoctor"),
     path('doctorspage/',views.doctorspage,name="doctorspage"),
     path('labs/',views.labs,name="labs"),
     path('hospitals/',views.hospitals,name="hospitals"),

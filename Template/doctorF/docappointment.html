@@ -8,9 +8,6 @@
         var button = event.relatedTarget
             // Extract info from data-bs-* attributes
         var recipient = button.getAttribute('data-bs-whatever')
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in a callback.
-            //
             // Update the modal's content.
         var modalTitle = exampleModal.querySelector('.modal-title')
         var modalBodyInput = exampleModal.querySelector('.modal-body input')
@@ -22,7 +19,6 @@
 
 <!-- Page Content  -->
 <div class="container">
-
     <div class="row">
         <div class="col-md-12 p-2">
             <h1>Patient Appointment</h1>
@@ -44,26 +40,21 @@
                     {% else %}
                         <option value="pending_appointments"  >Pending Appointments</option>
                     {% endif %}
-
                     {% if selected_field == 'approved_appointments' %}   
                         <option value="approved_appointments" selected>Approved Appointments</option selected>
                     {% else %}
                     <option value="approved_appointments" >Approved Appointments</option>
                     {% endif %}
-
                     {% if selected_field == 'all_appointments' %}   
                         <option value="all_appointments" selected>All Appointments</option selected>
                     {% else %}
                     <option value="all_appointments" >All Appointments</option>
                     {% endif %}
-
                     {% if selected_field == 'rejected_appointments' %}   
                         <option value="rejected_appointments" selected>Rejected Appointments</option selected>
                     {% else %}
                     <option value="rejected_appointments" >Rejected Appointments</option>
                     {% endif %}
-
-                
                 {% else %}<option value="" selected disabled>Apply Filter </option>
                     <option value="pending_appointments">Pending Appointments</option>
                     <option value="approved_appointments">Approved Appointments</option>
@@ -104,7 +95,6 @@
                         <td>{{app.app_notes}}</td>
                         {% if app.app_status == 'P' %}
                         <td>
-
                             <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModa{{forloop.counter}}">Accept</button>
                             <!-- Modal -->
                             <div id="myModa{{forloop.counter}}" class="modal fade" role="dialog">

@@ -21,7 +21,7 @@
                 <input type='text' value='2' name='type' hidden>
                 <div class="col-md-6 form-group mb-3">
                     <label for="f">Full Name</label><br/>
-                    <input type="text" class="form-control ii" placeholder="" name="fn" value="{{us.doc_name}}" id="f">
+                    <input type="text" class="form-control ii" pattern="[A-Z a-z_.]{3,30}" placeholder="" name="fn" value="{{us.doc_name}}" id="f">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="bgroup">Email</label><br/>
@@ -55,20 +55,20 @@
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="c">Contact Number</label><br/>
-                    <input type="tel" class="form-control ii" placeholder="" name="phn" value="{{us.doc_contact}}" id="c">
+                    <input type="tel" pattern="[0-9]{10}" class="form-control ii" placeholder="" name="phn" value="{{us.doc_contact}}" id="c">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="ex">Experience</label><br/>
-                    <input type="text" class="form-control ii" placeholder="" name="exp" value="{{us.doc_experience}}" id="ex">
+                    <input type="text" pattern="[0-9]{2}" class="form-control ii" placeholder="" name="exp" value="{{us.doc_experience}}" id="ex">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="pincode">PIN Code</label><br/>
-                    <input type="text" name="pin" value="{{us.doc_pincode}}" class="form-control ii" id="pincode">
+                    <input type="text" pattern="[0-9]{6}" name="pin" value="{{us.doc_pincode}}" class="form-control ii" id="pincode">
                 </div>
                 <div class="col-md-12 form-group mb-3">
                     <label for="qa">Qualification</label>
                     <div class="input-group">
-                        <textarea name="quali" rows="2" class="form-control" id="qa">{{us.qualification}}</textarea>
+                        <textarea name="quali"  rows="2" class="form-control" id="qa">{{us.qualification}}</textarea>
                     </div>
                 </div>
                 <div class="col-md-12 form-group mb-3">
@@ -80,11 +80,11 @@
 
                 <div class="col-md-6 form-group mb-3">
                     <label for="ci">City</label><br/>
-                    <input type="text" name="city" value="{{us.doc_city}}" class="form-control ii" id="ci">
+                    <input type="text" name="city" pattern="[A-Z a-z_]{3,30}" value="{{us.doc_city}}" class="form-control ii" id="ci">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                     <label for="">State</label><br/>
-                    <input type="text" name="state" value="{{us.doc_state}}" class="form-control ii" id="">
+                    <input type="text" name="state" pattern="[A-Z a-z_]{3,30}" value="{{us.doc_state}}" class="form-control ii" id="">
                 </div>
 
                 <div class="col-md-12"><br/>

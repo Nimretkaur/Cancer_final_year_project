@@ -65,6 +65,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Doctor</th>
                         <th scope="col">Date</th>
                         <th scope="col">Time(by doctor)</th>
                         <th scope="col">Reason</th>
@@ -85,6 +86,7 @@
                         <th scope="row">
                             {% if var.app_status == 'P'%} Pending {% elif var.app_status == 'A'%} Approved {% else %} Not Approved {% endif %}
                         </th>
+                        <td>{{var.doctor_id.doc_name}}</td>
                         <td>{{var.app_date}}</td>
                         <td>{{var.app_time}}</td>
                         <td>{{var.app_reason}}</td>

@@ -3,11 +3,11 @@
 <html>
 
 <head>
-    <title>Basefile</title>
-    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <title>Home Page</title>
+    
     <link href="{%static 'css/icofont.min.css' %}" rel="stylesheet">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- style of index page -->
     <style>
 
@@ -142,14 +142,16 @@
     <!-- Narbar ends -->
     {%block content %} {% endblock%}
     <!-- footer starts -->
-    <div class="container-fluid p-4" style="background-color: black; color: white ;">
+    <div class="container-fluid py-4" style="background-color: black; color: white ;">
+        <div class="container">
         <div class="row">
-            <div class="col-md-2">
-                <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E; ">Canc</span>er <span style="color: #FF8C3E">Care</span></h4>
+            
+            <div class="col-lg-2 col-sm-12">
+                <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E; text-align: justify; ">Canc</span>er <span style="color: #FF8C3E">Care</span></h4>
                 <p>Cancer Care which is based in Amritsar, provides a one stop solution for patients from available diagnostic tests, laboratories, consulting physician appointments and information related to their cancer diagnosis.</p>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-lg-2 col-sm-12">
                 <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E;">Quic</span>k <span style="color: #FF8C3E">Links</span></h4>
                 <!-- <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="..." class="f1" style="text-decoration: none;">About Us</a></p> -->
                 <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 ms-2"></i><a href="{% url 'contactus' %}" class="f1" style="text-decoration: none;">Contact Us</a></p>
@@ -162,48 +164,49 @@
 
             </div>
 
-            <div class="col-md-2 pb-4" style="text-align: center;">
+            <div class="col-lg-2 col-sm-4 pb-4" style="text-align: center;">
                 <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E;">Follo</span>w <span style="color: #FF8C3E">Us</span></h4>
                 <div class="row">
                     <div class="col-md-4 p-2" style="background-color: #08a0e9;">
-                        <h4>5K</h4>
+                        <h4>1K</h4>
                         <p style="font-size:14px">Followers</p>
                     </div>
                     <div class="col-md-4 p-2" style="background-color: #DD2A7B;">
-                        <h4>5K</h4>
+                        <h4>2K</h4>
                         <p style="font-size:14px">Followers</p>
                     </div>
                     <div class="col-md-4 p-2" style="background-color:#3B5998">
-                        <h4>5K</h4>
+                        <h4>3K</h4>
                         <p style="font-size:14px">Followers</p>
                     </div>
                 </div>
                 <div class="row pt-2">
                     <div class="col-md-4 pt-2 pb-2 is" style="background-color: #08a0e9;">
-                        <i class="icofont-twitter "></i>
+                        <a href="https://www.twitter.com/" style="text-decoration: none; color: white;"><i class="icofont-twitter"></i></a>
                     </div>
                     <div class="col-md-4 pt-2 pb-2 is" style="background-color: #DD2A7B">
-                        <i class="icofont-instagram "></i>
+                        <a href="https://www.instagram.com/" style="text-decoration: none; color: white;"><i class="icofont-instagram "></i></a>
+
                     </div>
                     <div class="col-md-4 pt-2 pb-2 is" style="background-color:#3B5998">
-                        <i class="icofont-facebook"></i>
+                        <a href="https://www.facebook.com/" style="text-decoration: none; color: white;"><i class="icofont-facebook"></i></a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-1"></div>
 
-            <div class="col-md-2">
+            <div class="col-lg-2 col-sm-12">
                 <h4 class="mb-4"><span style="border-bottom:solid; border-color: #FF8C3E;">For Pat</span>ients</h4>
                 <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'doctorspage' %}" style=" text-decoration: none;">Search for Doctors</a></p>
                 <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'clinics' %}" style="text-decoration: none;">Search for Clinics</a></p>
                 <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'hospitals' %}" style="text-decoration: none;">Search for Hospitals</a></p>
                 <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'labs' %}" style="text-decoration: none;">Search for Labs</a></p>
                 <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'doctorspage' %}" style="text-decoration: none;">Book an Appointment</a></p>
-                <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'login' %}" style="text-decoration: none;">Online doctor consultation</a></p>
+                <!-- <p class="mb-2 f1"><i class="icofont-swoosh-right me-2 "></i><a class="f1" href="{% url 'login' %}" style="text-decoration: none;">Online doctor consultation</a></p> -->
             </div>
 
-            <div class="col-md-3">
+            <div class="col-lg-3 col-sm-12">
                 <h4 class="mb-3"><span style="border-bottom:solid; border-color: #FF8C3E;">Conta</span>ct <span style="color: #FF8C3E">With Us</span></h4>
                 <p class="mb-3"><i class="icofont-email border rounded rounded-circle p-2 i-hover" style="border-color: #FF8C3E "></i><a class="f1" style="text-decoration: none" href=""> kaurnimret23@gmail.com</a></p>
                 <h4 class='mb-3 mt-5'><span style="border-bottom:solid; border-color: #FF8C3E;">Addr</span>ess</h4>
@@ -212,6 +215,7 @@
 
 
         </div>
+    </div>
     </div>
 
     <!-- footer ends -->

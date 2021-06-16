@@ -24,22 +24,37 @@
 <div class="container-fluid mt-1 ">
     <div class="row g-0">
         <div class="col-md-4">
-            <div class="row">
+            <!-- <div class="row">
                 <form action="" method="POST">
                     {% csrf_token %}
-                <select class="form-select ml-4 mt-2 p-2" aria-label="Default select example">
+                <select class="form-select ml-4 mt-2 p-2" aria-label="Default select example" name='doc_id' required>
+                  
+                
+                    {% if appointment %}
                     <option selected value="">Select Doctors</option>
-                    <option value="1">Hakeem</option>
-                    <option value="2">Mohit</option>
+                        {% for doct in doctors %}       
+                            {% if doct  == appointment.doctor_id %}
+                                <option value="{{doct.id}}" selected>{{doct.doc_name}}</option>
+                            {% else %}
+                            <option value="{{doct.id}}" >{{doct.doc_name}}</option>
+                            {% endif %}
+
+                        {% endfor %}
+                     {% else %}
+                        <option value="">No doctor</option>   
+                    {% endif %}    
                   </select>
+
+                  <button type="submit"> Select </button>
                 </form>
             </div>
-            <hr>
+            <hr> -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="row p-1 pt-3">
                         <h4 class="text-center ml-1">Doctor Profile</h4>
                     </div>
+                  
                     <div class="row p-2">
                         <div class="container">
                             <div class="row p-2">
@@ -63,6 +78,8 @@
                             <hr>
                         </div>
                     </div>
+
+              
                 </div>
             </div>
         </div>
@@ -104,14 +121,20 @@
 
                         {% endif %}
 
+                        {% empty %}
+
+                            No Data
+
                     {% endfor %}
                 </div>
             </div>
       </div>
         <!-- Text-Area -->
+       
 
         <form action="#" class="bg-light"  id='form'>
            {% csrf_token %}
+          
             <input type="text" value="{{appointment.id}}"  name="app_id" hidden>
             <input type="text" value="{{appointment.doctor_id.id}}"  name='doc_id' hidden>
             <div class="input-group p-1">
@@ -125,7 +148,7 @@
             </div>
 
         </form>
-        {{request.session.user_Id}}
+     
 
         </div>
     <div class="col-md-1"></div>
@@ -137,6 +160,7 @@
 
 {% block jsscript %}
 
+{% if appointment %}
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script>
     function clickAttachment() {
@@ -285,11 +309,11 @@ var interval = setInterval(function(){
             alert('An error occured')
         }
     });
-},10000);
+},5000);
 });
 </script>
 
 
-
+{% endif %}
 {% endblock %}
 

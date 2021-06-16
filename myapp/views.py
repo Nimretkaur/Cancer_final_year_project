@@ -75,9 +75,7 @@ def index(request):
     # print(articles)
     return render(request,'index.html',{'articles': articles})
 
-
 def register(request):
-
     if request.method == 'POST':
         name = request.POST.get('fn')
         email = request.POST.get('em')
@@ -87,7 +85,8 @@ def register(request):
         user_em = mypatient.objects.filter(pat_email = email)
 
         if len(user_em) > 0:
-            return render(request, 'register.html', {'result':False})
+            temp = 'Already registered. Please Login'
+            return render(request, 'register.html', {'temp':temp})
         else:
             if opass == cpass:
                 post = mypatient()
@@ -99,10 +98,11 @@ def register(request):
 
                 post.generate_patient_id()
                 post.save()
-                # print("done")
-                return render(request,'register.html',{'result':True})
+                temp = 'Registered, Please login'
+                return render(request,'register.html',{'temp':temp})
             else:
-                return render(request, 'register.html',{"result":False})
+                temp = 'New password and Confirm password does not match'
+                return render(request, 'register.html',{'temp':temp})
 
     return render(request,'register.html',{})
 
@@ -126,25 +126,28 @@ def contactus(request):
         return render(request,'contactus.html',{})
 
 def login(request):
-    if request.method == "POST":
+    if request.method == "POST":   # if user submit the data
         formpost = True
-        useremail = request.POST.get('em')
+        useremail = request.POST.get('em')  #getting data from the form, email and password
         pw = request.POST.get('npwd')
         errormessage = ""
-        expert = mypatient.objects.filter(pat_email = useremail, pat_pass = pw)
-        k = len(expert)
-        if k>0:
+        expert = mypatient.objects.filter(pat_email = useremail, pat_pass = pw) 
+        #filter operation will filter from mypatients model and will return a list.
+
+        k = len(expert) # list can be empty if or have items 
+        if k>0:         # if len of list is greater than zero means, user has registered before.
             print("Valid Credentials")
             request.session['em'] = useremail
             request.session['user_id'] = expert[0].id
             request.session['pat_name'] = expert[0].pat_name
+            
             return redirect('/dashboard')
 
-        else:
+        else:           # if len of list is zero means, user has not registered or is putting invalid credentials.
             res = 1
             print("Invalid Credentials")
             errormessage = "Invalid Credentials"
-            return render(request,'login.html',{'formpost':formpost,'res':res})
+            return render(request,'login.html',{'formpost':formpost,'res':res})  # returning a msg for the user for Invalid Credentials
     
     else:
         formpost = False
@@ -159,18 +162,21 @@ def recoverpassword(request):
             user = mypatient.objects.get(pat_email = em)
 
             subject = 'Password'
-            message  = 'Hello '+user.pat_name+' Your Password is '+user.pat_pass
+            
+            html_message= """<h3>Hello</h3>"""+user.pat_name+""" Your password is
+                            <b> """+user.pat_pass+"""</b> <a href='http://localhost:8000/login/'> Click Here to Login </a>"""
             email_from = settings.EMAIL_HOST_USER
             recepient_list = [user.pat_email, ]
             try: 
-                send_mail(subject,message , email_from , recepient_list)
+                send_mail(subject, email_from , recepient_list , html_message = html_message)
                 res = "Your Password is sent successfully to your mail"
             except Exception as E:
                 print(E)    
             return render(request, 'recoverpassword.html', {'res':res})
 
+
         else:
-            res = 'User doesnot exist'
+            res = 'User does not exist'
            
             return render(request, 'recoverpassword.html', {'res':res})
     
@@ -340,19 +346,41 @@ def dashboard(request):
 
     return render(request,'dashboard.html',{'count_active':count_approved_app, 'count_pending': count_pending_app, 'count_active_chat':count_active_chat})
 
+def chatwithdoctor(request):
+    if not request.session.has_key('em'):
+        return redirect("/login") 
+    
+    curr_pat = mypatient.objects.get(pat_email = request.session.get('em'))
 
-def chatpage(request):
+    appointments = myappointment.objects.filter(patient_id = curr_pat, app_isactive = True)
+    selected_field = 'enabled'
+
+    if request.method == 'POST':
+        selected_field = request.POST.get('apply_filter')
+
+        if selected_field == 'enabled':
+            appointments = myappointment.objects.filter(patient_id = curr_pat, app_isactive = True, app_status = 'A')
+            
+        elif selected_field == 'disabled':
+            appointments = myappointment.objects.filter(patient_id = curr_pat, app_isactive = False, app_status = 'A')  # otheriwise it will show pending and not approved patients also
+
+    print(appointments,selected_field)
+    return render(request,'chatwithdoctor.html',{'selected_field':selected_field,'appointments':appointments})
+
+
+def chatpage(request, id):
     if not  request.session.has_key('em'):
         return redirect('/login')
-    # current_user = mypatient.objects.get(pat_email = request.session.get('em'))
-    # appointments = myappointment.objects.filter(patient_id = current_user, app_status = 'A')
-    current_user = mypatient.objects.get(pat_email = request.session.get('em'))
-    latest_user_approved_appointment = myappointment.objects.filter(patient_id = current_user, app_status='A', app_isactive = True).order_by('-id')[0]
 
-    latest_user_appointed_doc_messages = mymessages.objects.filter(app_id = latest_user_approved_appointment)
+    current_user = mypatient.objects.get(pat_email = request.session.get('em'))
+    
+    appointment = myappointment.objects.get(id = id)
+
+    messages = mymessages.objects.filter(app_id = appointment)
+
     # print(latest_user_appointed_doc_messages)
 
-    return render(request,'chatpage.html',{'messages':latest_user_appointed_doc_messages, 'appointment':latest_user_approved_appointment})
+    return render(request,'chatpage.html',{'messages':messages, 'appointment':appointment })
 
 def getmessages(request):
     app_id = request.GET.get('app_id')
@@ -528,19 +556,19 @@ def docappointment(request):
     doc = mydoctor.objects.get(doc_email = request.session['docem'])
 
     if request.method == 'POST':
-        type_of_form = request.POST.get('type')
+        type_of_form = request.POST.get('type') # we have 3 forms, getting which form is submit
 
-        if type_of_form  == "1":
+        if type_of_form  == "1":    #for accept button, doctor needs to submit the timings for the appointment
             app_id = request.POST.get('app_id')
             appointment = myappointment.objects.get(id = int(app_id))
 
-            appointment.app_time = request.POST.get('timing')
-            appointment.app_reason = None
+            appointment.app_time = request.POST.get('timing') #getting timing from the form
+            appointment.app_reason = None                     # filling other values in myappointment model
             appointment.app_status = 'A'
             appointment.app_isactive = True
             appointment.save()
 
-        elif type_of_form == "2":
+        elif type_of_form == "2":    #for cancel button, doctor need to submit the reason.
             app_id = request.POST.get('app_id')
             print(app_id)
             appointment = myappointment.objects.get(id = int(app_id))
@@ -550,11 +578,11 @@ def docappointment(request):
             appointment.app_status = 'NA'
             appointment.save()
 
-        elif type_of_form == "3":
+        elif type_of_form == "3":    # for choosing which appointments, doctor wants to see.
             app_filter = request.POST.get('filter')
             filter_date = request.POST.get('date')
             print(app_filter,filter_date)
-
+            # applying if elif conditions to show particular appointments only 
             if app_filter == 'pending_appointments':
                 appointments = myappointment.objects.filter(app_status='P', app_date = filter_date, doctor_id = doc)
                 return render(request,'doctorF/docappointment.html',{'appointments':appointments, 'selected_field': app_filter, 'entered_date': filter_date})
@@ -649,7 +677,19 @@ def docpatients(request):
         elif selected_field == 'disabled':
             appointments = myappointment.objects.filter(doctor_id = curr_doc, app_isactive = False, app_status = 'A')  # otheriwise it will show pending and not approved patients also
 
-    return render(request,'doctorF/docpatients.html',{'appointments':appointments,'selected_field':selected_field})
+    data = []
+    for app in appointments:
+        # check whether we have added disease detail for that appointment and if yes then add in a 
+        # # tuple and then append it into list otherwise append none on place 
+        if mydisease.objects.filter(appointment_id = app).exists():
+            disease_associated = mydisease.objects.get(appointment_id = app.id)
+            data.append( (app, disease_associated) ) 
+
+        else:
+            data.append( (app, None) ) 
+
+    return render(request,'doctorF/docpatients.html',{'appointments_data':data,'selected_field':selected_field})
+
 
 def enable_disable(request):
     app_id = request.GET.get('app_id')
@@ -759,7 +799,6 @@ def visLSTopCY(request):
         df1 = df1.iloc[:n,:]
         
         plt.grid()
-        # ax = sns.barplot(x = 'Entity', y = 'Lung',data=df1)
         ax = sns.barplot(x = 'Lung', y = 'Entity',data=df1)
         for index, value in enumerate(df1['Lung']):
             plt.text(value+0.4, index+0.1, int(value),color='black',fontsize=11)
@@ -1558,12 +1597,10 @@ def visCDT2C(request):
         if c1 == c2:
             res = "Select Different Countries"
             return render(request,'visCDT2C.html',{'res':res})
-
         df1=df[df['Entity'].isin([c1,c2])]
 
         sns.barplot(x="Year", y="AgeS-cancer deaths-tobacco", hue="Entity", data=df1, ci=None)
         plt.title("CANCER DEATHS ATTRIBUTED TO TOBACCO \n in "+str(c1)+" and "+str(c2))
-        # plt.ylim(0,90)
         plt.xlim(-3,9)
         
         # Saving an image 
@@ -1696,13 +1733,12 @@ def visCDApY(request):
 
 def visCDAsyey(request):
     if request.method=='POST':
-        # CODE HERE settings 
+        # settings for the graph
         fig=plt.figure(figsize=(12, 5), dpi=85,facecolor='w', edgecolor='w')
         matplotlib.rcParams['axes.labelsize'] = 14
         matplotlib.rcParams['xtick.labelsize'] = 9
         matplotlib.rcParams['ytick.labelsize'] = 12
         matplotlib.rcParams['text.color'] = 'k'
-        
         # visualization code
         df = pd.read_csv('cancer-deaths-by-age_mine_cleandata.csv')
 
@@ -1711,7 +1747,6 @@ def visCDAsyey(request):
 
         y1 = int(request.POST.get('y1'))
         y2 = int(request.POST.get('y2'))
-
         if (y1>y2):
             res = 'Start Year should be less than End Year'
             return render(request,'visCDAsyey.html',{'res':res})
@@ -1724,10 +1759,8 @@ def visCDAsyey(request):
         df2 = df2.iloc[:,3:]
         ax = sns.barplot(data = df2,palette="flare")
         ax.set_title("Cancer death Rates by Age Group\n in "+str(country)+" from "+str(y1)+" to "+str(y2) )
-        
         plt.xlim(-2,7)
-        # plt.ylim(-2,5000000)
-        
+
         # Saving an image 
         buf = io.BytesIO()
         plt.margins(0.8)
@@ -1932,31 +1965,28 @@ def visNPAareaC(request):
         return render(request,'visNPAareaC.html',{})
 
 
-
-
-
 # Prediction 
 def lungsprediction(request):
-    if request.method == 'POST':
-        dataset=pd.read_csv('lung_cancer_examples.csv')
+    if request.method == 'POST':        
+        dataset=pd.read_csv('lung_cancer_examples.csv')        
         X = dataset.iloc[:,2:-1].values
         Y = dataset.iloc[:,-1].values
         X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.25,random_state=0)
-        age=request.POST.get("age")
+        age=request.POST.get("age")                      # getting all the values from the form
         smokes=request.POST.get("smoke")
         areaq=request.POST.get("areaq")
         alcohol=request.POST.get("alcohol")
-        print("before",X_test.shape)
-        X_test=np.append(X_test,[[age,smokes,areaq,alcohol]],axis=0)
+        print("before",X_test.shape)               
+        X_test=np.append(X_test,[[age,smokes,areaq,alcohol]],axis=0) #appending the entered data into test dataset in last row
         print("after",X_test.shape)
-        sc=StandardScaler()
+        sc=StandardScaler()                            # preprocessing the entered data
         X_train=sc.fit_transform(X_train)
         X_test=sc.transform(X_test)
-        model=loaded_model = pickle.load(open('lungs_model_new.sav', 'rb'))
-        Y_predict=model.predict(X_test)
+        model = pickle.load(open('lungs_model_new.sav', 'rb'))
+        Y_predict=model.predict(X_test)                 # making the prediction
         l=len(Y_predict)
-        print("prediction",Y_predict[l-1])
-        if(Y_predict[l-1]==0):
+        print("prediction",Y_predict[l-1])         
+        if(Y_predict[l-1]==0):                         # checking the result of last row only.
             a = 1
             return render(request,'doctorF/lungsprediction.html',{"ans":a})
         elif(Y_predict[l-1]==1):
@@ -1985,7 +2015,7 @@ def prostateprediction(request):
         sc=StandardScaler()
         X_train=sc.fit_transform(X_train)
         X_test=sc.transform(X_test)
-        model=loaded_model = pickle.load(open('prostate_model_new.sav', 'rb'))
+        model= pickle.load(open('prostate_model_new.sav', 'rb'))
         Y_predict=model.predict(X_test)
         l=len(Y_predict)
         print("prediction",Y_predict[l-1])
@@ -2015,24 +2045,23 @@ def handle_uploaded_file(f,name):
 
 def breastpredictionDL(request):
     if request.method == "POST":
+        f = request.FILES['predfile'] # getting the file from form tag
 
-        f = request.FILES['predfile'] # here you get the files needed
-
+        # code to check that file format should be png or jpg only
         if (request.FILES["predfile"].content_type != 'image/jpeg') or (request.FILES["predfile"].content_type != 'image/png'):
             invalid = 'Please submit jpg or png Image'
             return render(request,'doctorF/breastpredictionDL.html',{'invalid':invalid})
 
         handle_uploaded_file(f,f.name)
-        
-        classifier = load_model('breast_cnn_model.h5',compile=False)
+        classifier = load_model('breast_cnn_model.h5',compile=False) # calling the trained Deep learning model
 
         test_image =image.load_img(f.name,target_size =(64,64))  ## Upload the image here 
-        test_image =image.img_to_array(test_image)
+        # preprocessing the image before making prediction
+        test_image =image.img_to_array(test_image)         
         test_image =np.expand_dims(test_image, axis =0)
-        result = classifier.predict(test_image)
-        print(result)
-
-        if result[0][0] >= 0.5:
+        result = classifier.predict(test_image)   # getting the predictions
+        
+        if result[0][0] >= 0.5:              
             prediction = 'Benin'
             pred = 1
         elif result[0][1] >= 0.5:

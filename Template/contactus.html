@@ -82,7 +82,7 @@
                         <div class="col-md-6 ">
                             <div class="form-group mb-3">
                                 <i class="icofont-user"></i>
-                                <input type="text" required placeholder="Enter Name" name="fn" class="form-control" id="f">
+                                <input type="text" required placeholder="Enter Name" pattern="[a-z A-Z]{3,30}" name="fn" class="form-control" id="f">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -91,7 +91,6 @@
                                 <input type="email" required name="em" id="e" placeholder="Enter Email" class="form-control">
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <i class="icofont-address-book "></i>
@@ -101,7 +100,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <i class="icofont-phone"></i>
-                                <input type="tel" name="phn" class="form-control" id='em' placeholder="Enter Phone">
+                                <input type="tel" name="phn" pattern="[0-9]{10}" class="form-control" id='em' placeholder="Enter Phone">
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -113,7 +112,6 @@
                         <div class="col-md-12">
                             <center><button type="submit" name='save1' class="btn btn-dark">Submit</button></center>
                         </div>
-
                     </form>
                     {% if res %} {% if res == 1 %}
                     <div>
